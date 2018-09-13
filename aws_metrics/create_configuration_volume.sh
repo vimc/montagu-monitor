@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 here=$(dirname $0)
 
 $here/configure/configure.py > aws_configuration
