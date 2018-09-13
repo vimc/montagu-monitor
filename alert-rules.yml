@@ -13,5 +13,6 @@ groups:
       description: "More than 24 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
   - alert: BackupShrinking
     expr: min(rate(bucket_files_total_size_mb[1h])) < 0
+    annotations:
       summary: "Backup to bucket {{ $labels.bucket_id }} has decreased in size"
       description: "Over the last hour, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased"
