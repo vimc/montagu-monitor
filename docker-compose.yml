@@ -3,6 +3,7 @@ version: '3'
 services:
   prometheus:
     image: prom/prometheus
+    restart: always
     ports:
     - "9090:9090"
     volumes:
@@ -12,11 +13,13 @@ services:
 
   alertmanager:
     image: prom/alertmanager
+    restart: always
     volumes:
     - prometheus_alertmanager_config:/etc/alertmanager
 
   aws_metrics:
     build: aws_metrics
+    restart: always
     volumes:
     -  aws_metrics_config:/root/.aws
 
