@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 
 # Configure Prometheus
 docker volume rm prometheus_config || echo "No volume to remove"
@@ -17,4 +17,8 @@ docker kill $tmp
 # Configure AWS metrics
 ./aws_metrics/create_configuration_volume.sh
 
-docker-compose up --build
+docker-compose up --detach --build
+
+echo "Now running Montagu Monitor"
+echo "Browse to http://localhost:9090 to see basic output."
+echo "Stop with docker-compose down"
