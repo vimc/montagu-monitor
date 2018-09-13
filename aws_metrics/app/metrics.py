@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
-from flask import Flask, Response
+from flask import Response
 
-from helpers import seconds_elapsed_since, combine_dictionaries
+from helpers import seconds_elapsed_since
 from s3 import get_bucket
-
-app = Flask(__name__)
 
 
 def render_metrics(metrics):
@@ -45,16 +42,3 @@ def bucket_metrics(bucket_id):
             metrics["bucket_files_total_size_gb"] = size / (1024 * 1024 * 1024)
 
     return label_metrics(metrics, {"id": bucket_id})
-
-
-@app.route('/metrics')
-def metrics():
-    bucket_ids = [
-        'montagu-annex',
-        'montagu-db',
-        'montagu-orderly',
-        'montagu-teamcity',
-        'montagu-vault'
-    ]
-    metrics = combine_dictionaries(bucket_metrics(b) for b in bucket_ids)
-    return render_metrics(metrics)

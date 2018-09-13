@@ -1,10 +1,7 @@
-FROM python:alpine
-
-EXPOSE 5000
+FROM tiangolo/uwsgi-nginx-flask:python3.6
 
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
-COPY src /app
-WORKDIR /app
-ENTRYPOINT FLASK_APP=app.py flask run
+ENV STATIC_INDEX 1
+COPY app /app
