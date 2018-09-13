@@ -2,14 +2,12 @@
 set -e
 
 # Configure Prometheus
-docker volume rm prometheus_config || echo "No volume to remove"
 tmp=$(docker run -dt --rm -v prometheus_config:/data alpine)
 docker cp prometheus.yml $tmp:/data/prometheus.yml
 docker cp alert-rules.yml $tmp:/data/alert-rules.yml
 docker kill $tmp
 
 # Configure Alertmanager
-docker volume rm prometheus_alertmanager_config || echo "No volume to remove"
 tmp=$(docker run -dt --rm -v prometheus_alertmanager_config:/data alpine)
 docker cp alertmanager.yml $tmp:/data/alertmanager.yml
 docker kill $tmp
