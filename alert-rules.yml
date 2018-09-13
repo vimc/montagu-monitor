@@ -1,15 +1,13 @@
 groups:
-- name: demo
+- name: aws
   rules:
   - alert: InstanceDown
     expr: up == 0
-    for: 5s
     annotations:
       summary: "Instance {{ $labels.instance }} down"
-      description: "{{ $labels.instance }} has been down for more than 5 seconds."
-  - alert: PessimisticNumbers
-    expr: demo_b < 0.75
-    for: 3s
+      description: "{{ $labels.instance }} is not responding"
+  - alert: BackupStale
+    expr: bucket_files_time_since_last_modified_hours > 24
     annotations:
-      summary: "Random numbers aren't looking optimistic"
-      description: "We produced a random number smaller than 0.75 repeatedly"
+      summary: "Backup to bucket {{ $labels.bucket_id }} is out of date"
+      description: "More than 24 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"

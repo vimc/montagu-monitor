@@ -3,15 +3,24 @@ from flask import Response
 from helpers import seconds_elapsed_since
 
 
+def render_value(value):
+    if value is True:
+        return 1
+    elif value is False:
+        return 0
+    else:
+        return value
+
+
 def render_metrics(metrics):
     output = ""
-    for k,v in metrics.items():
-        output += "{k} {v}\n".format(k=k, v=v)
+    for k, v in metrics.items():
+        output += "{k} {v}\n".format(k=k, v=render_value(v))
     return Response(output, mimetype='text/plain')
 
 
 def label_metrics(metrics, labels):
-    label_items = ",".join("{k}={v}".format(k=k, v=v) for k, v in labels.items())
+    label_items = ",".join('{k}="{v}"'.format(k=k, v=v) for k, v in labels.items())
     label = "{" + label_items + "}"
 
     labelled = {}
@@ -40,4 +49,4 @@ def bucket_metrics(bucket_id, s3):
             metrics["bucket_files_total_size_mb"] = size / (1024 * 1024)
             metrics["bucket_files_total_size_gb"] = size / (1024 * 1024 * 1024)
 
-    return label_metrics(metrics, {"id": bucket_id})
+    return label_metrics(metrics, {"bucket_id": bucket_id})

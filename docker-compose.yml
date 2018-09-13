@@ -9,17 +9,22 @@ services:
     - prometheus_config:/etc/prometheus      
     depends_on: 
     - alertmanager
-    network_mode: host
 
   alertmanager:
     image: prom/alertmanager
-    ports:
-    - "9093:9093"
     volumes:
     - prometheus_alertmanager_config:/etc/alertmanager
+
+  aws_metrics:
+    build: aws_metrics
+    volumes:
+    -  aws_metrics_config:/root/.aws
+
 
 volumes:
   prometheus_config:
     external: true
   prometheus_alertmanager_config:
+    external: true
+  aws_metrics_config:
     external: true
