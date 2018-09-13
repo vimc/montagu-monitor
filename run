@@ -18,4 +18,3 @@ docker kill $tmp
 ./aws_metrics/create_configuration_volume.sh
 
 docker-compose up --build
-docker-compose rm -f
