@@ -7,7 +7,7 @@ DEFAULT_VAULT_ADDR = "https://support.montagu.dide.ic.ac.uk:8200"
 
 class VaultClient(object):
     def __init__(self):
-        self.client: hvac.Client = None
+        self.client = None
 
     def _connect(self):
         vault_url = os.environ.get("VAULT_ADDR", DEFAULT_VAULT_ADDR)
