@@ -1,7 +1,6 @@
 from flask import Response
 
 from helpers import seconds_elapsed_since
-from s3 import get_bucket
 
 
 def render_metrics(metrics):
@@ -21,8 +20,8 @@ def label_metrics(metrics, labels):
     return labelled
 
 
-def bucket_metrics(bucket_id):
-    bucket = get_bucket(bucket_id)
+def bucket_metrics(bucket_id, s3):
+    bucket = s3.get_bucket(bucket_id)
     metrics = {
         "bucket_exists": bucket is not None
     }
