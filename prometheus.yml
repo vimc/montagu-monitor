@@ -9,4 +9,4 @@ scrape_configs:
   - targets: ['aws_metrics:80']
 
 rule_files:
-  - alert-rules.yml
+- alert-rules.yml

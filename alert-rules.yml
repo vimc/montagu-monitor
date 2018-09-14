@@ -3,9 +3,15 @@ groups:
   rules:
   - alert: InstanceDown
     expr: up == 0
+    for: 5m
     annotations:
       summary: "Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} is not responding"
+  - alert: BackupBucketMissing
+    expr: bucket_exists == 0
+    annotations:
+      summary: "Bucket {{ $labels.bucket_id }} does not exist"
+      description: "Required S3 bucket {{ $labels.bucket_id }} does not exist"
   - alert: BackupStale
     expr: bucket_files_time_since_last_modified_hours > 24
     annotations:
