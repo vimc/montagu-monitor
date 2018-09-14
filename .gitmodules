@@ -1,0 +1,3 @@
+[submodule "config/vault"]
+	path = config/vault
+	url = https://github.com/vimc/montagu-vault-py
