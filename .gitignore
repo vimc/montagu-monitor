@@ -1,3 +1,4 @@
 aws_configuration
-icinga/*
 .idea/*
+config/alertmanager/alertmanager.yml
+config/__pycache__/*

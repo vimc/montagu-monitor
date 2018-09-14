@@ -14,6 +14,7 @@ manager. These instances are configured by:
 To start the monitor and external metric exporters (see below) use:
 
 ```
+sudo pip3 install -r requirements.txt
 ./run
 ```
 
