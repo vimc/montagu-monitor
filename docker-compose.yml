@@ -21,9 +21,4 @@ services:
     build: aws_metrics
     restart: always
     volumes:
-      - aws_metrics_config:/root/.aws
-
-
-volumes:
-  aws_metrics_config:
-    external: true
+      - "${PWD}/aws_metrics/config/volume:/root/.aws"

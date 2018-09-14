@@ -5,7 +5,7 @@ set -ex
 ./config/configure.py
 
 # Configure AWS metrics
-./aws_metrics/create_configuration_volume.sh
+./aws_metrics/config/configure.py
 
 docker-compose up --detach --build
 

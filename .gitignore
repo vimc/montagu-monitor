@@ -1,4 +1,4 @@
 aws_configuration
 .idea/*
-config/alertmanager/alertmanager.yml
+config/alertmanager/*
 config/__pycache__/*

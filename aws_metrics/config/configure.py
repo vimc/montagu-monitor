@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from os import chdir
+from os.path import dirname, realpath
 
 from vault import VaultClient
 
@@ -13,4 +15,8 @@ secrets = {
     "secret_key": vault.read_secret("secret/backup/aws_secret_access_key"),
 }
 
-print(template.format(**secrets))
+# Set working directory to this script's dir
+chdir(dirname(realpath(__file__)))
+
+with open('volume/credentials', 'w') as f:
+    f.write(template.format(**secrets))
