@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from os import chdir
 from os.path import dirname, realpath
+from pathlib import Path
 
 from pystache import render
 
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     chdir(dirname(realpath(__file__)))
     vault = VaultClient()
 
+    Path('alertmanager').mkdir(exist_ok=True)
     instantiate_config(
         "alertmanager.template.yml",
         "alertmanager/alertmanager.yml",
