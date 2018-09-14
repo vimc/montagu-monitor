@@ -5,29 +5,20 @@ services:
     image: prom/prometheus
     restart: always
     ports:
-    - "9090:9090"
+      - "9090:9090"
     volumes:
-    - prometheus_config:/etc/prometheus      
+      - "${PWD}/config/prometheus:/etc/prometheus"
     depends_on: 
-    - alertmanager
+      - alertmanager
 
   alertmanager:
     image: prom/alertmanager
     restart: always
     volumes:
-    - prometheus_alertmanager_config:/etc/alertmanager
+      - "${PWD}/config/alertmanager:/etc/prometheus"
 
   aws_metrics:
     build: aws_metrics
     restart: always
     volumes:
-    -  aws_metrics_config:/root/.aws
-
-
-volumes:
-  prometheus_config:
-    external: true
-  prometheus_alertmanager_config:
-    external: true
-  aws_metrics_config:
-    external: true
+      - "${PWD}/aws_metrics/config/volume:/root/.aws"

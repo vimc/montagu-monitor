@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
-# Configure Prometheus
-tmp=$(docker run -dt --rm -v prometheus_config:/data alpine)
-docker cp prometheus.yml $tmp:/data/prometheus.yml
-docker cp alert-rules.yml $tmp:/data/alert-rules.yml
-docker kill $tmp
-
-# Configure Alertmanager
-tmp=$(docker run -dt --rm -v prometheus_alertmanager_config:/data alpine)
-docker cp alertmanager.yml $tmp:/data/alertmanager.yml
-docker kill $tmp
+# Put secrets into configs
+./config/configure.py
 
 # Configure AWS metrics
-./aws_metrics/create_configuration_volume.sh
+./aws_metrics/config/configure.py
 
 docker-compose up --detach --build
 
