@@ -3,6 +3,7 @@ groups:
   rules:
   - alert: InstanceDown
     expr: up == 0
+    for: 5m
     annotations:
       summary: "Instance {{ $labels.instance }} down"
       description: "{{ $labels.instance }} is not responding"
