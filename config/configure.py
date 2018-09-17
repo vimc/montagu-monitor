@@ -3,7 +3,7 @@ from os import chdir
 from os.path import dirname, realpath
 from pathlib import Path
 
-from pystache import render
+from mako.template import Template
 
 from vault import VaultClient
 
@@ -11,9 +11,9 @@ from vault import VaultClient
 def instantiate_config(template_path, target_path, values):
     print("Templating from {} to {}".format(template_path, target_path))
     with open(template_path, 'r') as f:
-        template = f.read()
+        template = Template(f.read())
     with open(target_path, 'w') as f:
-        f.write(render(template, values))
+        f.write(template.render(**values))
 
 
 if __name__ == "__main__":
