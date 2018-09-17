@@ -3,7 +3,7 @@ from os import chdir
 from os.path import dirname, realpath
 from pathlib import Path
 
-from vault import VaultClient
+from vault.vault import VaultClient
 
 template = """[default]
 aws_access_key_id = {access_key}
@@ -19,6 +19,7 @@ secrets = {
 # Set working directory to this script's dir
 chdir(dirname(realpath(__file__)))
 
+print("Writing out AWS credentials")
 Path('volume').mkdir(exist_ok=True)
 with open('volume/credentials', 'w') as f:
     f.write(template.format(**secrets))

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from mako.template import Template
 
-from vault import VaultClient
+from vault.vault import VaultClient
 
 
 def instantiate_config(template_path, target_path, values):

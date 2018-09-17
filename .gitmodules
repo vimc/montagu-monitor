@@ -1,0 +1,6 @@
+[submodule "config/vault"]
+	path = config/vault
+	url = https://github.com/vimc/montagu-vault-py
+[submodule "aws_metrics/config/vault"]
+	path = aws_metrics/config/vault
+	url = https://github.com/vimc/montagu-vault-py
