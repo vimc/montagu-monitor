@@ -14,7 +14,9 @@ def metrics():
         'montagu-db',
         'montagu-orderly',
         'montagu-teamcity',
-        'montagu-vault'
+        'montagu-vault',
+        'nonsense-bucket',
+        'more-nonsense'
     ]
     s3 = S3Helper()
     metrics = combine_dictionaries(bucket_metrics(b, s3) for b in bucket_ids)
