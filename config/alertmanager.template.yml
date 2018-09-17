@@ -1,5 +1,5 @@
 global:
-  slack_api_url: https://hooks.slack.com/services/{{slack_webhook}}
+  slack_api_url: https://hooks.slack.com/services/${slack_webhook}
 
 route:
   receiver: 'slack'

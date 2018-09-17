@@ -1,2 +1,2 @@
-pystache>=0.5.4
+Mako>=1.0.7
 hvac>=0.6.4
