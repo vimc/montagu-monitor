@@ -3,8 +3,6 @@ global:
 
 route:
   receiver: 'slack'
-  group_interval: 1s
-  group_by: [status]
 
 templates:
   - '../templates/*.tmpl'
