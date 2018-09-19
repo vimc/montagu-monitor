@@ -5,20 +5,16 @@ groups:
     expr: up == 0
     for: 5m
     annotations:
-      error: "{{ $labels.instance }} is "
-      success: "{{ $labels.instance }} is back up!"
+      error: "{{ $labels.instance }} is down"
   - alert: BackupBucketMissing
     expr: bucket_exists == 0
     annotations:
       error: "Required S3 bucket {{ $labels.bucket_id }} does not exist"
-      success: "Required S3 bucket {{ $labels.bucket_id }} exists!"
   - alert: BackupStale
-    expr: bucket_files_time_since_last_modified_hours > 24
+    expr: bucket_files_time_since_last_modified_hours > 26
     annotations:
-      error: "More than 24 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
-      success: "Files recently modified in bucket {{ $labels.bucket_id }}"
+      error: "More than 26 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
   - alert: BackupShrinking
     expr: min(rate(bucket_files_total_size_mb[1h])) < 0
     annotations:
       error: "Over the last hour, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased"
-      success: "Total amount of data stored in bucket {{ $labels.bucket_id }} has not decreased further, but you may want to investigate"
