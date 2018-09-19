@@ -18,6 +18,11 @@ sudo pip3 install -r requirements.txt
 ./run
 ```
 
+To reload Prometheus and the alert manager after a config change, run
+ ```
+ ./reload
+ ```
+
 ## Metric exporters
 Prometheus relies on the services it is monitoring serving up a text file that
 exports values to monitor. By convention, these are served at
