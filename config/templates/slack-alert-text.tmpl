@@ -1,0 +1,4 @@
+{{ define "slack-alert-text" }}
+{{ range .Alerts }}* {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
+{{ end }}
+{{ end }}
