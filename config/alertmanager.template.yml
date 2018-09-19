@@ -4,11 +4,18 @@ global:
 route:
   receiver: 'slack'
 
+templates:
+  - '../templates/*.tmpl'
+
 receivers:
 - name: 'slack'
   slack_configs:
   - channel: 'montagu-monitor'
-    username: 'montagu-bot'
+    username: '{{ if eq .Status "firing" }}prometheus-sad-bot{{ else }}prometheus-happy-bot{{ end }}'
     send_resolved: true
-    title: "{{ .Status }}: {{ range .Alerts }}{{ .Annotations.summary }}, {{ end }}"
-    text: "{{ range .Alerts }}* {{ .Annotations.description }}\n{{ end }}"
+    color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+    title: '{{ if eq .Status "firing" }}Problems detected{{ else }}Resolved{{ end }}'
+    text: '{{ template "slack-alert-text" .}}'
+    title_link: null
+    icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
+
