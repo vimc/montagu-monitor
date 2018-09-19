@@ -7,8 +7,8 @@ set -ex
 # Configure AWS metrics
 ./aws_metrics/config/configure.py
 
-docker-compose up --detach --build
+docker-compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
 echo "Browse to http://localhost:9090 to see basic output."
-echo "Stop with docker-compose down"
+
