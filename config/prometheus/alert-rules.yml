@@ -15,6 +15,6 @@ groups:
     annotations:
       error: "More than 26 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
   - alert: BackupShrunk
-    expr: min(delta(bucket_files_total_size_mb[24h])) < -1
+    expr: delta(bucket_files_total_size_mb[24h]) < -1
     annotations:
       error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
