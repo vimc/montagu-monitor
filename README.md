@@ -22,6 +22,16 @@ To reload Prometheus and the alert manager after a config change, run
  ```
  ./reload
  ```
+ 
+## Deployment on support
+```
+sudo su
+cd /montagu/monitor
+git pull
+```
+
+And then either call `./run` (if there are code changes) or `./reload` (to 
+refresh the config).
 
 ## Metric exporters
 Prometheus relies on the services it is monitoring serving up a text file that
