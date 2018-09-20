@@ -5,7 +5,7 @@ route:
   receiver: 'slack'
 
 templates:
-  - '../templates/*.tmpl'
+  - 'templates/*.tmpl'
 
 receivers:
 - name: 'slack'
