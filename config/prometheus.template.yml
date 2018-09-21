@@ -8,7 +8,7 @@ scrape_configs:
   static_configs:
   - targets: ['aws_metrics:80']
 - job_name: 'barman'
-  scrape_timeout: 40s
+  scrape_timeout: 60s
   static_configs:
   - targets: ['annex.montagu.dide.ic.ac.uk:5000']
   ec2_sd_configs:
