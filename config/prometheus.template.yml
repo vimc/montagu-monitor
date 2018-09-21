@@ -1,0 +1,20 @@
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['alertmanager:9093']
+
+scrape_configs:
+- job_name: 'aws'
+  static_configs:
+  - targets: ['aws_metrics:80']
+- job_name: 'barman'
+  static_configs:
+  - targets: ['annex.montagu.dide.ic.ac.uk:5000']
+  ec2_sd_configs:
+  - region: 'eu-west-2'
+    access_key: ${aws_access_key_id}
+    secret_key: ${aws_secret_key}
+    port: 5000
+
+rule_files:
+- alert-rules.yml
