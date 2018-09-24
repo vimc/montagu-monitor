@@ -1,4 +1,5 @@
 aws_configuration
 .idea/*
 config/alertmanager/alertmanager.yml
+config/prometheus/prometheus.yml
 config/__pycache__/*

@@ -18,3 +18,17 @@ groups:
     expr: delta(bucket_files_total_size_mb[24h]) < -1
     annotations:
       error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
+- name: barman
+  rules:
+  - alert: BarmanCheckFailed
+    expr: barman_ok == 0
+    annotations:
+      error: "Barman check on {{ $labels.instance }} failed"
+  - alert: BarmanNotRunning
+    expr: barman_running == 0
+    annotations:
+      error: "Barman on {{ $labels.instance }} is not running"
+  - alert: NoRemoteBarman
+    expr: sum(up{job="barman"})-sum(up{job="barman",instance="annex.montagu.dide.ic.ac.uk:5000"}) == 0
+    annotations:
+      error: "No EC2 barman instances are reporting metrics"

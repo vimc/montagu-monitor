@@ -27,3 +27,10 @@ if __name__ == "__main__":
         "alertmanager/alertmanager.yml",
         {"slack_webhook": vault.read_secret("secret/slack/monitor-webhook")}
     )
+    instantiate_config(
+        "prometheus.template.yml",
+        "prometheus/prometheus.yml",
+        {"aws_access_key_id": vault.read_secret("secret/prometheus/aws_access_key_id"),
+         "aws_secret_key": vault.read_secret("secret/prometheus/aws_secret_key")},
+
+    )
