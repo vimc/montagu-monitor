@@ -2,7 +2,7 @@ groups:
 - name: aws
   rules:
   - alert: InstanceDown
-    expr: up{job="aws"} == 0
+    expr: up == 0
     for: 5m
     annotations:
       error: "{{ $labels.instance }} is down"
@@ -20,11 +20,6 @@ groups:
       error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
 - name: barman
   rules:
-  - alert: InstanceDown
-    expr: up{job="barman"} == 0
-    for: 5m
-    annotations:
-      error: "{{ $labels.instance }} is down"
   - alert: BarmanCheckFailed
     expr: barman_ok == 0
     annotations:
