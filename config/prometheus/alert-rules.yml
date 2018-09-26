@@ -29,6 +29,6 @@ groups:
     annotations:
       error: "Barman on {{ $labels.instance }} is not running"
   - alert: NoRemoteBarman
-    expr: sum(up{job="barman"})-sum(up{job="barman",instance="annex.montagu.dide.ic.ac.uk:5000"}) == 0
+    expr: sum(sum_over_time(up{job="barman"}[1h]))-sum(sum_over_time(up{job="barman",instance="annex.montagu.dide.ic.ac.uk:5000"}[1h])) == 0
     annotations:
       error: "No EC2 barman instances are reporting metrics"
