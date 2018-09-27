@@ -31,6 +31,5 @@ if __name__ == "__main__":
         "prometheus.template.yml",
         "prometheus/prometheus.yml",
         {"aws_access_key_id": vault.read_secret("secret/prometheus/aws_access_key_id"),
-         "aws_secret_key": vault.read_secret("secret/prometheus/aws_secret_key")},
-
+         "aws_secret_key": vault.read_secret("secret/prometheus/aws_secret_key")}
     )

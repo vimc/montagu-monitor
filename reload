@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Put secrets into configs
+./config/configure.py
+
 curl -X POST http://127.0.0.1:9093/-/reload
 
 curl -X POST http://127.0.0.1:9090/-/reload
