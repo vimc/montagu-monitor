@@ -38,7 +38,7 @@ groups:
 - name: barman-remote
   rules:
   - alert: NoRemoteBarman
-    expr: max(up{job="barman-remote"}) == 0
+    expr: max(up{job="barman-remote"}) == 0 or absent({job="barman-remote"}) == 1
     for: 5m
     annotations:
       error: "No EC2 barman instances are reporting metrics"
