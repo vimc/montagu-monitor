@@ -19,3 +19,16 @@ receivers:
     title_link: null
     icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
 
+inhibit_rules:
+# inhibit alerts of order > 1 if an alert of order 1 is firing
+- source_match:
+    order: [1]
+  target_match_re:
+    order: [2,3]
+  equal: ['job']
+# inhibit alerts of order 3 if an alert of order 2 is firing
+- source_match:
+    order: [2]
+  target_match_re:
+    order: 3
+  equal: 'job'
