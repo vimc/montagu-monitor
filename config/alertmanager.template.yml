@@ -31,4 +31,4 @@ inhibit_rules:
     order: [2]
   target_match_re:
     order: 3
-  equal: 'job'
+  equal: ['job']
