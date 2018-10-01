@@ -8,10 +8,11 @@ scrape_configs:
   static_configs:
   - targets: ['aws_metrics:80']
 - job_name: 'barman'
-  scrape_timeout: 60s
-  scrape_interval: 1h
   static_configs:
   - targets: ['annex.montagu.dide.ic.ac.uk:5000']
+- job_name: 'barman-remote'
+  scrape_timeout: 60s
+  scrape_interval: 2m
   ec2_sd_configs:
   - region: 'eu-west-2'
     access_key: ${aws_access_key_id}
