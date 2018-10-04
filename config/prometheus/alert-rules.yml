@@ -1,53 +1,53 @@
 groups:
-- name: aws
-  rules:
-  - alert: InstanceDown
-    expr: up{job="aws"} == 0
-    for: 5m
-    annotations:
-      error: "{{ $labels.instance }} is down"
-  - alert: BackupBucketMissing
-    expr: bucket_exists == 0
-    annotations:
-      error: "Required S3 bucket {{ $labels.bucket_id }} does not exist"
-  - alert: BackupStale
-    expr: bucket_files_time_since_last_modified_hours > 26
-    annotations:
-      error: "More than 26 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
-  - alert: BackupShrunk
-    expr: delta(bucket_files_total_size_mb[24h]) < -1
-    annotations:
-      error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
+  - name: aws
+    rules:
+      - alert: InstanceDown
+        expr: up{job="aws"} == 0
+        for: 5m
+        annotations:
+          error: "{{ $labels.instance }} is down"
+      - alert: BackupBucketMissing
+        expr: bucket_exists == 0
+        annotations:
+          error: "Required S3 bucket {{ $labels.bucket_id }} does not exist"
+      - alert: BackupStale
+        expr: bucket_files_time_since_last_modified_hours > 26
+        annotations:
+          error: "More than 26 hours have passed since any files were modified in bucket {{ $labels.bucket_id }}"
+      - alert: BackupShrunk
+        expr: delta(bucket_files_total_size_mb[24h]) < -1
+        annotations:
+          error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
 
-- name: barman
-  rules:
-  - alert: BarmanDown
-    expr: up{job="barman"} == 0
-    for: 5m
-    annotations:
-      error: "{{ $labels.instance }} is down"
-  - alert: BarmanNotRunning
-    expr: barman_running{job="barman"} == 0
-    annotations:
-      error: "Barman on {{ $labels.instance }} is not running"
-  - alert: BarmanCheckFailed
-    expr: barman_ok{job="barman"} == 0
-    annotations:
-      error: "Barman check on {{ $labels.instance }} failed"
+  - name: barman
+    rules:
+      - alert: BarmanDown
+        expr: up{job="barman"} == 0
+        for: 5m
+        annotations:
+          error: "{{ $labels.instance }} is down"
+      - alert: BarmanNotRunning
+        expr: barman_running{job="barman"} == 0
+        annotations:
+          error: "Barman on {{ $labels.instance }} is not running"
+      - alert: BarmanCheckFailed
+        expr: barman_ok{job="barman"} == 0
+        annotations:
+          error: "Barman check on {{ $labels.instance }} failed"
 
-- name: barman-remote
-  rules:
-  - alert: NoRemoteBarman
-    expr: max(up{job="barman-remote"}) == 0 or absent({job="barman-remote"}) == 1
-    for: 5m
-    annotations:
-      error: "No EC2 barman instances are reporting metrics"
-  - alert: RemoteBarmanNotRunning
-    expr: barman_running{job="barman-remote"} == 0
-    annotations:
-      error: "Barman on {{ $labels.instance }} is not running"
-  - alert: RemoteBarmanCheckFailed
-    expr: barman_ok{job="barman-remote"} == 0
-    annotations:
-      error: "Barman check on {{ $labels.instance }} failed"
+  - name: barman-remote
+    rules:
+      - alert: NoRemoteBarman
+        expr: max(up{job="barman-remote"}) == 0 or absent({job="barman-remote"}) == 1
+        for: 5m
+        annotations:
+          error: "No EC2 barman instances are reporting metrics"
+      - alert: RemoteBarmanNotRunning
+        expr: barman_running{job="barman-remote"} == 0
+        annotations:
+          error: "Barman on {{ $labels.instance }} is not running"
+      - alert: RemoteBarmanCheckFailed
+        expr: barman_ok{job="barman-remote"} == 0
+        annotations:
+          error: "Barman check on {{ $labels.instance }} failed"
 
