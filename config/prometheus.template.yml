@@ -16,7 +16,7 @@ scrape_configs:
   - job_name: 'barman-remote'
     scrape_timeout: 60s
     scrape_interval: 2m
-    ec2_sd_configs:
+    ec2_sd_configs: &ec2
       - region: 'eu-west-2'
         access_key: ${aws_access_key_id}
         secret_key: ${aws_secret_key}
@@ -27,10 +27,7 @@ scrape_configs:
         replacement: <%text>$</%text>{1}:5000
 
   - job_name: 'ec2-machine-metrics'
-    ec2_sd_configs:
-      - region: 'eu-west-2'
-        access_key: ${aws_access_key_id}
-        secret_key: ${aws_secret_key}
+    ec2_sd_configs: *ec2
     relabel_configs:
       - source_labels: [__meta_ec2_public_dns_name]
         target_label: __address__
