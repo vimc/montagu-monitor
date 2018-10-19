@@ -66,3 +66,23 @@ groups:
         annotations:
           error: "Barman metrics on {{ $labels.instance }} are not responding"
 
+  - name: bb8
+    rules:
+      - alert: bb8Down
+        expr: up{job="bb8"}
+        for: 5m
+        annotations:
+          error: "bb8 metrics is down"
+      - alert: StaleBackup
+        expr: time_since_last_backup_hours > 26
+        annotations:
+          error: "More than 26 hours have passed since bb8 backup of {{ $labels.target_id }}"
+      - alert: MetadataCorrupted
+        expr: metadata_present == 0
+        annotations:
+          error: "bb8 metadata missing for {{ $labels.target_id }}"
+      - alert: TargetsShrunk
+        expr: delta(number_of_targets[1h]) < 0
+        annotations:
+          error: "Number of targets backed up to Starport has shrunk in the last hour"
+
