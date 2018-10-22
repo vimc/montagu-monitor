@@ -69,7 +69,7 @@ groups:
   - name: bb8
     rules:
       - alert: bb8Down
-        expr: up{job="bb8"}
+        expr: up{job="bb8"} == 0
         for: 5m
         annotations:
           error: "bb8 metrics is down"
