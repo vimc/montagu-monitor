@@ -34,7 +34,7 @@ groups:
         annotations:
           error: "{{ $labels.instance }} is down"
       - alert: BarmanNotRunning
-        expr: barman_running{job="barman"} == 0 or absent(barman_running{job="barman"}) == 1
+        expr: barman_running{job="barman"} == 1 or absent(barman_running{job="barman"}) == 1
         annotations:
           error: "Barman on {{ $labels.instance }} is not running"
       - alert: BarmanCheckFailed
@@ -54,7 +54,7 @@ groups:
         annotations:
           error: "No EC2 barman instances are reporting metrics"
       - alert: RemoteBarmanNotRunning
-        expr: barman_running{job="barman-remote"} == 0 or absent(barman_running{job="barman-remote"}) == 1
+        expr: barman_running{job="barman-remote"} == 1 or absent(barman_running{job="barman-remote"}) == 1
         annotations:
           error: "Barman on {{ $labels.instance }} is not running"
       - alert: RemoteBarmanCheckFailed
