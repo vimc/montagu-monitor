@@ -23,8 +23,8 @@ inhibit_rules:
   - source_match:
       alertname: NoRemoteBarman
     target_match:
+      job: barman-remote
     equal:
-    - job
   - source_match:
       alertname: BarmanDown
     target_match:

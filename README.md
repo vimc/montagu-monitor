@@ -22,7 +22,19 @@ To reload Prometheus and the alert manager after a config change, run
  ```
  ./reload
  ```
- 
+
+## Local development
+To run locally and have the alert manager notify a test Slack channel rather than creating noise in
+the real monitor channel, use
+```
+./run --dev
+```
+
+and for reloading
+```
+./reload --dev
+```
+
 ## Deployment on support
 ```
 sudo su
