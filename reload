@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
+set -e
+
+echo "Usage: ./reload [--dev]"
+echo "Options:"
+echo  "--dev     Run in development mode, using the test Slack channel for notifications"
+echo ""
+
+if [[ "$1" == "--dev" ]] ; then
+    echo "Running in development mode"
+    echo ""
+fi
 
 # Put secrets into configs
-./config/configure.py
+./config/configure.py $1
 
 curl -X POST http://127.0.0.1:9093/-/reload
 

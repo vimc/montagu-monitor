@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
-set -ex
+set -e
+
+echo "Usage: ./run [--dev]"
+echo "Options:"
+echo  "--dev     Run in development mode, using the test Slack channel for notifications"
+echo ""
+
+if [[ "$1" == "--dev" ]] ; then
+    echo "Running in development mode"
+    echo ""
+fi
 
 # Put secrets into configs
-./config/configure.py
+./config/configure.py $1
 
 # Configure AWS metrics
 ./aws_metrics/config/configure.py
@@ -11,4 +21,3 @@ docker-compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
 echo "Browse to http://localhost:9090 to see basic output."
-

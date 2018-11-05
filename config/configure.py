@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
+"""
+Usage:
+  setup.py [--dev]
+"""
 from os import chdir
 from os.path import dirname, realpath
 from pathlib import Path
-
+from docopt import docopt
 from mako.template import Template
 
 from vault.vault import VaultClient
@@ -21,11 +25,20 @@ if __name__ == "__main__":
     chdir(dirname(realpath(__file__)))
     vault = VaultClient()
 
+    args = docopt(__doc__)
+    if args["--dev"]:
+        slack_webhook_key = "secret/slack/test-webhook"
+        slack_channel = "montagu-test"
+    else:
+        slack_webhook_key = "secret/slack/monitor-webhook"
+        slack_channel = "montagu-monitor"
+
     Path('alertmanager').mkdir(exist_ok=True)
     instantiate_config(
         "alertmanager.template.yml",
         "alertmanager/alertmanager.yml",
-        {"slack_webhook": vault.read_secret("secret/slack/monitor-webhook")}
+        {"slack_webhook": vault.read_secret(slack_webhook_key),
+         "slack_channel": slack_channel}
     )
     instantiate_config(
         "prometheus.template.yml",

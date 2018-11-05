@@ -19,6 +19,25 @@ groups:
         annotations:
           error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
 
+  - name: barman-shared
+    rules:
+      - alert: BarmanCacheStale
+        expr: cache_out_of_date == 1
+        annotations:
+          error: "Barman cached metrics are out of date on {{ $labels.instance }}"
+      - alert: BarmanNotRunning
+        expr: barman_running == 0
+        annotations:
+          error: "Barman on {{ $labels.instance }} is not running"
+      - alert: BarmanCheckFailed
+        expr: barman_ok == 0
+        annotations:
+          error: "Barman check on {{ $labels.instance }} failed"
+      - alert: BarmanMetricsDown
+        expr: metrics_responding == 0
+        annotations:
+          error: "Barman metrics on {{ $labels.instance }} are not responding"
+
   - name: barman
     rules:
       - alert: BarmanDown
@@ -26,14 +45,6 @@ groups:
         for: 5m
         annotations:
           error: "{{ $labels.instance }} is down"
-      - alert: BarmanNotRunning
-        expr: barman_running{job="barman"} == 0
-        annotations:
-          error: "Barman on {{ $labels.instance }} is not running"
-      - alert: BarmanCheckFailed
-        expr: barman_ok{job="barman"} == 0
-        annotations:
-          error: "Barman check on {{ $labels.instance }} failed"
 
   - name: barman-remote
     rules:
@@ -42,14 +53,6 @@ groups:
         for: 5m
         annotations:
           error: "No EC2 barman instances are reporting metrics"
-      - alert: RemoteBarmanNotRunning
-        expr: barman_running{job="barman-remote"} == 0
-        annotations:
-          error: "Barman on {{ $labels.instance }} is not running"
-      - alert: RemoteBarmanCheckFailed
-        expr: barman_ok{job="barman-remote"} == 0
-        annotations:
-          error: "Barman check on {{ $labels.instance }} failed"
 
   - name: bb8
     rules:

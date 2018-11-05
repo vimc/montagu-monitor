@@ -10,7 +10,7 @@ templates:
 receivers:
   - name: 'slack'
     slack_configs:
-      - channel: 'montagu-monitor'
+      - channel: ${slack_channel}
         username: '{{ if eq .Status "firing" }}prometheus-sad-bot{{ else }}prometheus-happy-bot{{ end }}'
         send_resolved: true
         color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
@@ -19,3 +19,14 @@ receivers:
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
 
+inhibit_rules:
+  - source_match:
+      alertname: NoRemoteBarman
+    target_match:
+      job: barman-remote
+    equal:
+  - source_match:
+      alertname: BarmanDown
+    target_match:
+    equal:
+    - instance
