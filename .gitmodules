@@ -4,3 +4,6 @@
 [submodule "aws_metrics/config/vault"]
 	path = aws_metrics/config/vault
 	url = https://github.com/vimc/montagu-vault-py
+[submodule "montagu-api-metrics"]
+	path = montagu-api-metrics
+	url = https://github.com/vimc/montagu-api-metrics

@@ -32,3 +32,9 @@ services:
     restart: always
     volumes:
       - "${PWD}/aws_metrics/config/volume:/root/.aws"
+
+  montagu_api_metrics:
+    build: montagu-api-metrics
+    restart: always
+    volumes:
+      - "${PWD}/montagu-api-metrics/config/volume:/root/.api"

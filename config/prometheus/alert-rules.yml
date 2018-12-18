@@ -19,6 +19,38 @@ groups:
         annotations:
           error: "Over the last 24 hours, the total amount of data stored in bucket {{ $labels.bucket_id }} has decreased by at least 1MB"
 
+  - name: api-metrics
+    rules:
+      - alert: InstanceDown
+        expr: up{job="aws"} == 0
+        for: 5m
+        annotations:
+          error: "{{ $labels.instance }} is down"
+      - alert: UATMontaguAPIDown
+        expr: uat_api_alive == 0
+        annotations:
+          error: "Montagu API on UAT is down"
+      - alert: UATReportingAPIDown
+        expr: uat_reporting_api_alive == 0
+        annotations:
+          error: "Reporting API on UAT is down"
+      - alert: ScienceMontaguAPIDown
+          expr: science_api_alive == 0
+          annotations:
+            error: "Montagu API on Science is down"
+      - alert: ScienceReportingAPIDown
+          expr: science_reporting_api_alive == 0
+          annotations:
+            error: "Reporting API on Science is down"
+      - alert: ProductionMontaguAPIDown
+          expr: production_api_alive == 0
+          annotations:
+            error: "Montagu API on Production is down"
+      - alert: ProductionReportingAPIDown
+          expr: production_reporting_api_alive == 0
+          annotations:
+            error: "Reporting API on Production is down"
+
   - name: barman-shared
     rules:
       - alert: BarmanCacheStale
