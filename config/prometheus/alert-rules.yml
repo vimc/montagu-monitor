@@ -35,21 +35,21 @@ groups:
         annotations:
           error: "Reporting API on UAT is down"
       - alert: ScienceMontaguAPIDown
-          expr: science_api_alive == 0
-          annotations:
-            error: "Montagu API on Science is down"
+        expr: science_api_alive == 0
+        annotations:
+          error: "Montagu API on Science is down"
       - alert: ScienceReportingAPIDown
-          expr: science_reporting_api_alive == 0
-          annotations:
-            error: "Reporting API on Science is down"
+        expr: science_reporting_api_alive == 0
+        annotations:
+          error: "Reporting API on Science is down"
       - alert: ProductionMontaguAPIDown
-          expr: production_api_alive == 0
-          annotations:
-            error: "Montagu API on Production is down"
+        expr: production_api_alive == 0
+        annotations:
+          error: "Montagu API on Production is down"
       - alert: ProductionReportingAPIDown
-          expr: production_reporting_api_alive == 0
-          annotations:
-            error: "Reporting API on Production is down"
+        expr: production_reporting_api_alive == 0
+        annotations:
+          error: "Reporting API on Production is down"
 
   - name: barman-shared
     rules:
