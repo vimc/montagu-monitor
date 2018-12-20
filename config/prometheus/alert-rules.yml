@@ -22,7 +22,7 @@ groups:
   - name: api-metrics
     rules:
       - alert: InstanceDown
-        expr: up{job="aws"} == 0
+        expr: up{job="api-metrics"} == 0
         for: 5m
         annotations:
           error: "{{ $labels.instance }} is down"
