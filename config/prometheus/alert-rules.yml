@@ -46,6 +46,14 @@ groups:
         annotations:
           error: "{{ $labels.instance }} is down"
 
+  - name: proxy
+    rules:
+      - alert: ProxyDown
+        expr: up{job="proxy-metrics"} == 0
+        for: 5m
+        annotations:
+          error: "Proxy metrics at {{ $labels.instance }} are down"
+
   - name: barman-remote
     rules:
       - alert: NoRemoteBarman
