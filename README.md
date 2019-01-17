@@ -19,9 +19,9 @@ sudo pip3 install -r requirements.txt
 ```
 
 To reload Prometheus and the alert manager after a config change, run
- ```
- ./reload
- ```
+```
+./reload
+```
 
 ## Local development
 To run locally and have the alert manager notify a test Slack channel rather than creating noise in
@@ -36,9 +36,12 @@ and for reloading
 ```
 
 ## Deployment on support
+
+Connect as the `montagu` user on support (either by connecting with `ssh montagu@support.dide.ic.ac.uk` or by using `sudo su montagu`, then)
+
 ```
-sudo su
-cd /montagu/monitor
+# git clone --recursive https://github.com/vimc/montagu-monitor monitor
+cd ~/monitor
 git pull
 ```
 
