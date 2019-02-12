@@ -35,6 +35,16 @@ and for reloading
 ./reload --dev
 ```
 
+To force alerts to fire just invert the rules in `prometheus/alert-rules.yml` temporarily, e.g. change a rule expression
+like
+
+`up{job="bb8"} == 0`
+
+to 
+
+`up{job="bb8"} == 1` 
+
+
 ## Deployment on support
 
 Connect as the `montagu` user on support (either by connecting with `ssh montagu@support.dide.ic.ac.uk` or by using `sudo su montagu`, then)
