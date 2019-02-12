@@ -47,7 +47,7 @@ groups:
       - alert: ProxyDown
         labels:
           frequency: "high"
-        expr: up{job="proxy-metrics"} == 1
+        expr: up{job="proxy-metrics"} == 0
         for: 5m
         annotations:
           error: "Montagu on {{ $labels.instance }} is down"
