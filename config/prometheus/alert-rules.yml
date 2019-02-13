@@ -45,10 +45,12 @@ groups:
   - name: proxy
     rules:
       - alert: ProxyDown
+        labels:
+          frequency: "high"
         expr: up{job="proxy-metrics"} == 0
         for: 5m
         annotations:
-          error: "Proxy metrics at {{ $labels.instance }} are down"
+          error: "Montagu on {{ $labels.instance }} is down"
 
   - name: barman-remote
     rules:

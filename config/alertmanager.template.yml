@@ -3,6 +3,12 @@ global:
 
 route:
   receiver: 'slack'
+  repeat_interval: 4h
+  routes:
+    - match:
+        frequency: high
+      repeat_interval: 20m
+      receiver: 'slack'
 
 templates:
   - 'templates/*.tmpl'

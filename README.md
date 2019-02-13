@@ -14,7 +14,7 @@ manager. These instances are configured by:
 To start the monitor and external metric exporters (see below) use:
 
 ```
-sudo pip3 install -r requirements.txt
+pip3 install -r requirements.txt --user
 ./run
 ```
 
@@ -34,6 +34,16 @@ and for reloading
 ```
 ./reload --dev
 ```
+
+To force alerts to fire just invert the rules in `prometheus/alert-rules.yml` temporarily, e.g. change a rule expression
+like
+
+`up{job="bb8"} == 0`
+
+to 
+
+`up{job="bb8"} == 1` 
+
 
 ## Deployment on support
 
