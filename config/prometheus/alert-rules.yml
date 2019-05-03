@@ -20,7 +20,7 @@ groups:
       - alert: BarmanCacheStale
         expr: cache_out_of_date == 1
         annotations:
-          error: "Barman cached metrics are out of date on {{ $labels.instance }}"
+          error: "Barman cached metrics on {{ $labels.instance }} are out of date"
       - alert: BarmanNotRunning
         expr: barman_running == 0
         annotations:
