@@ -30,11 +30,11 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
-        regex: (support)(.+)(9113)
+        regex: (support)(.+)(10443)
         replacement: 'UAT'
       - source_labels: [__address__]
         target_label: instance
-        regex: (.+)(9114)
+        regex: (.+)(11443)
         replacement: 'Science'
       - source_labels: [__address__]
         target_label: instance
