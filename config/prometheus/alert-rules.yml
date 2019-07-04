@@ -52,6 +52,16 @@ groups:
         annotations:
           error: "Montagu on {{ $labels.instance }} is down"
 
+  - name: orderly-web
+    rules:
+      - alert: OrderlyWebDown
+        labels:
+          frequency: "high"
+        expr: up{job="orderly-web"} == 0
+        for: 5m
+        annotations:
+          error: "OrderlyWeb on {{ $labels.instance }} is down"
+
   - name: barman-remote
     rules:
       - alert: NoRemoteBarman
