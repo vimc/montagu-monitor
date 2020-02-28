@@ -11,7 +11,6 @@ app = Flask(__name__)
 @app.route('/metrics')
 def metrics():
     bucket_ids = [
-        'montagu-db',
         'montagu-orderly',
         'montagu-teamcity',
         'montagu-vault'
