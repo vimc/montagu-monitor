@@ -26,9 +26,21 @@ services:
       - "${PWD}/config/alertmanager:/etc/alertmanager"
     ports:
       - "9093:9093"
+    depends_on:
+      - prom2teams
 
   aws_metrics:
     build: aws_metrics
     restart: always
     volumes:
       - "${PWD}/aws_metrics/config/volume:/root/.aws"
+
+  prom2teams:
+    image: idealista/prom2teams:3.1.0
+    volumes:
+      - "${PWD}/config/prom2teams/config.ini:/opt/prom2teams/config.ini"
+      - "${PWD}/config/prom2teams/alarm-template.j2:/opt/prom2teams/alarm-template.j2"
+    ports:
+      - "8089:8089"
+    restart: always
+
