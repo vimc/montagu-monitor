@@ -41,6 +41,11 @@ scrape_configs:
         regex: (.+)(vaccineimpact)(.+)
         replacement: 'Production'
 
+  - job_name: 'hint'
+    scheme: https
+    static_configs:
+      - targets: ['naomi.unaids.org']
+
   - job_name: 'aws'
     static_configs:
       - targets: ['aws_metrics:80']
