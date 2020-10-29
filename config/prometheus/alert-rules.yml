@@ -62,6 +62,14 @@ groups:
         annotations:
           error: "OrderlyWeb on {{ $labels.instance }} is down"
 
+  - name: hint
+    rules:
+      - alert: HINTDown
+        expr: up{job="hint"} == 0
+        for: 5m
+        annotations:
+          error: "Naomi is down"
+
   - name: barman-remote
     rules:
       - alert: NoRemoteBarman

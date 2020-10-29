@@ -2,7 +2,7 @@ global:
   slack_api_url: https://hooks.slack.com/services/${slack_webhook}
 
 route:
-  receiver: 'slack'
+  receiver: 'Teams'
   repeat_interval: 4h
   routes:
     - match:
@@ -24,6 +24,9 @@ receivers:
         text: '{{ template "slack-alert-text" .}}'
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
+  - name: 'Teams'
+    webhook_configs:
+      - url: http://prom2teams:8089/v2/Connector
 
 inhibit_rules:
   - source_match:

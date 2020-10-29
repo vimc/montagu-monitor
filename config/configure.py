@@ -46,3 +46,8 @@ if __name__ == "__main__":
         {"aws_access_key_id": vault.read_secret("secret/prometheus/aws_access_key_id"),
          "aws_secret_key": vault.read_secret("secret/prometheus/aws_secret_key")}
     )
+    instantiate_config(
+        "config.template.ini",
+        "prom2teams/config.ini",
+        {"connector": vault.read_secret("secret/prometheus/teams_connector")}
+    )
