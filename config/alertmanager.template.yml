@@ -8,7 +8,7 @@ route:
     - match:
         frequency: high
       repeat_interval: 20m
-      receiver: 'slack'
+      receiver: 'Teams'
 
 templates:
   - 'templates/*.tmpl'
