@@ -69,6 +69,11 @@ groups:
         for: 5m
         annotations:
           error: "Naomi is down"
+      - alert: WorkersDown
+        expr: live_workers < 7
+        for: 5m
+        annotations:
+          error: "Naomi has fewer than 7 workers"
 
   - name: barman-remote
     rules:
