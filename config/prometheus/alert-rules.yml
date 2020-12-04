@@ -73,7 +73,7 @@ groups:
         expr: live_workers < 7
         for: 5m
         annotations:
-          error: "Naomi has fewer than 3 workers"
+          error: "Naomi has fewer than 7 workers"
 
   - name: barman-remote
     rules:
