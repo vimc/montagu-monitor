@@ -12,7 +12,6 @@ app = Flask(__name__)
 def metrics():
     bucket_ids = [
         'montagu-orderly',
-        'montagu-teamcity',
         'montagu-vault'
     ]
     s3 = S3Helper()
