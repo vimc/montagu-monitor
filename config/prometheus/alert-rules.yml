@@ -77,12 +77,12 @@ groups:
 
   - name: hint-dev
     rules:
-      - alert: HINTDown
+      - alert: DevHINTDown
         expr: up{job="hint-dev"} == 0
         for: 5m
         annotations:
           error: "Naomi-dev is down"
-      - alert: WorkersDown
+      - alert: DevWorkersDown
         expr: live_workers < 2
         for: 5m
         annotations:
@@ -90,12 +90,12 @@ groups:
 
   - name: hint-staging
     rules:
-      - alert: HINTDown
+      - alert: StagingHINTDown
         expr: up{job="hint-staging"} == 0
         for: 5m
         annotations:
           error: "Naomi-staging is down"
-      - alert: WorkersDown
+      - alert: StagingWorkersDown
         expr: live_workers < 2
         for: 5m
         annotations:
@@ -103,12 +103,12 @@ groups:
 
   - name: hint-preview
     rules:
-      - alert: HINTDown
+      - alert: PreviewHINTDown
         expr: up{job="hint-preview"} == 0
         for: 5m
         annotations:
           error: "Naomi-preview is down"
-      - alert: WorkersDown
+      - alert: PreviewWorkersDown
         expr: live_workers < 2
         for: 5m
         annotations:
