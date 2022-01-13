@@ -46,6 +46,21 @@ scrape_configs:
     static_configs:
       - targets: ['naomi.unaids.org']
 
+  - job_name: 'hint-dev'
+    scheme: https
+    static_configs:
+      - targets: ['naomi-dev.dide.ic.ac.uk']
+
+  - job_name: 'hint-staging'
+    scheme: https
+    static_configs:
+      - targets: ['naomi-staging.dide.ic.ac.uk']
+
+  - job_name: 'hint-preview'
+    scheme: https
+    static_configs:
+      - targets: ['naomi-preview.dide.ic.ac.uk']
+
   - job_name: 'aws'
     static_configs:
       - targets: ['aws_metrics:80']

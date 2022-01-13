@@ -75,6 +75,45 @@ groups:
         annotations:
           error: "Naomi has fewer than 7 workers"
 
+  - name: hint-dev
+    rules:
+      - alert: DevHINTDown
+        expr: up{job="hint-dev"} == 0
+        for: 5m
+        annotations:
+          error: "Naomi-dev is down"
+      - alert: DevWorkersDown
+        expr: live_workers < 2
+        for: 5m
+        annotations:
+          error: "Naomi-dev has fewer than 2 workers"
+
+  - name: hint-staging
+    rules:
+      - alert: StagingHINTDown
+        expr: up{job="hint-staging"} == 0
+        for: 5m
+        annotations:
+          error: "Naomi-staging is down"
+      - alert: StagingWorkersDown
+        expr: live_workers < 2
+        for: 5m
+        annotations:
+          error: "Naomi-staging has fewer than 2 workers"
+
+  - name: hint-preview
+    rules:
+      - alert: PreviewHINTDown
+        expr: up{job="hint-preview"} == 0
+        for: 5m
+        annotations:
+          error: "Naomi-preview is down"
+      - alert: PreviewWorkersDown
+        expr: live_workers < 2
+        for: 5m
+        annotations:
+          error: "Naomi-preview has fewer than 2 workers"
+
   - name: barman-remote
     rules:
       - alert: NoRemoteBarman
