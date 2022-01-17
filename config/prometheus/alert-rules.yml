@@ -70,7 +70,7 @@ groups:
         annotations:
           error: "Naomi is down"
       - alert: WorkersDown
-        expr: live_workers < 7
+        expr: live_workers{job="hint"} < 7
         for: 5m
         annotations:
           error: "Naomi has fewer than 7 workers"
@@ -83,7 +83,7 @@ groups:
         annotations:
           error: "Naomi-dev is down"
       - alert: DevWorkersDown
-        expr: live_workers < 2
+        expr: live_workers{job="hint-dev"} < 2
         for: 5m
         annotations:
           error: "Naomi-dev has fewer than 2 workers"
@@ -96,7 +96,7 @@ groups:
         annotations:
           error: "Naomi-staging is down"
       - alert: StagingWorkersDown
-        expr: live_workers < 2
+        expr: live_workers{job="hint-staging"} < 2
         for: 5m
         annotations:
           error: "Naomi-staging has fewer than 2 workers"
@@ -109,7 +109,7 @@ groups:
         annotations:
           error: "Naomi-preview is down"
       - alert: PreviewWorkersDown
-        expr: live_workers < 2
+        expr: live_workers{job="hint-preview"} < 2
         for: 5m
         annotations:
           error: "Naomi-preview has fewer than 2 workers"
