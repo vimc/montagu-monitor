@@ -64,12 +64,12 @@ groups:
 
   - name: hint
     rules:
-      - alert: ProductionHINTDown
+      - alert: HINTDown
         expr: up{job="hint"} == 0
         for: 5m
         annotations:
           error: "Naomi is down"
-      - alert: ProductionWorkersDown
+      - alert: WorkersDown
         expr: live_workers{job="hint"} < 7
         for: 5m
         annotations:
