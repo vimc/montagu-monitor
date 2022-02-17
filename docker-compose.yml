@@ -47,7 +47,7 @@ services:
   buildkite_metrics:
     image: reside/buildkite-agent-metrics
     restart: always
-    env_file: buildkite.env
+    env_file: config/buildkite.env
     command:
-      - '-backend prometheus'
-      - '-interval 30s'
+      - '-backend=prometheus'
+      - '-interval=30s'

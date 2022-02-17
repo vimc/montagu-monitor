@@ -52,6 +52,6 @@ if __name__ == "__main__":
         {"connector": vault.read_secret("secret/prometheus/teams_connector")}
     )
     with open("buildkite.env", 'w') as f:
-        f.write("BUIDLKITE_AGENT_TOKEN={}".format( \
+        f.write("BUILDKITE_AGENT_TOKEN={}".format( \
             vault.read_secret("secret/buildkite/agent", "token")))
 
