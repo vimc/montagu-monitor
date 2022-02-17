@@ -44,3 +44,10 @@ services:
       - "8089:8089"
     restart: always
 
+  buildkite_metrics:
+    image: reside/buildkite-agent-metrics
+    restart: always
+    command:
+      - '-token ${BUILDKITE_AGENT_TOKEN}'
+      - '-backend prometheus'
+      - '-interval 30s'

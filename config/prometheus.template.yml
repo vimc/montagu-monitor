@@ -94,5 +94,9 @@ scrape_configs:
         regex: (.+)
         replacement: <%text>$</%text>{1}:9100
 
+  - job_name: 'buildkite-metrics'
+    static_configs:
+    - targets: ['buildkite_metrics:8080']
+
 rule_files:
   - alert-rules.yml
