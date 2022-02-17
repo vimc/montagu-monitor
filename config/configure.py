@@ -51,3 +51,7 @@ if __name__ == "__main__":
         "prom2teams/config.ini",
         {"connector": vault.read_secret("secret/prometheus/teams_connector")}
     )
+    with open("buildkite.env", 'w') as f:
+        f.write("BUIDLKITE_AGENT_TOKEN={}".format( \
+            vault.read_secret("secret/buildkite/agent", "token")))
+

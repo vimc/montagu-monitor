@@ -4,3 +4,4 @@ config/alertmanager/alertmanager.yml
 config/prometheus/prometheus.yml
 config/prom2teams/config.ini
 config/__pycache__/*
+config/buildkite.env
