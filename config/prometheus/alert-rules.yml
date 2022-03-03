@@ -142,3 +142,25 @@ groups:
         annotations:
           error: "Number of targets backed up to Starport has shrunk in the last hour"
 
+  - name: buildkite-metrics
+    rules:
+      - alert: BuildkiteMetricsDown
+        expr: up{job="buildkite-metrics"} == 0
+        for: 5m
+        annotations:
+          error: "buildkite-agent-metrics is down"
+      - alert: DefaultAgentsDown
+        expr: buildkite_queues_total_agent_count{queue="default"} < 8
+        for: 5m
+        annotations:
+          error: "Buildkite has fewer than 8 default agents"
+      - alert: HintDeployAgentDown
+        expr: buildkite_queues_total_agent_count{queue="hint-deploy"} < 1
+        for: 5m
+        annotations:
+          error: "Buildkite hint-deployment agent is down"
+      - alert: NcovAgentDown
+        expr: buildkite_queues_total_agent_count{queue="ncov-cdi"} < 1
+        for: 5m
+        annotations:
+          error: "Buildkite ncov CDI agent is down"

@@ -8,7 +8,7 @@ services:
       - "9090:9090"
     volumes:
       - "${PWD}/config/prometheus:/etc/prometheus"
-    depends_on: 
+    depends_on:
       - alertmanager
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -44,3 +44,10 @@ services:
       - "8089:8089"
     restart: always
 
+  buildkite_metrics:
+    image: reside/buildkite-agent-metrics
+    restart: always
+    env_file: config/buildkite.env
+    command:
+      - '-backend=prometheus'
+      - '-interval=30s'
