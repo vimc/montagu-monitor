@@ -12,8 +12,8 @@ aws_secret_access_key = {secret_key}
 
 vault = VaultClient()
 secrets = {
-    "access_key": vault.read_secret("secret/backup/aws_access_key_id"),
-    "secret_key": vault.read_secret("secret/backup/aws_secret_access_key"),
+    "access_key": vault.read_secret("secret/vimc/backup/aws_access_key_id"),
+    "secret_key": vault.read_secret("secret/vimc/backup/aws_secret_access_key"),
 }
 
 # Set working directory to this script's dir

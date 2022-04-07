@@ -27,10 +27,10 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
     if args["--dev"]:
-        slack_webhook_key = "secret/slack/test-webhook"
+        slack_webhook_key = "secret/vimc/slack/test-webhook"
         slack_channel = "montagu-test"
     else:
-        slack_webhook_key = "secret/slack/monitor-webhook"
+        slack_webhook_key = "secret/vimc/slack/monitor-webhook"
         slack_channel = "montagu-monitor"
 
     Path('alertmanager').mkdir(exist_ok=True)
