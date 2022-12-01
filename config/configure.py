@@ -43,15 +43,14 @@ if __name__ == "__main__":
     instantiate_config(
         "prometheus.template.yml",
         "prometheus/prometheus.yml",
-        {"aws_access_key_id": vault.read_secret("secret/prometheus/aws_access_key_id"),
-         "aws_secret_key": vault.read_secret("secret/prometheus/aws_secret_key")}
+        {"aws_access_key_id": vault.read_secret("secret/vimc/prometheus/aws_access_key_id"),
+         "aws_secret_key": vault.read_secret("secret/vimc/prometheus/aws_secret_key")}
     )
     instantiate_config(
         "config.template.ini",
         "prom2teams/config.ini",
-        {"connector": vault.read_secret("secret/prometheus/teams_connector")}
+        {"connector": vault.read_secret("secret/vimc/prometheus/teams_connector")}
     )
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \
             vault.read_secret("secret/buildkite/agent", "token")))
-
