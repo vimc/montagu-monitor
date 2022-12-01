@@ -104,19 +104,19 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
-        regex: (naomi.dide)(.+)
-        replacement: 'prod'
+        regex: (naomi)(.+)
+        replacement: 'production'
       - source_labels: [__address__]
         target_label: instance
-        regex: (naomi-preview.dide)(.+)
-        replacement: 'preview]'
+        regex: (wpia-naomi-preview)(.+)
+        replacement: 'preview'
       - source_labels: [__address__]
         target_label: instance
-        regex: (naomi-dev.dide)(.+)
+        regex: (wpia-naomi-dev)(.+)
         replacement: 'dev'
       - source_labels: [__address__]
         target_label: instance
-        regex: (naomi-staging.dide)(.+)
+        regex: (wpia-naomi-staging)(.+)
         replacement: 'staging'
 
 rule_files:
