@@ -99,6 +99,7 @@ scrape_configs:
     - targets: ['buildkite_metrics:8080']
 
   - job_name: 'hint-machine-metrics'
+    scheme: https
     static_configs:
       - targets: ['naomi.dide.ic.ac.uk:9100', 'naomi-preview.dide.ic.ac.uk:9100', 'naomi-dev.dide.ic.ac.uk:9100', 'naomi-staging.dide.ic.ac.uk:9100']
     relabel_configs:
