@@ -26,7 +26,7 @@ scrape_configs:
     metrics_path: /reports/metrics
     scheme: https
     static_configs:
-      - targets: ['montagu.vaccineimpact.org', 'uat.montagu.dide.ic.ac.uk:10443', 'science.montagu.dide.ic.ac.uk:11443']
+      - targets: ['montagu.vaccineimpact.org', 'uat.montagu.dide.ic.ac.uk', 'science.montagu.dide.ic.ac.uk']
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
