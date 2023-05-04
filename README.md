@@ -45,14 +45,15 @@ to
 `up{job="bb8"} == 1`
 
 
-## Deployment on support
+## Deployment on bots.dide.ic.ac.uk
 
-Connect as the `montagu` user on support (either by connecting with `ssh montagu@support.dide.ic.ac.uk` or by using `sudo su montagu`, then)
+Connect as the `vagrant` user on `bots.dide.ic.ac.uk`, then
 
 ```
 # git clone --recursive https://github.com/vimc/montagu-monitor monitor
 cd ~/monitor
 git pull
+pip3 install --user -r requirements.txt
 ```
 
 And then either call `./run` (if there are code changes) or `./reload` (to
