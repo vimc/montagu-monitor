@@ -7,7 +7,7 @@ scrape_configs:
 
   - job_name: 'proxy-metrics'
     static_configs:
-      - targets: ['montagu.vaccineimpact.org:9113', 'uat.montagu.dide.ic.ac.uk:9113', 'science.montagu.dide.ic.ac.uk:9114']
+      - targets: ['montagu.vaccineimpact.org:9113', 'uat.montagu.dide.ic.ac.uk:9113', 'science.montagu.dide.ic.ac.uk:9113']
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
