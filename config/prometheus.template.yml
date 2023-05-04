@@ -7,15 +7,15 @@ scrape_configs:
 
   - job_name: 'proxy-metrics'
     static_configs:
-      - targets: ['montagu.vaccineimpact.org:9113', 'support.montagu.dide.ic.ac.uk:9113', 'support.montagu.dide.ic.ac.uk:9114']
+      - targets: ['montagu.vaccineimpact.org:9113', 'uat.montagu.dide.ic.ac.uk:9113', 'science.montagu.dide.ic.ac.uk:9114']
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
-        regex: (support)(.+)(9113)
+        regex: (uat)(.+)(9113)
         replacement: 'UAT'
       - source_labels: [__address__]
         target_label: instance
-        regex: (.+)(9114)
+        regex: (science)(.+)(9113)
         replacement: 'Science'
       - source_labels: [__address__]
         target_label: instance
@@ -26,15 +26,15 @@ scrape_configs:
     metrics_path: /reports/metrics
     scheme: https
     static_configs:
-      - targets: ['montagu.vaccineimpact.org', 'support.montagu.dide.ic.ac.uk:10443', 'support.montagu.dide.ic.ac.uk:11443']
+      - targets: ['montagu.vaccineimpact.org', 'uat.montagu.dide.ic.ac.uk:10443', 'science.montagu.dide.ic.ac.uk:11443']
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
-        regex: (.+)(10443)
+        regex: (uat)(.+)
         replacement: 'UAT'
       - source_labels: [__address__]
         target_label: instance
-        regex: (.+)(11443)
+        regex: (science)(.+)
         replacement: 'Science'
       - source_labels: [__address__]
         target_label: instance
