@@ -50,21 +50,29 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets: ['naomi.unaids.org']
+        labels:
+          channel: hint-monitor
 
   - job_name: 'hint-dev'
     scheme: https
     static_configs:
       - targets: ['naomi-dev.dide.ic.ac.uk']
+        labels:
+          channel: hint-monitor
 
   - job_name: 'hint-staging'
     scheme: https
     static_configs:
       - targets: ['naomi-staging.dide.ic.ac.uk']
+        labels:
+          channel: hint-monitor
 
   - job_name: 'hint-preview'
     scheme: https
     static_configs:
       - targets: ['naomi-preview.dide.ic.ac.uk']
+        labels:
+          channel: hint-monitor
 
   - job_name: 'aws'
     static_configs:
@@ -106,6 +114,8 @@ scrape_configs:
   - job_name: 'hint-machine-metrics'
     static_configs:
       - targets: ['naomi.dide.ic.ac.uk:9100', 'wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100']
+        labels:
+          channel: hint-monitor
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
