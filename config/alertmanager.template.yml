@@ -30,13 +30,12 @@ receivers:
             credentials: ${slack_oauth_token}
 
 inhibit_rules:
-  - source_match:
-      alertname: NoRemoteBarman
-    target_match:
-      job: barman-remote
-    equal:
-  - source_match:
-      alertname: BarmanDown
-    target_match:
+  - source_matchers:
+      - alertname = NoRemoteBarman
+    target_matchers:
+      - job = barman-remote
+  - source_matchers:
+      - alertname = BarmanDown
+    target_matchers:
     equal:
     - instance
