@@ -14,6 +14,8 @@ manager. These instances are configured by:
 To start the monitor and external metric exporters (see below) use:
 
 ```
+git submodule init
+git submodule update
 pip3 install -r requirements.txt --user
 ./run
 ```
