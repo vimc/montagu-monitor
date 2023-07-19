@@ -1,14 +1,14 @@
 global:
-  slack_api_url: https://hooks.slack.com/services/${slack_webhook}
+  slack_api_url: https://slack.com/api/chat.postMessage
 
 route:
-  receiver: 'Teams'
-  repeat_interval: 4h
+  receiver: 'slack'
+  repeat_interval: 4m
   routes:
     - match:
         frequency: high
       repeat_interval: 20m
-      receiver: 'Teams'
+      receiver: 'slack'
 
 templates:
   - 'templates/*.tmpl'
@@ -24,9 +24,10 @@ receivers:
         text: '{{ template "slack-alert-text" .}}'
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
-  - name: 'Teams'
-    webhook_configs:
-      - url: http://prom2teams:8089/v2/Connector
+        http_config:
+          authorization:
+            type: Bearer
+            credentials: ${slack_oauth_token}
 
 inhibit_rules:
   - source_match:
