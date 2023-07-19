@@ -5,12 +5,12 @@ route:
   receiver: 'slack'
   repeat_interval: 4h
   routes:
-    - match:
-        frequency: high
+    - matchers:
+        - frequency = high
       repeat_interval: 20m
       receiver: 'slack'
-    - match:
-        frequency: low
+    - matchers:
+        - frequency = low
       repeat_interval: 24h
       receiver: 'slack'
 
