@@ -3,11 +3,15 @@ global:
 
 route:
   receiver: 'slack'
-  repeat_interval: 4m
+  repeat_interval: 4h
   routes:
     - match:
         frequency: high
       repeat_interval: 20m
+      receiver: 'slack'
+    - match:
+        frequency: low
+      repeat_interval: 24h
       receiver: 'slack'
 
 templates:
