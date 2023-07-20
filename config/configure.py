@@ -27,9 +27,11 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
     if args["--dev"]:
-        slack_channel = "monitor-test"
+        slack_default_channel = "monitor-test"
+        slack_hint_channel = "monitor-test"
     else:
-        slack_channel = "montagu-monitor"
+        slack_default_channel = "montagu-monitor"
+        slack_hint_channel = "hint-monitor"
 
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
