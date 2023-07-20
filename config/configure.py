@@ -40,7 +40,8 @@ if __name__ == "__main__":
         "alertmanager.template.yml",
         "alertmanager/alertmanager.yml",
         {"slack_oauth_token": vault.read_secret(slack_oauth_token),
-         "slack_channel": slack_channel}
+         "slack_default_channel": slack_default_channel,
+         "slack_hint_channel": slack_hint_channel}
     )
     instantiate_config(
         "prometheus.template.yml",
