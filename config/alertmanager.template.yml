@@ -35,6 +35,10 @@ receivers:
         color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
         title: '{{ if eq .Status "firing" }}Problems detected{{ else }}Resolved{{ end }}'
         text: '{{ template "slack-alert-text" .}}'
+        actions:
+          - text: 'Silence'
+            type: button
+            url: 'https://mrc-ide.myjetbrains.com/youtrack/articles/RESIDE-A-22/Monitoring#silence-an-alert'
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
         http_config:
@@ -50,6 +54,10 @@ receivers:
         color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
         title: '{{ if eq .Status "firing" }}Problems detected{{ else }}Resolved{{ end }}'
         text: '{{ template "slack-alert-text" .}}'
+        actions:
+          - text: 'Silence'
+            type: button
+            url: 'https://mrc-ide.myjetbrains.com/youtrack/articles/RESIDE-A-22/Monitoring#silence-an-alert'
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
         http_config:
