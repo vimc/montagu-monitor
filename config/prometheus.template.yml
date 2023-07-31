@@ -26,7 +26,12 @@ scrape_configs:
     metrics_path: /reports/metrics
     scheme: https
     static_configs:
-      - targets: ['montagu.vaccineimpact.org', 'uat.montagu.dide.ic.ac.uk', 'science.montagu.dide.ic.ac.uk']
+      - targets: ['montagu.vaccineimpact.org', 'science.montagu.dide.ic.ac.uk']
+        labels:
+          frequency: high
+      - targets: ['uat.montagu.dide.ic.ac.uk']
+        labels:
+          frequency: low
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
@@ -45,21 +50,30 @@ scrape_configs:
     scheme: https
     static_configs:
       - targets: ['naomi.unaids.org']
+        labels:
+          project: hint
+          frequency: high
 
   - job_name: 'hint-dev'
     scheme: https
     static_configs:
       - targets: ['naomi-dev.dide.ic.ac.uk']
+        labels:
+          project: hint
 
   - job_name: 'hint-staging'
     scheme: https
     static_configs:
       - targets: ['naomi-staging.dide.ic.ac.uk']
+        labels:
+          project: hint
 
   - job_name: 'hint-preview'
     scheme: https
     static_configs:
       - targets: ['naomi-preview.dide.ic.ac.uk']
+        labels:
+          project: hint
 
   - job_name: 'aws'
     static_configs:
@@ -100,7 +114,13 @@ scrape_configs:
 
   - job_name: 'hint-machine-metrics'
     static_configs:
-      - targets: ['naomi.dide.ic.ac.uk:9100', 'wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100']
+      - targets: ['naomi.dide.ic.ac.uk:9100']
+        labels:
+          project: hint
+          frequency: high
+      - targets: [ 'wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100' ]
+        labels:
+          project: hint
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance

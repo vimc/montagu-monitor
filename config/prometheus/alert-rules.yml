@@ -55,8 +55,6 @@ groups:
   - name: orderly-web
     rules:
       - alert: OrderlyWebDown
-        labels:
-          frequency: "high"
         expr: up{job="orderly-web"} == 0
         for: 5m
         annotations:

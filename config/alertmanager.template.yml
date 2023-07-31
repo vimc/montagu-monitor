@@ -1,41 +1,77 @@
 global:
-  slack_api_url: https://hooks.slack.com/services/${slack_webhook}
+  slack_api_url: https://slack.com/api/chat.postMessage
 
 route:
-  receiver: 'Teams'
+  receiver: 'slack-default'
   repeat_interval: 4h
   routes:
-    - match:
-        frequency: high
+    - matchers:
+        - project = hint
+        - frequency = high
       repeat_interval: 20m
-      receiver: 'Teams'
+      receiver: 'slack-hint'
+    - matchers:
+        - project = hint
+      repeat_interval: 4h
+      receiver: 'slack-hint'
+    - matchers:
+        - frequency = high
+      repeat_interval: 20m
+      receiver: 'slack-default'
+    - matchers:
+        - frequency = low
+      repeat_interval: 24h
+      receiver: 'slack-default'
 
 templates:
   - 'templates/*.tmpl'
 
 receivers:
-  - name: 'slack'
+  - name: 'slack-default'
     slack_configs:
-      - channel: ${slack_channel}
+      - channel: ${slack_default_channel}
         username: '{{ if eq .Status "firing" }}prometheus-sad-bot{{ else }}prometheus-happy-bot{{ end }}'
         send_resolved: true
         color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
         title: '{{ if eq .Status "firing" }}Problems detected{{ else }}Resolved{{ end }}'
         text: '{{ template "slack-alert-text" .}}'
+        actions:
+          - text: 'Silence'
+            type: button
+            url: 'https://mrc-ide.myjetbrains.com/youtrack/articles/RESIDE-A-22/Monitoring#silence-an-alert'
         title_link: null
         icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
-  - name: 'Teams'
-    webhook_configs:
-      - url: http://prom2teams:8089/v2/Connector
+        http_config:
+          authorization:
+            type: Bearer
+            credentials: ${slack_oauth_token}
+
+  - name: 'slack-hint'
+    slack_configs:
+      - channel: ${slack_hint_channel}
+        username: '{{ if eq .Status "firing" }}prometheus-sad-bot{{ else }}prometheus-happy-bot{{ end }}'
+        send_resolved: true
+        color: '{{ if eq .Status "firing" }}warning{{ else }}good{{ end }}'
+        title: '{{ if eq .Status "firing" }}Problems detected{{ else }}Resolved{{ end }}'
+        text: '{{ template "slack-alert-text" .}}'
+        actions:
+          - text: 'Silence'
+            type: button
+            url: 'https://mrc-ide.myjetbrains.com/youtrack/articles/RESIDE-A-22/Monitoring#silence-an-alert'
+        title_link: null
+        icon_emoji: '{{ if eq .Status "firing" }}:lightning:{{ else }}:sun_with_face:{{ end }}'
+        http_config:
+          authorization:
+            type: Bearer
+            credentials: ${slack_oauth_token}
 
 inhibit_rules:
-  - source_match:
-      alertname: NoRemoteBarman
-    target_match:
-      job: barman-remote
-    equal:
-  - source_match:
-      alertname: BarmanDown
-    target_match:
+  - source_matchers:
+      - alertname = NoRemoteBarman
+    target_matchers:
+      - job = barman-remote
+  - source_matchers:
+      - alertname = BarmanDown
+    target_matchers:
     equal:
     - instance

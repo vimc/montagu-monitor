@@ -27,29 +27,27 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
     if args["--dev"]:
-        slack_webhook_key = "secret/vimc/slack/test-webhook"
-        slack_channel = "montagu-test"
+        slack_default_channel = "monitor-test"
+        slack_hint_channel = "monitor-test"
     else:
-        slack_webhook_key = "secret/vimc/slack/monitor-webhook"
-        slack_channel = "montagu-monitor"
+        slack_default_channel = "montagu-monitor"
+        slack_hint_channel = "hint-monitor"
+
+    slack_oauth_token = "secret/vimc/slack/oauth-token"
 
     Path('alertmanager').mkdir(exist_ok=True)
     instantiate_config(
         "alertmanager.template.yml",
         "alertmanager/alertmanager.yml",
-        {"slack_webhook": vault.read_secret(slack_webhook_key),
-         "slack_channel": slack_channel}
+        {"slack_oauth_token": vault.read_secret(slack_oauth_token),
+         "slack_default_channel": slack_default_channel,
+         "slack_hint_channel": slack_hint_channel}
     )
     instantiate_config(
         "prometheus.template.yml",
         "prometheus/prometheus.yml",
         {"aws_access_key_id": vault.read_secret("secret/vimc/prometheus/aws_access_key_id"),
          "aws_secret_key": vault.read_secret("secret/vimc/prometheus/aws_secret_key")}
-    )
-    instantiate_config(
-        "config.template.ini",
-        "prom2teams/config.ini",
-        {"connector": vault.read_secret("secret/vimc/prometheus/teams_connector")}
     )
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \
