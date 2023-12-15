@@ -126,19 +126,19 @@ scrape_configs:
       - source_labels: [__address__]
         target_label: instance
         regex: (naomi)(.+)
-        replacement: 'production'
+        replacement: 'hint production'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-preview)(.+)
-        replacement: 'preview'
+        replacement: 'hint preview'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-dev)(.+)
-        replacement: 'dev'
+        replacement: 'hint dev'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-staging)(.+)
-        replacement: 'staging'
+        replacement: 'hint staging'
       - source_labels: [__address__]
         target_label: instance
         regex: (montagu.vaccineimpact)(.+)
