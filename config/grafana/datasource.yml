@@ -18,7 +18,7 @@ datasources:
     # proxy or direct (Server or Browser in the UI).
     # Some data sources are incompatible with any setting
     # but proxy (Server).
-    access: direct
+    access: proxy
     # <int> Sets the organization id. Defaults to orgId 1.
     orgId: 1
     # <string> Sets a custom UID to reference this
@@ -27,7 +27,7 @@ datasources:
     uid: my_unique_uid
     # <string> Sets the data source's URL, including the
     # port.
-    url: prometheus:9090
+    url: http://prometheus:9090
     # <string> Sets the database user, if necessary.
     user:
     # <string> Sets the database name, if necessary.
