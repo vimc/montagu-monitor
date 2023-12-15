@@ -121,7 +121,11 @@ scrape_configs:
       - targets: ['wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100']
         labels:
           project: hint
-      - targets: ['montagu.vaccineimpact.org:9100', 'wpia-annex2.montagu.dide.ic.ac.uk:9100']
+      - targets: [
+        'montagu.vaccineimpact.org:9100',
+        'wpia-annex2.montagu.dide.ic.ac.uk:9100',
+        '14.0.0.2:9100'
+      ]
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
