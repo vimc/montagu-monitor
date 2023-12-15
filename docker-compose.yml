@@ -8,6 +8,7 @@ services:
       - "9090:9090"
     volumes:
       - "${PWD}/config/prometheus:/etc/prometheus"
+      - prometheus-storage:/prometheus
     depends_on:
       - alertmanager
     command:
@@ -56,3 +57,4 @@ services:
 
 volumes:
   grafana-storage: {}
+  prometheus-stoage: {}
