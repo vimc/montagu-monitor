@@ -28,19 +28,19 @@ def instantiate_config(template_path, target_path, values):
 node_exporter_metrics_targets = {
     "montagu.vaccineimpact.org:9100": "montagu prod",
     "wpia-annex2.montagu.dide.ic.ac.uk:9100": "annex",
-    "14.0.0.2": "reside-bk1",
-    "14.0.0.3": "reside-bk2",
-    "14.0.0.4": "reside-bk3",
-    "14.0.0.5": "reside-bk4",
-    "14.0.0.6": "reside-bk5",
-    "14.0.0.7": "reside-bk6",
-    "14.0.0.8": "reside-bk7",
-    "14.0.0.9": "reside-bk8",
-    "14.0.0.10": "reside-deploy1",
-    "14.0.0.11": "reside-bk-browser-test1",
-    "14.0.0.12": "reside-bk-multicore1",
-    "14.0.0.13": "reside-bk-multicore2",
-    "14.0.0.14": "reside-bk-multicore3"
+    "14.0.0.2:9100": "reside-bk1",
+    "14.0.0.3:9100": "reside-bk2",
+    "14.0.0.4:9100": "reside-bk3",
+    "14.0.0.5:9100": "reside-bk4",
+    "14.0.0.6:9100": "reside-bk5",
+    "14.0.0.7:9100": "reside-bk6",
+    "14.0.0.8:9100": "reside-bk7",
+    "14.0.0.9:9100": "reside-bk8",
+    "14.0.0.10:9100": "reside-deploy1",
+    "14.0.0.11:9100": "reside-bk-browser-test1",
+    "14.0.0.12:9100": "reside-bk-multicore1",
+    "14.0.0.13:9100": "reside-bk-multicore2",
+    "14.0.0.14:9100": "reside-bk-multicore3"
 }
 
 
