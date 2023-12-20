@@ -83,8 +83,8 @@ if __name__ == "__main__":
          "metrics_targets": "\n      ".join(metrics_targets)}
     )
     instantiate_config(
+        "grafana/grafana.template.ini",
         "grafana/grafana.ini",
-        "grafana/grafana.ini.in",
         {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
     )
     cert = vault.read_secret("secret/bots/ssl")
