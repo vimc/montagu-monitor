@@ -52,6 +52,18 @@ services:
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini
 
+  proxy:
+    image: mrcide/monitor-proxy
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/certificate.pem:/run/proxy/certificate.pem
+      - ./config/nginx/key.pem:/run/proxy/key.pem
+    ports:
+      - '80:80'
+      - '443:443'
+    command: prometheus:9090 alertmanager:9093 grafana:3000 wpia-bots.dide.ic.ac.uk 80 443
+
+
 volumes:
   grafana-storage: {}
   prometheus-storage: {}
