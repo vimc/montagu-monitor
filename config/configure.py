@@ -20,6 +20,34 @@ def instantiate_config(template_path, target_path, values):
         f.write(template.render(**values))
 
 
+# Not amazing that we have to write this here duplicating the IP
+# setup done on the hyperv machine. But this needs to be defined
+# somewhere as we can't use data from after the scraping in the
+# rename config. And having this here is a bit more explicit than
+# having the renaming done in grafana
+node_exporter_metrics_targets = {
+    "montagu.vaccineimpact.org:9100": "montagu prod",
+    "wpia-annex2.montagu.dide.ic.ac.uk:9100": "annex",
+    "14.0.0.2:9100": "reside-bk1",
+    "14.0.0.3:9100": "reside-bk2",
+    "14.0.0.4:9100": "reside-bk3",
+    "14.0.0.5:9100": "reside-bk4",
+    "14.0.0.6:9100": "reside-bk5",
+    "14.0.0.7:9100": "reside-bk6",
+    "14.0.0.8:9100": "reside-bk7",
+    "14.0.0.9:9100": "reside-bk8",
+    "14.0.0.10:9100": "reside-deploy1",
+    "14.0.0.11:9100": "reside-bk-browser-test1",
+    "14.0.0.12:9100": "reside-bk-multicore1",
+    "14.0.0.13:9100": "reside-bk-multicore2",
+    "14.0.0.14:9100": "reside-bk-multicore3"
+}
+
+
+def relabel_config(ip, target):
+    return ['- targets: ["{}"]'.format(ip), '  labels: ', '    instance: "{}"'.format(target)]
+
+
 if __name__ == "__main__":
     # Set working directory to this script's dir
     chdir(dirname(realpath(__file__)))
@@ -35,6 +63,10 @@ if __name__ == "__main__":
 
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
+    metrics_targets = []
+    for ip, target in node_exporter_metrics_targets.items():
+        metrics_targets += relabel_config(ip, target)
+
     Path('alertmanager').mkdir(exist_ok=True)
     instantiate_config(
         "alertmanager.template.yml",
@@ -47,7 +79,8 @@ if __name__ == "__main__":
         "prometheus.template.yml",
         "prometheus/prometheus.yml",
         {"aws_access_key_id": vault.read_secret("secret/vimc/prometheus/aws_access_key_id"),
-         "aws_secret_key": vault.read_secret("secret/vimc/prometheus/aws_secret_key")}
+         "aws_secret_key": vault.read_secret("secret/vimc/prometheus/aws_secret_key"),
+         "metrics_targets": "\n      ".join(metrics_targets)}
     )
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \

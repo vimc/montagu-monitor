@@ -17,3 +17,6 @@ fi
 curl -X POST http://127.0.0.1:9093/-/reload
 
 curl -X POST http://127.0.0.1:9090/-/reload
+
+# No Reload for grafana so just restart this
+docker-compose -p monitor restart grafana

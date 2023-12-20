@@ -8,6 +8,7 @@ services:
       - "9090:9090"
     volumes:
       - "${PWD}/config/prometheus:/etc/prometheus"
+      - prometheus-storage:/prometheus
     depends_on:
       - alertmanager
     command:
@@ -40,3 +41,20 @@ services:
     command:
       - '-backend=prometheus'
       - '-interval=30s'
+
+  grafana:
+    image: grafana/grafana-oss
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+volumes:
+  grafana-storage: {}
+  prometheus-storage: {}

@@ -112,32 +112,42 @@ scrape_configs:
     static_configs:
     - targets: ['buildkite_metrics:8080']
 
-  - job_name: 'hint-machine-metrics'
+  - job_name: 'machine-metrics'
     static_configs:
       - targets: ['naomi.dide.ic.ac.uk:9100']
         labels:
           project: hint
           frequency: high
-      - targets: [ 'wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100' ]
+      - targets: ['wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100']
         labels:
           project: hint
+      ${metrics_targets}
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
         regex: (naomi)(.+)
-        replacement: 'production'
+        replacement: 'hint production'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-preview)(.+)
-        replacement: 'preview'
+        replacement: 'hint preview'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-dev)(.+)
-        replacement: 'dev'
+        replacement: 'hint dev'
       - source_labels: [__address__]
         target_label: instance
         regex: (wpia-naomi-staging)(.+)
-        replacement: 'staging'
+        replacement: 'hint staging'
+      - source_labels: [__address__]
+        target_label: instance
+        regex: (montagu.vaccineimpact)(.+)
+        replacement: 'montagu production'
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: (wpia-annex2)(.+)
+        replacement: 'montagu annex'
+
 
 rule_files:
   - alert-rules.yml
