@@ -28,6 +28,8 @@ services:
       - "${PWD}/config/alertmanager:/etc/alertmanager"
     ports:
       - "9093:9093"
+    command:
+      - "--web.external-url=https://bots.dide.ic.ac.uk/alertmanager"
 
   aws_metrics:
     build: aws_metrics
