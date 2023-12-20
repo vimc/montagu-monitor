@@ -82,6 +82,11 @@ if __name__ == "__main__":
          "aws_secret_key": vault.read_secret("secret/vimc/prometheus/aws_secret_key"),
          "metrics_targets": "\n      ".join(metrics_targets)}
     )
+    instantiate_config(
+        "grafana/grafana.ini",
+        "grafana/grafana.ini.in",
+        {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
+    )
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \
             vault.read_secret("secret/buildkite/agent", "token")))
