@@ -3,7 +3,7 @@
 Usage:
   setup.py [--dev]
 """
-from os import chdir
+from os import chdir, makedirs
 from os.path import dirname, realpath
 from pathlib import Path
 from docopt import docopt
@@ -87,11 +87,13 @@ if __name__ == "__main__":
         "grafana/grafana.ini",
         {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
     )
-    cert = vault.read_secret("secret/bots/ssl")
-    with open("nginx/certificate.pem", "w") as f:
-        f.write(cert["cert"])
-    with open("nginx/key.pem", "w") as file:
-        f.write(cert["key"])
+
+    print("Writing SSL certificate and key")
+    makedirs("nginx", exist_ok=True)
+    with open("nginx/certificate.pem", "a") as f:
+        f.write(vault.read_secret("secret/bots/ssl", field="cert"))
+    with open("nginx/key.pem", "a") as f:
+        f.write(vault.read_secret("secret/bots/ssl", field="key"))
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \
             vault.read_secret("secret/buildkite/agent", "token")))
