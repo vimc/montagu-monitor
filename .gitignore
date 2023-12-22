@@ -6,4 +6,3 @@ config/prom2teams/config.ini
 config/__pycache__/*
 config/buildkite.env
 config/grafana/grafana.ini
-config/nginx
