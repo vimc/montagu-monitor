@@ -16,10 +16,10 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
+      # --web.enable-lifecycle enables reloading new config, see: https://prometheus.io/docs/operating/security/
+      # all other flags are as in https://github.com/prometheus/prometheus/blob/master/Dockerfile
       - '--web.enable-lifecycle'
       - '--web.external-url=https://bots.dide.ic.ac.uk/prometheus'
-       # --web.enable-lifecycle enables reloading new config, see: https://prometheus.io/docs/operating/security/
-       # all other flags are as in https://github.com/prometheus/prometheus/blob/master/Dockerfile
 
   alertmanager:
     image: prom/alertmanager
@@ -28,6 +28,9 @@ services:
       - "${PWD}/config/alertmanager:/etc/alertmanager"
     ports:
       - "9093:9093"
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
 
   aws_metrics:
     build: aws_metrics
