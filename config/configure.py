@@ -90,9 +90,9 @@ if __name__ == "__main__":
 
     print("Writing SSL certificate and key")
     makedirs("nginx", exist_ok=True)
-    with open("nginx/certificate.pem", "a") as f:
+    with open("nginx/certificate.pem", "w") as f:
         f.write(vault.read_secret("secret/bots/ssl", field="cert"))
-    with open("nginx/key.pem", "a") as f:
+    with open("nginx/key.pem", "w") as f:
         f.write(vault.read_secret("secret/bots/ssl", field="key"))
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format( \
