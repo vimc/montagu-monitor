@@ -27,7 +27,7 @@ datasources:
     uid: my_unique_uid
     # <string> Sets the data source's URL, including the
     # port.
-    url: http://prometheus:9090
+    url: http://prometheus:9090/prometheus
     # <string> Sets the database user, if necessary.
     user:
     # <string> Sets the database name, if necessary.

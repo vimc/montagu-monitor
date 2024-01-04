@@ -16,9 +16,10 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
+      # --web.enable-lifecycle enables reloading new config, see: https://prometheus.io/docs/operating/security/
+      # all other flags are as in https://github.com/prometheus/prometheus/blob/master/Dockerfile
       - '--web.enable-lifecycle'
-       # --web.enable-lifecycle enables reloading new config, see: https://prometheus.io/docs/operating/security/
-       # all other flags are as in https://github.com/prometheus/prometheus/blob/master/Dockerfile
+      - '--web.external-url=https://bots.dide.ic.ac.uk/prometheus'
 
   alertmanager:
     image: prom/alertmanager
@@ -27,6 +28,9 @@ services:
       - "${PWD}/config/alertmanager:/etc/alertmanager"
     ports:
       - "9093:9093"
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
 
   aws_metrics:
     build: aws_metrics
@@ -50,10 +54,19 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
+      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini
+
+  proxy:
+    image: mrcide/monitor-proxy
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/certificate.pem:/run/proxy/certificate.pem
+      - ./config/nginx/key.pem:/run/proxy/key.pem
+    ports:
+      - '80:80'
+      - '443:443'
+    command: prometheus:9090 alertmanager:9093 grafana:3000 bots.dide.ic.ac.uk 80 443
+
 
 volumes:
   grafana-storage: {}
