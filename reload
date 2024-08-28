@@ -14,9 +14,9 @@ fi
 # Put secrets into configs
 ./config/configure.py $1
 
-curl -X POST http://127.0.0.1:9093/-/reload
+curl -X POST -L http://localhost/alertmanager/-/reload
 
-curl -X POST http://127.0.0.1:9090/-/reload
+curl -X POST -L http://localhost/prometheus/-/reload
 
 # No Reload for grafana so just restart this
 docker-compose -p monitor restart grafana
