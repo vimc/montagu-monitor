@@ -55,20 +55,6 @@ scrape_configs:
           project: hint
           frequency: high
 
-  - job_name: 'hint-dev'
-    scheme: https
-    static_configs:
-      - targets: ['naomi-dev.dide.ic.ac.uk']
-        labels:
-          project: hint
-
-  - job_name: 'hint-staging'
-    scheme: https
-    static_configs:
-      - targets: ['naomi-staging.dide.ic.ac.uk']
-        labels:
-          project: hint
-
   - job_name: 'hint-preview'
     scheme: https
     static_configs:
@@ -119,7 +105,7 @@ scrape_configs:
         labels:
           project: hint
           frequency: high
-      - targets: ['wpia-naomi-preview.dide.ic.ac.uk:9100', 'wpia-naomi-dev.dide.ic.ac.uk:9100', 'wpia-naomi-staging.dide.ic.ac.uk:9100']
+      - targets: ['wpia-naomi-preview.dide.ic.ac.uk:9100']
         labels:
           project: hint
       ${metrics_targets}
@@ -132,14 +118,6 @@ scrape_configs:
         target_label: instance
         regex: (wpia-naomi-preview)(.+)
         replacement: 'hint preview'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (wpia-naomi-dev)(.+)
-        replacement: 'hint dev'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (wpia-naomi-staging)(.+)
-        replacement: 'hint staging'
       - source_labels: [__address__]
         target_label: instance
         regex: (montagu.vaccineimpact)(.+)
