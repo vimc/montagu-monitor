@@ -56,6 +56,14 @@ services:
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
       - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
 
+  rrq-dashboard:
+    image: mrcide/rrq.dashboard:main
+    restart: unless-stopped
+    ports:
+      - '8888:8888'
+    environment:
+      REDIS_URL: wpia-hn.hpc.dide.ic.ac.uk
+
   proxy:
     image: nginx
     restart: unless-stopped
