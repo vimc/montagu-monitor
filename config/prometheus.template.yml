@@ -127,12 +127,17 @@ scrape_configs:
         regex: (wpia-annex2)(.+)
         replacement: 'montagu annex'
 
-  - job_name: 'packit.dide.ic.ac.uk'
+  - job_name: 'packit'
     http_sd_configs:
       - url: "http://packit.dide.ic.ac.uk:9000/targets"
+      - url: "http://packit-private.dide.ic.ac.uk:9000/targets"
     relabel_configs:
-      - target_label: instance
-        replacement: packit.dide.ic.ac.uk
+      # The default instance label has the form hostname:port.
+      # The port isn't particularly relevant, so we remove it.
+      - source_labels: [instance]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
 
 rule_files:
   - alert-rules.yml
