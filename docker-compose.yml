@@ -7,7 +7,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "${PWD}/config/prometheus:/etc/prometheus"
+      - "./config/prometheus:/etc/prometheus:ro"
       - prometheus-storage:/prometheus
     depends_on:
       - alertmanager
@@ -25,7 +25,7 @@ services:
     image: prom/alertmanager
     restart: always
     volumes:
-      - "${PWD}/config/alertmanager:/etc/alertmanager"
+      - "./config/alertmanager:/etc/alertmanager:ro"
     ports:
       - "9093:9093"
     command:
@@ -53,20 +53,20 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
+      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
 
   proxy:
-    image: mrcide/monitor-proxy
+    image: nginx
     restart: unless-stopped
     volumes:
-      - ./config/nginx/certificate.pem:/run/proxy/certificate.pem
-      - ./config/nginx/key.pem:/run/proxy/key.pem
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/certificate.pem:/run/proxy/certificate.pem:ro
+      - ./config/nginx/key.pem:/run/proxy/key.pem:ro
+      - ./config/nginx/dhparam.pem:/run/proxy/dhparam.pem:ro
     ports:
       - '80:80'
       - '443:443'
-    command: prometheus:9090 alertmanager:9093 grafana:3000 bots.dide.ic.ac.uk 80 443
-
 
 volumes:
   grafana-storage: {}
