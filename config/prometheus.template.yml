@@ -134,7 +134,7 @@ scrape_configs:
     relabel_configs:
       # The default instance label has the form hostname:port.
       # The port isn't particularly relevant, so we remove it.
-      - source_labels: [instance]
+      - source_labels: [__address__]
         regex: (.+):(.+)
         target_label: instance
         replacement: $1
