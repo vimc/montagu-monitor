@@ -1,0 +1,58 @@
+- targets:
+  - https://bots.dide.ic.ac.uk
+  - https://data.dide.ic.ac.uk
+  - https://mrcdata.dide.ic.ac.uk
+  - https://vault.dide.ic.ac.uk:8200
+  - https://www.infectiousdiseasemodels.org
+
+- targets:
+  - https://beebop.dide.ic.ac.uk
+  - https://beebop-dev.dide.ic.ac.uk
+  labels:
+    project: beebop
+
+- targets:
+  - https://daedalus.jameel-institute.org
+  - https://daedalus-dev.dide.ic.ac.uk
+  labels:
+    project: daedalus
+
+- targets:
+  - https://www.vaccineimpact.org
+  - https://montagu.vaccineimpact.org
+  - https://science.montagu.dide.ic.ac.uk
+  - https://uat.montagu.dide.ic.ac.uk
+  labels:
+    project: montagu
+
+- targets:
+  - https://mint.dide.ic.ac.uk
+  - https://mint-dev.dide.ic.ac.uk
+  labels:
+    project: mint
+
+# These are set to become Avenir's responsibility in the near future.
+- targets:
+  - https://naomi.unaids.org
+  - https://naomi-preview.dide.ic.ac.uk
+  labels:
+    project: naomi
+
+- targets:
+  - https://packit.dide.ic.ac.uk
+  - https://packit-dev.dide.ic.ac.uk
+  - https://packit-private.dide.ic.ac.uk
+  labels:
+    project: packit
+
+- targets:
+  - https://shiny.dide.ic.ac.uk
+  - https://shiny-dev.dide.ic.ac.uk
+  labels:
+    project: shiny
+
+- targets:
+  - https://epimodels.dide.ic.ac.uk
+  - https://wodin-dev.dide.ic.ac.uk
+  labels:
+    project: wodin
