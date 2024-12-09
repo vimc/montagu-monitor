@@ -19,4 +19,4 @@ curl -X POST --insecure -L http://localhost/alertmanager/-/reload
 curl -X POST --insecure -L http://localhost/prometheus/-/reload
 
 # No Reload for grafana so just restart this
-docker-compose -p monitor restart grafana
+docker compose -p monitor restart grafana
