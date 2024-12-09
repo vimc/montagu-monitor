@@ -1,0 +1,73 @@
+- targets:
+  - https://bots.dide.ic.ac.uk
+  - https://data.dide.ic.ac.uk
+  - https://logs.dide.ic.ac.uk
+  - https://mrcdata.dide.ic.ac.uk
+  - https://ebola2018.dide.ic.ac.uk
+  - https://hipercow.dide.ic.ac.uk
+  - https://mpox.dide.ic.ac.uk
+  - https://vault.dide.ic.ac.uk:8200
+  - https://www.infectiousdiseasemodels.org
+  - https://ncov.dide.ic.ac.uk
+
+- targets:
+  - https://beebop.dide.ic.ac.uk
+  - https://beebop-dev.dide.ic.ac.uk
+  labels:
+    project: beebop
+
+- targets:
+  - https://daedalus.dide.ic.ac.uk
+  - https://daedalus-dev.dide.ic.ac.uk
+  - https://daedalus.jameel-institute.org
+  labels:
+    project: daedalus
+
+- targets:
+  - https://www.vaccineimpact.org
+  - https://montagu.vaccineimpact.org
+  - https://science.montagu.dide.ic.ac.uk
+  - https://uat.montagu.dide.ic.ac.uk
+  - https://production2.montagu.dide.ic.ac.uk
+  labels:
+    project: montagu
+
+- targets:
+  - https://mint.dide.ic.ac.uk
+  - https://mint-dev.dide.ic.ac.uk
+  labels:
+    project: mint
+
+- targets:
+  - https://naomi.unaids.org
+  - https://naomi-dev.dide.ic.ac.uk
+  - https://naomi-preview.dide.ic.ac.uk
+  - https://naomi-staging.dide.ic.ac.uk
+  labels:
+    project: naomi
+
+- targets:
+  - https://orderly.dide.ic.ac.uk
+  - https://hiv-orderly.dide.ic.ac.uk
+  - https://malaria-orderly.dide.ic.ac.uk
+  labels:
+    project: orderly
+
+- targets:
+  - https://packit.dide.ic.ac.uk
+  - https://packit-dev.dide.ic.ac.uk
+  - https://packit-private.dide.ic.ac.uk
+  labels:
+    project: packit
+
+- targets:
+  - https://shiny.dide.ic.ac.uk
+  - https://shiny-dev.dide.ic.ac.uk
+  labels:
+    project: shiny
+
+- targets:
+  - https://epimodels.dide.ic.ac.uk
+  - https://wodin-dev.dide.ic.ac.uk
+  labels:
+    project: wodin
