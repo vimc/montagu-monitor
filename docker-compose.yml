@@ -1,5 +1,4 @@
-version: '3'
-
+name: monitor
 services:
   prometheus:
     image: prom/prometheus
@@ -11,6 +10,7 @@ services:
       - prometheus-storage:/prometheus
     depends_on:
       - alertmanager
+    env_file: config/prometheus/env
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
