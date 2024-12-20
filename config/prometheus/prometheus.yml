@@ -120,9 +120,14 @@ scrape_configs:
       - files:
         - /etc/prometheus/machine-metrics.json
 
+  # The packit servers have a whole slew of services we want to scrape. To ease
+  # configuration, each server exposes a JSON document that lists them all.
+  # Prometheus dynamically discovers the services to scrape by fetching that
+  # endpoint.
   - job_name: 'packit'
     http_sd_configs:
       - url: "http://packit.dide.ic.ac.uk:9000/targets"
+      - url: "http://packit-dev.dide.ic.ac.uk:9000/targets"
       - url: "http://packit-private.dide.ic.ac.uk:9000/targets"
     relabel_configs:
       # The default instance label has the form hostname:port.
