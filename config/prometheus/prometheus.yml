@@ -137,5 +137,22 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis://wpia-hn.hpc.dide.ic.ac.uk']
+    metrics_path: /scrape
+
+    # See https://github.com/oliver006/redis_exporter/blob/master/README.md#prometheus-configuration-to-scrape-multiple-redis-hosts
+    # This rewrites the metrics URL as redis-exporter:9115/scrape?target=<...>
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+        regex: .+://(.+)
+        replacement: $1
+      - target_label: __address__
+        replacement: redis-exporter:9121
+
 rule_files:
   - alert-rules.yml

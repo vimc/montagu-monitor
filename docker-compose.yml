@@ -76,6 +76,10 @@ services:
       - '80:80'
       - '443:443'
 
+  redis-exporter:
+    image: oliver006/redis_exporter
+    restart: unless-stopped
+
 volumes:
   grafana-storage: {}
   prometheus-storage: {}
