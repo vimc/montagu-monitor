@@ -64,6 +64,10 @@ services:
     environment:
       REDIS_URL: wpia-hn.hpc.dide.ic.ac.uk
 
+  blackbox-exporter:
+    image: quay.io/prometheus/blackbox-exporter:latest
+    restart: unless-stopped
+
   proxy:
     image: nginx
     restart: unless-stopped
@@ -75,6 +79,10 @@ services:
     ports:
       - '80:80'
       - '443:443'
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    restart: unless-stopped
 
 volumes:
   grafana-storage: {}
