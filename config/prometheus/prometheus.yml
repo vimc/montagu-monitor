@@ -1,3 +1,7 @@
+global:
+  # This is the Prometheus default already, but lets be explicit about it.
+  scrape_interval: 1m
+
 alerting:
   alertmanagers:
     - path_prefix: "alertmanager/"
