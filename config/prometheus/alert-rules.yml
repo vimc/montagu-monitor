@@ -159,3 +159,17 @@ groups:
         for: 5m
         annotations:
           error: "{{ $labels.instance }} will be full in 2 weeks"
+
+  - name: redis
+    rules:
+      - alert: RedisExporterDown
+        expr: up{job="redis"} == 0
+        for: 5m
+        annotations:
+          error: "redis-exporter is down: {{ $labels.instance }}"
+
+      - alert: RedisDown
+        expr: redis_up{job="redis"} == 0
+        for: 5m
+        annotations:
+          error: "redis is down: {{ $labels.instance }}"
