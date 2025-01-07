@@ -52,6 +52,9 @@ datasources:
       # <bool> Enables TLS authentication using a CA
       # certificate.
       tlsAuthWithCACert: false
+
+      # This needs to match the prometheus configuration
+      timeInterval: 1m
     # <map> Fields to encrypt before storing in jsonData.
     secureJsonData:
       # <string> Defines the CA cert, client cert, and
