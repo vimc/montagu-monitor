@@ -142,7 +142,7 @@ scrape_configs:
         replacement: $1
 
   # We run a couple of "multi-target exporters", that expose a different service
-  # as prometheus metrics. This scrape job collects the exporters own metrics.
+  # as prometheus metrics. This scrape job collects the exporters' own metrics.
   - job_name: 'exporter'
     metrics_path: /metrics
     static_configs:
