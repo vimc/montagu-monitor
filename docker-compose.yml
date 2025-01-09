@@ -64,6 +64,10 @@ services:
     environment:
       REDIS_URL: wpia-hn.hpc.dide.ic.ac.uk
 
+  blackbox-exporter:
+    image: quay.io/prometheus/blackbox-exporter:latest
+    restart: unless-stopped
+
   proxy:
     image: nginx
     restart: unless-stopped

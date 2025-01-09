@@ -173,3 +173,22 @@ groups:
         for: 5m
         annotations:
           error: "redis is down: {{ $labels.instance }}"
+
+  - name: blackbox
+    rules:
+      - alert: BlackBoxHttpDown
+        expr: up{job="blackbox-http"} == 0
+        for: 5m
+        annotations:
+          error: "blackbox-http scrape is down: '{{ $labels.instance }}'"
+
+      - alert: BlackBoxProbeFailed
+        expr: probe_success == 0
+        for: 5m
+        annotations:
+          error: "probe failed: '{{ $labels.instance }}'"
+
+      - alert: CertificateExpiry30Days
+        expr: probe_ssl_earliest_cert_expiry - time() < 30d
+        annotations:
+          error: "certificate expires in {{ humanizeDuration .Value }}: '{{ $labels.instance }}'"
