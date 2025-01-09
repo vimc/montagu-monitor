@@ -26,6 +26,7 @@ services:
     restart: always
     volumes:
       - "./config/alertmanager:/etc/alertmanager:ro"
+      - alertmanager-storage:/alertmanager
     ports:
       - "9093:9093"
     command:
@@ -83,3 +84,4 @@ services:
 volumes:
   grafana-storage: {}
   prometheus-storage: {}
+  alertmanager-storage: {}
