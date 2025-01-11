@@ -141,6 +141,16 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
+  # We run a couple of "multi-target exporters", that expose a different service
+  # as prometheus metrics. This scrape job collects the exporters' own metrics.
+  - job_name: 'exporter'
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - blackbox-exporter:9115
+          - redis-exporter:9121
+          - github-exporter:8080
+
   - job_name: 'redis'
     static_configs:
       - targets: ['redis://wpia-hn.hpc.dide.ic.ac.uk']
@@ -176,6 +186,26 @@ scrape_configs:
         replacement: $2
       - target_label: __address__
         replacement: blackbox-exporter:9115
+
+  - job_name: 'github'
+    # We don't particular care about being very up-to-date, so do our best to
+    # avoid wasting GitHub rate limit credit.
+    scrape_interval: 10m
+    metrics_path: /scrape
+    static_configs:
+      - targets: ['reside-ic/packit-infra']
+    relabel_configs:
+      # This rewrites the metrics URL as github-exporter:8080/scrape?owner=foo&repo=bar
+      - source_labels: [__address__]
+        target_label: __param_owner
+        regex: ^(.*)/(.*)$
+        replacement: $1
+      - source_labels: [__address__]
+        target_label: __param_repo
+        regex: ^(.*)/(.*)$
+        replacement: $2
+      - target_label: __address__
+        replacement: github-exporter:8080
 
 rule_files:
   - alert-rules.yml

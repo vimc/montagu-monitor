@@ -192,3 +192,19 @@ groups:
         expr: probe_ssl_earliest_cert_expiry - time() < 30d
         annotations:
           error: "certificate expires in {{ humanizeDuration .Value }}: '{{ $labels.instance }}'"
+
+  - name: packit
+    rules:
+      # Detect configuration drift between the NixOS config on GitHub and what
+      # is deployed on the machines. If a machine differs from the source of
+      # truth for more than a week, an alert is fired.
+      - alert: PackitConfigDrift
+        expr: |
+          nixos_configuration_info{instance=~"^packit.*$"}
+            unless on(revision)
+            label_replace(
+              github_repo_branch_info{owner="reside-ic", repo="packit-infra", branch="main"},
+              "revision", "$0", "sha", ".*")
+        for: 1w
+        annotations:
+          error: "NixOS configuration is out-of-sync: '{{ $labels.instance }}'"

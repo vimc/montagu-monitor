@@ -85,6 +85,10 @@ services:
     image: oliver006/redis_exporter
     restart: unless-stopped
 
+  github-exporter:
+    build: github-exporter
+    restart: unless-stopped
+
 volumes:
   grafana-storage: {}
   prometheus-storage: {}
