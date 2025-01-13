@@ -33,12 +33,6 @@ services:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
 
-  aws_metrics:
-    build: aws_metrics
-    restart: always
-    volumes:
-      - "${PWD}/aws_metrics/config/volume:/root/.aws"
-
   buildkite_metrics:
     image: reside/buildkite-agent-metrics
     restart: always
