@@ -64,14 +64,3 @@ receivers:
           authorization:
             type: Bearer
             credentials: ${slack_oauth_token}
-
-inhibit_rules:
-  - source_matchers:
-      - alertname = NoRemoteBarman
-    target_matchers:
-      - job = barman-remote
-  - source_matchers:
-      - alertname = BarmanDown
-    target_matchers:
-    equal:
-    - instance

@@ -14,9 +14,6 @@ fi
 # Put secrets into configs
 ./config/configure.py $1
 
-# Configure AWS metrics
-./aws_metrics/config/configure.py
-
 docker compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"

@@ -66,38 +66,6 @@ scrape_configs:
         labels:
           project: hint
 
-  - job_name: 'aws'
-    static_configs:
-      - targets: ['aws_metrics:80']
-
-  - job_name: 'bb8'
-    static_configs:
-      - targets: ['annex.montagu.dide.ic.ac.uk:5001']
-
-  - job_name: 'barman'
-    static_configs:
-      - targets: ['annex.montagu.dide.ic.ac.uk:5000']
-
-  - job_name: 'barman-remote'
-    scrape_timeout: 60s
-    scrape_interval: 2m
-    ec2_sd_configs: &ec2
-      # Credentials are passed as environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
-      - region: 'eu-west-2'
-    relabel_configs:
-      - source_labels: [__meta_ec2_public_dns_name]
-        target_label: __address__
-        regex: (.+)
-        replacement: $1:5000
-
-  - job_name: 'ec2-machine-metrics'
-    ec2_sd_configs: *ec2
-    relabel_configs:
-      - source_labels: [__meta_ec2_public_dns_name]
-        target_label: __address__
-        regex: (.+)
-        replacement: $1:9100
-
   - job_name: 'buildkite-metrics'
     static_configs:
     - targets: ['buildkite_metrics:8080']

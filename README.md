@@ -40,11 +40,11 @@ and for reloading
 To force alerts to fire just invert the rules in `prometheus/alert-rules.yml` temporarily, e.g. change a rule expression
 like
 
-`up{job="bb8"} == 0`
+`up{job="proxy-metrics"} == 0`
 
 to
 
-`up{job="bb8"} == 1`
+`up{job="proxy-metrics"} == 1`
 
 
 ## Deployment on bots.dide.ic.ac.uk
@@ -82,11 +82,6 @@ either:
   [client libraries](https://prometheus.io/docs/instrumenting/clientlibs/))
 * Write our own exporter to sit alongside as a small Flask app in a separate
   container
-
-### External metric exporters
-For monitoring external services (like S3) there's no need to deploy them
-separately; instead we can deploy them alongside Prometheus. So far we have one:
-`aws_metrics`. When you run `run` it will also build and start the exporter.
 
 ### Machine metrics
 
