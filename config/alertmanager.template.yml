@@ -10,17 +10,25 @@ route:
         - frequency = high
       repeat_interval: 20m
       receiver: 'slack-hint'
+
     - matchers:
         - project = hint
       repeat_interval: 4h
       receiver: 'slack-hint'
+
     - matchers:
         - frequency = high
       repeat_interval: 20m
       receiver: 'slack-default'
+
     - matchers:
         - frequency = low
       repeat_interval: 24h
+      receiver: 'slack-default'
+
+    - matchers:
+        - frequency = weekly
+      repeat_interval: 1w
       receiver: 'slack-default'
 
 templates:

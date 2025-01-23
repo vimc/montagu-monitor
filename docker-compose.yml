@@ -32,6 +32,9 @@ services:
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
+      # Two weeks of data rentention: this is necessary to support long repeat
+      # intervals for alerts.
+      - '--data.retention=336h'
 
   buildkite_metrics:
     image: reside/buildkite-agent-metrics
