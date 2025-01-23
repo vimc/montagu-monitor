@@ -153,3 +153,5 @@ groups:
         for: 1w
         annotations:
           error: "NixOS configuration is out-of-sync: '{{ $labels.instance }}'"
+        labels:
+          frequency: "weekly"
