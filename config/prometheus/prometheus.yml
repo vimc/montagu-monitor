@@ -156,9 +156,12 @@ scrape_configs:
         replacement: blackbox-exporter:9115
 
   - job_name: 'github'
-    # We don't particular care about being very up-to-date, so do our best to
-    # avoid wasting GitHub rate limit credit.
-    scrape_interval: 10m
+
+    # We don't particular care about being very up-to-date, so we reduce the
+    # scraping rate to avoid wasting GitHub rate limit credit. We don't want to
+    # go over 5 minutes though or Prometheus consideres the data to be stale:
+    # https://prometheus.io/docs/prometheus/latest/querying/basics/#staleness
+    scrape_interval: 3m
     metrics_path: /scrape
     static_configs:
       - targets: ['reside-ic/packit-infra']
