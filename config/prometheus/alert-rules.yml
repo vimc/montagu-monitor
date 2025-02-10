@@ -133,8 +133,10 @@ groups:
         annotations:
           error: "probe failed: '{{ $labels.instance }}'"
 
-      - alert: CertificateExpiry30Days
-        expr: probe_ssl_earliest_cert_expiry - time() < 30d
+      # The standard certbot configuration is to renew 30 days before expiry.
+      # We give it an extra week or so before
+      - alert: CertificateExpiry
+        expr: probe_ssl_earliest_cert_expiry - time() < 21d
         annotations:
           error: "certificate expires in {{ humanizeDuration .Value }}: '{{ $labels.instance }}'"
 
