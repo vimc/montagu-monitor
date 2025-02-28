@@ -99,11 +99,6 @@ groups:
         for: 5m
         annotations:
           error: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.instance }} is over 80% full"
-      - alert: DiskWillFillIn2Weeks
-        expr: predict_linear(node_filesystem_free_bytes{job="machine-metrics"}[24h], 2w) < 0
-        for: 5m
-        annotations:
-          error: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.instance }} will be full in 2 weeks"
 
   - name: redis
     rules:
