@@ -1,4 +1,19 @@
-{{ define "slack-alert-text" }}
-{{ range .Alerts }}* {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
-{{ end }}
-{{ end }}
+{{ define "__alert_silence_link" -}}
+    {{ .ExternalURL }}/#/silences/new?filter=%7B
+    {{- range .CommonLabels.SortedPairs -}}
+        {{- if ne .Name "alertname" -}}
+            {{- .Name }}%3D"{{- .Value -}}"%2C%20
+        {{- end -}}
+    {{- end -}}
+    alertname%3D"{{- .CommonLabels.alertname -}}"%7D
+{{- end }}
+
+{{ define "slack.title" -}}
+  [{{ .Status | toUpper -}}] {{ .CommonLabels.alertname }}
+{{- end }}
+
+{{ define "slack.text" -}}
+  {{- range .Alerts -}}
+    * {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
+  {{- end }}
+{{- end }}
