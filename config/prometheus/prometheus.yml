@@ -113,9 +113,8 @@ scrape_configs:
   - job_name: 'DCGM'
     static_configs:
     - targets:
-      # DCGM-exporter is only running on GPU-01 for now because GPU-02 is
-      # running an older Ubuntu version where it isn't packaged.
       - wpia-gpu-01.dide.ic.ac.uk:9400
+      - wpia-gpu-02.dide.ic.ac.uk:9400
 
   # The packit servers have a whole slew of services we want to scrape. To ease
   # configuration, each server exposes a JSON document that lists them all.
