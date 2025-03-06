@@ -105,10 +105,22 @@ scrape_configs:
     - targets:
       - wpia-gpu-01.dide.ic.ac.uk:9100
       - wpia-gpu-02.dide.ic.ac.uk:9100
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
 
+  - job_name: 'machine-metrics-buildkite'
     file_sd_configs:
-      - files:
-        - /etc/prometheus/machine-metrics.json
+      - files: [ /etc/prometheus/generated/buildkite-nodes.json ]
+    relabel_configs:
+      - source_labels: [__address__]
+        replacement: $0:9100
+        target_label: __address__
+      - target_label: job
+        replacement: "machine-metrics"
 
   - job_name: 'DCGM'
     static_configs:
@@ -116,6 +128,12 @@ scrape_configs:
       # DCGM-exporter is only running on GPU-01 for now because GPU-02 is
       # running an older Ubuntu version where it isn't packaged.
       - wpia-gpu-01.dide.ic.ac.uk:9400
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
 
   # The packit servers have a whole slew of services we want to scrape. To ease
   # configuration, each server exposes a JSON document that lists them all.
@@ -127,8 +145,7 @@ scrape_configs:
       - url: "http://packit-dev.dide.ic.ac.uk:9000/targets"
       - url: "http://packit-private.dide.ic.ac.uk:9000/targets"
     relabel_configs:
-      # The default instance label has the form hostname:port.
-      # The port isn't particularly relevant, so we remove it.
+      # Override the default instance name to remove the port
       - source_labels: [__address__]
         regex: (.+):(.+)
         target_label: instance
@@ -202,6 +219,20 @@ scrape_configs:
         replacement: $2
       - target_label: __address__
         replacement: github-exporter:8080
+
+  - job_name: 'windows-exporter'
+    file_sd_configs:
+      - files: [ /etc/prometheus/generated/hpc-windows-nodes.json ]
+    relabel_configs:
+      # The HPC nodes sit behind a NAT, meaning we can't pull directly from
+      # them. The headnode runs a simple reverse-proxy that we connect to, and
+      # use `/metrics/<ip>` where `<ip>` represents the actual target we want
+      # to reach.
+      - source_labels: [__address__]
+        replacement: /metrics/$0
+        target_label: __metrics_path__
+      - target_label: __address__
+        replacement: wpia-hn.hpc.dide.ic.ac.uk:9183
 
 rule_files:
   - alert-rules.yml

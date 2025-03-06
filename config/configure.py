@@ -9,8 +9,25 @@ from pathlib import Path
 from docopt import docopt
 from mako.template import Template
 import json
+import os.path
 
 from vault.vault import VaultClient
+
+# This turns a very succinct JSON inventory of machines into something
+# ingestable by Prometheus' file_sd mechanism. It uses the key as the
+# instance label and the value as the target.
+def process_inventory(name):
+    with open(os.path.join("prometheus/data", name)) as f:
+        nodes = json.load(f)
+
+    targets = [ {
+        "targets": [ ip ],
+        "labels": { "instance": name }
+    } for name, ip in nodes.items() ]
+
+    os.makedirs("prometheus/generated", exist_ok=True)
+    with open(os.path.join("prometheus/generated", name), "w") as f:
+        json.dump(targets, f)
 
 
 def instantiate_config(template_path, target_path, values):
@@ -19,28 +36,6 @@ def instantiate_config(template_path, target_path, values):
         template = Template(f.read())
     with open(target_path, 'w') as f:
         f.write(template.render(**values))
-
-
-# Not amazing that we have to write this here duplicating the IP
-# setup done on the hyperv machine. But this needs to be defined
-# somewhere as we can't use data from after the scraping in the
-# rename config. And having this here is a bit more explicit than
-# having the renaming done in grafana
-buildkite_hosts = {
-    "reside-bk1": "14.0.0.2:9100",
-    "reside-bk2": "14.0.0.3:9100",
-    "reside-bk3": "14.0.0.4:9100",
-    "reside-bk4": "14.0.0.5:9100",
-    "reside-bk5": "14.0.0.6:9100",
-    "reside-bk6": "14.0.0.7:9100",
-    "reside-bk7": "14.0.0.8:9100",
-    "reside-bk8": "14.0.0.9:9100",
-    "reside-deploy1": "14.0.0.10:9100",
-    "reside-bk-browser-test1": "14.0.0.11:9100",
-    "reside-bk-multicore1": "14.0.0.12:9100",
-    "reside-bk-multicore2": "14.0.0.13:9100",
-    "reside-bk-multicore3": "14.0.0.14:9100",
-}
 
 
 def buildkite_node_exporter_config(name, ip):
@@ -67,10 +62,8 @@ if __name__ == "__main__":
 
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
-    buildkite_targets = [
-        buildkite_node_exporter_config(name, ip)
-        for name, ip in buildkite_hosts.items()
-    ]
+    process_inventory("hpc-windows-nodes.json")
+    process_inventory("buildkite-nodes.json")
 
     Path('alertmanager').mkdir(exist_ok=True)
     instantiate_config(
@@ -100,5 +93,3 @@ if __name__ == "__main__":
             vault.read_secret("secret/vimc/prometheus/aws_access_key_id")))
         f.write("AWS_SECRET_ACCESS_KEY={}\n".format(
             vault.read_secret("secret/vimc/prometheus/aws_secret_key")))
-    with open("prometheus/machine-metrics.json", "w") as f:
-        json.dump(buildkite_targets, f)
