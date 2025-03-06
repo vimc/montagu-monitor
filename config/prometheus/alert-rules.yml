@@ -95,7 +95,7 @@ groups:
   - name: disk-usage
     rules:
       - alert: DiskNearlyFull
-        expr: (100 - (avg_over_time(node_filesystem_avail_bytes{job="machine-metrics"}[1h]) * 100) / avg_over_time(node_filesystem_size_bytes{job="machine-metrics"}[1h])) > 80
+        expr: (100 - (avg_over_time(node_filesystem_avail_bytes{job="machine-metrics", fstype!="cifs"}[1h]) * 100) / avg_over_time(node_filesystem_size_bytes[1h])) > 80
         for: 5m
         annotations:
           error: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.instance }} is over 80% full"
