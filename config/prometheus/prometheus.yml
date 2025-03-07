@@ -226,13 +226,13 @@ scrape_configs:
     relabel_configs:
       # The HPC nodes sit behind a NAT, meaning we can't pull directly from
       # them. The headnode runs a simple reverse-proxy that we connect to, and
-      # use `/metrics/<ip>` where `<ip>` represents the actual target we want
-      # to reach.
+      # use `/metrics/<ip>:<port>` where `<ip>` and `<port>` represent the actual
+      # target we want to reach.
       - source_labels: [__address__]
-        replacement: /metrics/$0
+        replacement: /metrics/$0:9182
         target_label: __metrics_path__
       - target_label: __address__
-        replacement: wpia-hn.hpc.dide.ic.ac.uk:9183
+        replacement: wpia-hn.hpc.dide.ic.ac.uk:8000
 
 rule_files:
   - alert-rules.yml
