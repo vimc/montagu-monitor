@@ -1,9 +1,7 @@
-aws_configuration
 .idea/*
 config/alertmanager/alertmanager.yml
-config/prometheus/machine-metrics.json
+config/prometheus/generated
 config/prometheus/env
-config/prom2teams/config.ini
 config/__pycache__/*
 config/buildkite.env
 config/grafana/grafana.ini
