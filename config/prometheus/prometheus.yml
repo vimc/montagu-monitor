@@ -158,7 +158,6 @@ scrape_configs:
       - targets:
           - blackbox-exporter:9115
           - redis-exporter:9121
-          - github-exporter:8080
 
   - job_name: 'redis'
     static_configs:
@@ -196,28 +195,30 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox-exporter:9115
 
-  - job_name: 'github'
-
-    # We don't particular care about being very up-to-date, so we reduce the
-    # scraping rate to avoid wasting GitHub rate limit credit. We don't want to
-    # go over 5 minutes though or Prometheus consideres the data to be stale:
-    # https://prometheus.io/docs/prometheus/latest/querying/basics/#staleness
-    scrape_interval: 3m
-    metrics_path: /scrape
+  # This jobs scrapes metrics off of GitHub pages. These metrics would
+  # typically be produced by a GitHub actions workflow and published to pages.
+  - job_name: 'github-pages-metrics'
+    # GitHub pages does not set the right Content-Type, so we need a fallback
+    # value.
+    fallback_scrape_protocol: 'PrometheusText0.0.4'
     static_configs:
       - targets: ['reside-ic/packit-infra']
+
+    scheme: https
+    # The target set above is saved as the `repository` label.
+    # It is split in two and used to form `https://<owner>.github.io/<repo>/metrics`
+    # as the metrics URL.
     relabel_configs:
-      # This rewrites the metrics URL as github-exporter:8080/scrape?owner=foo&repo=bar
       - source_labels: [__address__]
-        target_label: __param_owner
-        regex: ^(.*)/(.*)$
-        replacement: $1
+        target_label: repository
       - source_labels: [__address__]
-        target_label: __param_repo
+        target_label: __metrics_path__
         regex: ^(.*)/(.*)$
-        replacement: $2
-      - target_label: __address__
-        replacement: github-exporter:8080
+        replacement: $2/metrics
+      - source_labels: [__address__]
+        target_label: __address__
+        regex: ^(.*)/(.*)$
+        replacement: $1.github.io
 
   - job_name: 'windows-exporter'
     file_sd_configs:
