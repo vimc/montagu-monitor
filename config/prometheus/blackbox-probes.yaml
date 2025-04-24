@@ -1,6 +1,5 @@
 - targets:
   - https://bots.dide.ic.ac.uk
-  - https://data.dide.ic.ac.uk
   - https://mrcdata.dide.ic.ac.uk
   - https://vault.dide.ic.ac.uk:8200
   - https://www.infectiousdiseasemodels.org
