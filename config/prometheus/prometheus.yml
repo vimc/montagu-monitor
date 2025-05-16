@@ -103,6 +103,7 @@ scrape_configs:
       labels:
         instance: 'montagu annex'
     - targets:
+      - bots.dide.ic.ac.uk:9100
       - wpia-gpu-01.dide.ic.ac.uk:9100
       - wpia-gpu-02.dide.ic.ac.uk:9100
     relabel_configs:
