@@ -235,5 +235,18 @@ scrape_configs:
       - target_label: __address__
         replacement: wpia-hn.hpc.dide.ic.ac.uk:8000
 
+  - job_name: 'acme-buddy'
+    static_configs:
+    - targets:
+      - wodin-dev.dide.ic.ac.uk:2112
+      - epimodels.dide.ic.ac.uk:2112
+      - vault.dide.ic.ac.uk:2112
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
+
 rule_files:
   - alert-rules.yml
