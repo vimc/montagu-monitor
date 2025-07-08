@@ -238,9 +238,11 @@ scrape_configs:
   - job_name: 'acme-buddy'
     static_configs:
     - targets:
-      - wodin-dev.dide.ic.ac.uk:2112
       - epimodels.dide.ic.ac.uk:2112
+      - mint.dide.ic.ac.uk:2112
+      - mint-dev.dide.ic.ac.uk:2112
       - vault.dide.ic.ac.uk:2112
+      - wodin-dev.dide.ic.ac.uk:2112
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
