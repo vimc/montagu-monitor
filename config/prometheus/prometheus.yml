@@ -238,6 +238,7 @@ scrape_configs:
   - job_name: 'acme-buddy'
     static_configs:
     - targets:
+      - daedalus-dev.dide.ic.ac.uk:2112
       - epimodels.dide.ic.ac.uk:2112
       - mint.dide.ic.ac.uk:2112
       - mint-dev.dide.ic.ac.uk:2112
