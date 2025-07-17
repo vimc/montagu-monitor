@@ -13,7 +13,7 @@
 {{- end }}
 
 {{ define "slack.text" -}}
-  {{- range .Alerts -}}
-    * {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
+  {{- range .Alerts }}
+* {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
   {{- end }}
 {{- end }}
