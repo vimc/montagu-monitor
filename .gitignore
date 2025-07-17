@@ -1,7 +1,6 @@
 .idea/*
 config/alertmanager/alertmanager.yml
 config/prometheus/generated
-config/prometheus/env
 config/__pycache__/*
 config/buildkite.env
 config/grafana/grafana.ini
