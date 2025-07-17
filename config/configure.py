@@ -88,8 +88,3 @@ if __name__ == "__main__":
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format(
             vault.read_secret("secret/buildkite/agent", "token")))
-    with open("prometheus/env", 'w') as f:
-        f.write("AWS_ACCESS_KEY_ID={}\n".format(
-            vault.read_secret("secret/vimc/prometheus/aws_access_key_id")))
-        f.write("AWS_SECRET_ACCESS_KEY={}\n".format(
-            vault.read_secret("secret/vimc/prometheus/aws_secret_key")))
