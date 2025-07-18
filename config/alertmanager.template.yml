@@ -37,6 +37,10 @@ receivers:
           - text: 'Silence'
             type: button
             url: '{{ template "__alert_silence_link" . }}'
+          # Not all alerts have an associated playbook. The button is invisible if the URL field is empty.
+          - text: 'Playbook'
+            type: button
+            url: '{{ (index .Alerts 0).Annotations.playbook }}'
           - text: 'Docs'
             type: button
             url: 'https://mrc-ide.myjetbrains.com/youtrack/articles/RESIDE-A-22/Monitoring'

@@ -99,6 +99,7 @@ groups:
         for: 5m
         annotations:
           error: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.instance }} is over 80% full"
+          playbook: https://github.com/vimc/montagu-monitor/blob/main/playbooks/DiskNearlyFull.md
 
   - name: redis
     rules:
@@ -149,5 +150,6 @@ groups:
         for: 1w
         annotations:
           error: "NixOS configuration is out-of-sync: '{{ $labels.instance }}'"
+          playbook: https://github.com/vimc/montagu-monitor/blob/main/playbooks/PackitConfigDrift.md
         labels:
           frequency: "weekly"
