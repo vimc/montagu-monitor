@@ -38,7 +38,7 @@ sudo install -d -o <USER> -g <USER> /data/<USER>
 
 ## `/boot` partition
 
-After a kernel upgrades, the `/boot` partition may grow in size if the old
+After a kernel upgrade, the `/boot` partition may grow in size if the old
 kernels aren't pruned. While Ubuntu should be handling automatically,
 occasionally this does not seem to work as expected and old kernels can
 accumulate.
@@ -49,7 +49,7 @@ used to prune these kernel versions.
 
 ## Network and Pseudo filesystems
 
-The metrics and alert are configured to ignored network and pseudo file system
+The metrics and alert are configured to ignore network and pseudo file system
 types, including cifs (aka Windows network drives), procfs, sysfs, etc. In the
 future it may be necessary to exclude additional file system types if new ones
 crop up. This can be done most easily by modifying the alert definition.
