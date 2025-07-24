@@ -10,31 +10,23 @@ question.
 ## wpia-gpu-02
 
 The GPU nodes, in particular GPU02, often end up accumulating lots of software
-and data from its users which they don't always clean up and which, if left
-unchecked, grows endlessly.
+and data from its users in their home directories, which, if left unchecked,
+grows endlessly.
 
-The following command will list all directories in the `/home` directory and
-sort them by descending size:
+The `/home` directory is mounted on its own 4TB drive. For historical reasons,
+`/home/old-data` is bind-mounted onto `/data` and users may have data in there
+as well (we will get rid of this eventually).
+
+The following command will list all directories in the `/home` and `/data`
+directories and sort them by descending size (the `--exclude` flag is needed to
+avoid double counting):
 
 ```sh
-sudo du -x -d 1 -h /home | sort -hr
+sudo du -x -d 1 -h /home /data --exclude /home/old-data | sort -hr
 ```
 
 If a particular user stands out in this list, you can contact them asking them
 to remove any old data or software they may have lying around.
-
-In addition to the root drive (which is "only" 400GB), the machine is equipped
-with a very large drive mounted under `/data`. Users should be encouraged to
-move any voluminous data to that drive.
-
-The first time they need access to the `/data` drive, you can create a new
-folder for them using the following command, replacing all instances of
-`<USER>` with their username on that machine (which may not be the same as
-their DIDE or IC username):
-
-```sh
-sudo install -d -o <USER> -g <USER> /data/<USER>
-```
 
 ## `/boot` partition
 
