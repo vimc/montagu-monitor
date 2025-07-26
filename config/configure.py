@@ -79,12 +79,13 @@ if __name__ == "__main__":
         {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
     )
 
-    print("Writing SSL certificate and key")
-    makedirs("nginx", exist_ok=True)
-    with open("nginx/certificate.pem", "w") as f:
-        f.write(vault.read_secret("secret/bots/ssl", field="cert"))
-    with open("nginx/key.pem", "w") as f:
-        f.write(vault.read_secret("secret/bots/ssl", field="key"))
+    print("Fetching HDB credentials")
+    hdb_username = vault.read_secret("secret/certbot-hdb/credentials", field="username")
+    hdb_password = vault.read_secret("secret/certbot-hdb/credentials", field="password")
+    with open("hdb-credentials" , "w") as f:
+      f.write(f"HDB_ACME_USERNAME={hdb_username}\n")
+      f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")        
+
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format(
             vault.read_secret("secret/buildkite/agent", "token")))
