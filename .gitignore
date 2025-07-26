@@ -6,3 +6,4 @@ config/buildkite.env
 config/grafana/grafana.ini
 config/nginx/certificate.pem
 config/nginx/key.pem
+hdb-credentials
