@@ -71,6 +71,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
       - bots-tls:/run/proxy
     ports:
       - '80:80'
