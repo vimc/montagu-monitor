@@ -88,7 +88,7 @@ services:
     environment:
       - ACME_BUDDY_STAGING
     env_file:
-      - hdb-credentials
+      - config/hdb-credentials
     command: >
       --domain bots.dide.ic.ac.uk
       --email reside@imperial.ac.uk

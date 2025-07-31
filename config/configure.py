@@ -84,7 +84,7 @@ if __name__ == "__main__":
     hdb_password = vault.read_secret("secret/certbot-hdb/credentials", field="password")
     with open("hdb-credentials" , "w") as f:
       f.write(f"HDB_ACME_USERNAME={hdb_username}\n")
-      f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")        
+      f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")
 
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format(
