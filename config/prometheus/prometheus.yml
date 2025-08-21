@@ -135,6 +135,18 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
+  - job_name: 'quota_exporter'
+    static_configs:
+    - targets:
+      - wpia-gpu-01.dide.ic.ac.uk:10018
+      - wpia-gpu-02.dide.ic.ac.uk:10018
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
+
   # The packit servers have a whole slew of services we want to scrape. To ease
   # configuration, each server exposes a JSON document that lists them all.
   # Prometheus dynamically discovers the services to scrape by fetching that
