@@ -99,7 +99,7 @@ groups:
         for: 5m
         annotations:
           error: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.instance }} is over 80% full"
-          playbook: https://github.com/vimc/montagu-monitor/blob/main/playbooks/DiskNearlyFull.md
+          playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/DiskNearlyFull.md
 
   - name: redis
     rules:
@@ -143,7 +143,7 @@ groups:
         for: 5m
         annotations:
           error: "certificate obtained by acme-buddy was not loaded: '{{ $labels.domain }}'"
-          playbook: https://github.com/vimc/montagu-monitor/blob/main/playbooks/AcmeBuddyCertificateNotLoaded.md
+          playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/AcmeBuddyCertificateNotLoaded.md
 
   - name: packit
     rules:
@@ -159,6 +159,6 @@ groups:
         for: 1w
         annotations:
           error: "NixOS configuration is out-of-sync: '{{ $labels.instance }}'"
-          playbook: https://github.com/vimc/montagu-monitor/blob/main/playbooks/PackitConfigDrift.md
+          playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/PackitConfigDrift.md
         labels:
           frequency: "weekly"
