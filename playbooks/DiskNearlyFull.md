@@ -15,7 +15,15 @@ grows endlessly.
 
 The `/home` directory is mounted on its own 4TB drive. For historical reasons,
 `/home/old-data` is bind-mounted onto `/data` and users may have data in there
-as well (we will get rid of this eventually).
+as well (we will get rid of this eventually). `/home` and `/data` are the same
+disk, but two distinct alerts will fire each time the disk fills up.
+
+You can connect to the machine using `ssh reside@wpia-gpu-02.dide.ic.ac.uk`.
+
+The following command will show the current disk usage for `/home`:
+```
+df -h /home
+```
 
 The following command will list all directories in the `/home` and `/data`
 directories and sort them by descending size (the `--exclude` flag is needed to
