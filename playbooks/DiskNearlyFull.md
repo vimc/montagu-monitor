@@ -18,7 +18,16 @@ The `/home` directory is mounted on its own 4TB drive. For historical reasons,
 as well (we will get rid of this eventually). `/home` and `/data` are the same
 disk, but two distinct alerts will fire each time the disk fills up.
 
-You can connect to the machine using `ssh reside@wpia-gpu-02.dide.ic.ac.uk`.
+A break down of disk usage by user is reported on the [GPU servers dashboard](gpu-dashboard).
+The dashboard can be used to find out which user might be responsible for
+recent increase in disk usage. If a particular user stands out, you can contact
+to find out more about their needs and ask them to remove any old data or
+software they may have lying around.
+
+[gpu-dashboard]: https://bots.dide.ic.ac.uk/grafana/d/aew654v1ovg8wc/gpu-servers?var-instance=wpia-gpu-02.dide.ic.ac.uk
+
+In addition to using the dashboard, you can connect to the machine using `ssh
+reside@wpia-gpu-02.dide.ic.ac.uk`.
 
 The following command will show the current disk usage for `/home`:
 ```
@@ -27,14 +36,11 @@ df -h /home
 
 The following command will list all directories in the `/home` and `/data`
 directories and sort them by descending size (the `--exclude` flag is needed to
-avoid double counting):
+avoid double counting the bind-mount):
 
 ```sh
 sudo du -x -d 1 -h /home /data --exclude /home/old-data | sort -hr
 ```
-
-If a particular user stands out in this list, you can contact them asking them
-to remove any old data or software they may have lying around.
 
 ## `/boot` partition
 
