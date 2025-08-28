@@ -42,8 +42,32 @@ scrape_configs:
         regex: (.+)(vaccineimpact)(.+)
         replacement: 'Production'
 
-  - job_name: 'orderly-web'
-    metrics_path: /reports/metrics
+  - job_name: 'montagu-packit'
+    metrics_path: /packit-api/metrics
+    scheme: https
+    static_configs:
+      - targets: ['montagu.vaccineimpact.org', 'science.montagu.dide.ic.ac.uk']
+        labels:
+          frequency: high
+      - targets: ['uat.montagu.dide.ic.ac.uk']
+        labels:
+          frequency: low
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: (uat)(.+)
+        replacement: 'UAT'
+      - source_labels: [__address__]
+        target_label: instance
+        regex: (science)(.+)
+        replacement: 'Science'
+      - source_labels: [__address__]
+        target_label: instance
+        regex: (.+)(vaccineimpact)(.+)
+        replacement: 'Production'
+
+  - job_name: 'montagu-outpack-server'
+    metrics_path: /outpack_server/metrics
     scheme: https
     static_configs:
       - targets: ['montagu.vaccineimpact.org', 'science.montagu.dide.ic.ac.uk']
