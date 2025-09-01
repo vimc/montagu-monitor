@@ -53,18 +53,11 @@ scrape_configs:
         labels:
           frequency: low
     relabel_configs:
+      # Override the default instance name to remove the port
       - source_labels: [__address__]
+        regex: (.+):(.+)
         target_label: instance
-        regex: (uat)(.+)
-        replacement: 'UAT'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (science)(.+)
-        replacement: 'Science'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (.+)(vaccineimpact)(.+)
-        replacement: 'Production'
+        replacement: $1
 
   - job_name: 'montagu-outpack-server'
     metrics_path: /metrics/outpack_server
