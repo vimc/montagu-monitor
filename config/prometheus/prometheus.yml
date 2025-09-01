@@ -59,7 +59,7 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
-  - job_name: 'montagu-outpack-server'
+  - job_name: 'outpack_server'
     metrics_path: /metrics/outpack_server
     scheme: http
     static_configs:
