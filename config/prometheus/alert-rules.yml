@@ -9,21 +9,21 @@ groups:
         annotations:
           error: "Montagu on {{ $labels.instance }} is down"
 
-  - name: montagu-packit
+  - name: packit-api
     rules:
-      - alert: MonatguPackitDown
-        expr: up{job="montagu-packit"} == 0
+      - alert: PackitAPIDown
+        expr: up{job="packit-api"} == 0
         for: 5m
         annotations:
-          error: "MontaguPackit on {{ $labels.instance }} is down"
+          error: "PackitAPI on {{ $labels.instance }} is down"
 
-  - name: montagu-outpack-server
+  - name: outpack-server
     rules:
-      - alert: MonatguOutpackServerDown
-        expr: up{job="montagu-outpack-server"} == 0
+      - alert: OutpackServerDown
+        expr: up{job="outpack-server"} == 0
         for: 5m
         annotations:
-          error: "MontaguOutpackServer on {{ $labels.instance }} is down"
+          error: "OutpackServer on {{ $labels.instance }} is down"
 
   - name: hint
     rules:
