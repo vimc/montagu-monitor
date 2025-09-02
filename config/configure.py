@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Usage:
-  setup.py [--dev]
+  configure.py [--dev]
 """
 from os import chdir, makedirs
 from os.path import dirname, realpath
