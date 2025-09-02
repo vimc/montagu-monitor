@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
 set -ex
 
-if [ -e "./config/nginx/self-signed-key.pem" ]; then
-    echo "Found self-signed certificate. Assuming --dev"
-    docker compose --profile dev -p monitor down
-
-else
-    docker compose -p monitor down
-fi
+docker compose -p monitor down
