@@ -8,19 +8,17 @@ echo "          and self-signed certificate."
 echo ""
 
 if [[ "$1" == "--dev" ]] ; then
-    echo "Running in development mode"
-    echo ""
-    ./config/configure.py $1
-    docker compose --profile dev -p monitor up --detach --build
-
+    PROFILE="dev"
 else
-    echo "Running in production mode"
-    echo ""
-
-    # Put secrets into configs
-    ./config/configure.py $1
-    docker compose --profile production -p monitor up --detach --build
+    PROFILE="production"
 fi
+
+echo "Running in $PROFILE mode"
+echo ""
+echo "COMPOSE_PROFILES=$PROFILE" > .env
+
+./config/configure.py $1
+docker compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
 echo "Browse to http://localhost:9090 to see basic output."

@@ -1,3 +1,4 @@
+.env
 .idea/*
 config/alertmanager/alertmanager.yml
 config/prometheus/generated
