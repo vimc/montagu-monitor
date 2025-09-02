@@ -3,7 +3,8 @@ set -e
 
 echo "Usage: ./run [--dev]"
 echo "Options:"
-echo  "--dev         Run in development mode, use test Slack channel for notifications, and no TLS"
+echo "--dev     Run in development mode, using the test Slack channel for notifications"
+echo "          and self-signed certificate."
 echo ""
 
 if [[ "$1" == "--dev" ]] ; then
