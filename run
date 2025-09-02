@@ -19,6 +19,7 @@ if [[ "$1" == "--dev" ]] ; then
        -subj "/C=GB/ST=GB/L=London/O=Imperial College/OU=Reside/CN=localhost"
 
     echo ""
+    ./config/configure.py $1
     docker compose -f docker-compose-dev.yml -p monitor up --detach --build
 
 else
