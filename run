@@ -10,24 +10,12 @@ echo ""
 if [[ "$1" == "--dev" ]] ; then
     echo "Running in development mode"
     echo ""
-    echo "Creating self-signed SSL key/cert"
-    openssl req -x509 \
-       -newkey rsa:2048 \
-       -nodes \
-       -keyout ./config/nginx/self-signed-key.pem \
-       -out ./config/nginx/self-signed-crt.pem \
-       -days 365 \
-       -subj "/C=GB/ST=GB/L=London/O=Imperial College/OU=Reside/CN=localhost"
-
-    echo ""
     ./config/configure.py $1
     docker compose --profile dev -p monitor up --detach --build
 
 else
     echo "Running in production mode"
     echo ""
-
-    rm -f ./config/nginx/self-signed-key.pem ./config/nginx/self-signed-crt.pem
 
     # Put secrets into configs
     ./config/configure.py $1
