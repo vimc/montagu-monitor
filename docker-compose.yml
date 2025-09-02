@@ -66,6 +66,15 @@ services:
     image: quay.io/prometheus/blackbox-exporter:latest
     restart: unless-stopped
 
+  openssl:
+    build:
+      context: ./openssl
+      dockerfile: Dockerfile
+    profiles:
+      - dev
+    volumes:
+      - bots-tls:/tls
+
   proxy:
     image: nginx
     restart: unless-stopped
@@ -76,21 +85,6 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    profiles:
-      - !dev
-
-  proxy-dev:
-    image: nginx
-    restart: unless-stopped
-    volumes:
-      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./config/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
-      - bots-tls:/run/proxy
-    ports:
-      - '80:80'
-      - '443:443'
-    profiles:
-      - dev
 
   acme-buddy:
     image: ghcr.io/reside-ic/acme-buddy:main
