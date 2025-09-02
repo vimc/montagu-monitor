@@ -21,7 +21,7 @@ if [[ "$1" == "--dev" ]] ; then
 
     echo ""
     ./config/configure.py $1
-    docker compose -f docker-compose-dev.yml -p monitor up --detach --build
+    docker compose --profile dev -p monitor up --detach --build
 
 else
     echo "Running in production mode"

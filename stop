@@ -3,7 +3,7 @@ set -ex
 
 if [ -e "./config/nginx/self-signed-key.pem" ]; then
     echo "Found self-signed certificate. Assuming --dev"
-    docker compose -f docker-compose-dev.yml -p monitor down
+    docker compose --profile dev -p monitor down
 
 else
     docker compose -p monitor down

@@ -76,6 +76,21 @@ services:
     ports:
       - '80:80'
       - '443:443'
+    profiles:
+      - !dev
+
+  proxy-dev:
+    image: nginx
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
+      - bots-tls:/run/proxy
+    ports:
+      - '80:80'
+      - '443:443'
+    profiles:
+      - dev
 
   acme-buddy:
     image: ghcr.io/reside-ic/acme-buddy:main
@@ -96,7 +111,9 @@ services:
       --certificate-path /tls/certificate.pem
       --key-path /tls/key.pem
       --account-path /tls/account.json
-      --reload-container ${COMPOSE_PROJECT_NAME}-proxy-1			
+      --reload-container ${COMPOSE_PROJECT_NAME}-proxy-1
+    profiles:
+      - !dev
 
   redis-exporter:
     image: oliver006/redis_exporter
