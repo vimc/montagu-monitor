@@ -86,4 +86,3 @@ volumes:
   grafana-storage: {}
   prometheus-storage: {}
   alertmanager-storage: {}
-  bots-tls: {}
