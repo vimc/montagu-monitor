@@ -67,9 +67,12 @@ services:
     restart: unless-stopped
 
   openssl:
-    build:
-      context: ./openssl
-      dockerfile: Dockerfile
+    image: alpine/openssl
+    command: >
+      req -x509 -newkey rsa:2048 -noenc -days 365
+          -subj "/C=GB/ST=GB/L=London/O=Imperial College/OU=Reside/CN=localhost"
+          -keyout /tls/key.pem
+          -out /tls/certificate.pem
     profiles:
       - dev
     volumes:
