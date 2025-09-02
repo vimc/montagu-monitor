@@ -110,7 +110,7 @@ services:
       --account-path /tls/account.json
       --reload-container ${COMPOSE_PROJECT_NAME}-proxy-1
     profiles:
-      - !dev
+      - production
 
   redis-exporter:
     image: oliver006/redis_exporter

@@ -19,7 +19,7 @@ else
 
     # Put secrets into configs
     ./config/configure.py $1
-    docker compose -p monitor up --detach --build
+    docker compose --profile production -p monitor up --detach --build
 fi
 
 echo "Now running Montagu Monitor"
