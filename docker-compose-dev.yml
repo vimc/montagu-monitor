@@ -1,0 +1,89 @@
+name: monitor
+services:
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./config/prometheus:/etc/prometheus:ro"
+      - prometheus-storage:/prometheus
+    depends_on:
+      - alertmanager
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=60d'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      # --web.enable-lifecycle enables reloading new config, see: https://prometheus.io/docs/operating/security/
+      # all other flags are as in https://github.com/prometheus/prometheus/blob/master/Dockerfile
+      - '--web.enable-lifecycle'
+      - '--web.external-url=https://bots.dide.ic.ac.uk/prometheus'
+
+  alertmanager:
+    image: prom/alertmanager
+    restart: always
+    volumes:
+      - "./config/alertmanager:/etc/alertmanager:ro"
+      - alertmanager-storage:/alertmanager
+    ports:
+      - "9093:9093"
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
+      # Two weeks of data rentention: this is necessary to support long repeat
+      # intervals for alerts.
+      - '--data.retention=336h'
+
+  buildkite_metrics:
+    image: reside/buildkite-agent-metrics
+    restart: always
+    env_file: config/buildkite.env
+    command:
+      - '-backend=prometheus'
+      - '-interval=30s'
+
+  grafana:
+    image: grafana/grafana-oss
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
+      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+
+  rrq-dashboard:
+    image: mrcide/rrq.dashboard:main
+    restart: unless-stopped
+    ports:
+      - '8888:8888'
+    environment:
+      REDIS_URL: wpia-hn.hpc.dide.ic.ac.uk
+
+  blackbox-exporter:
+    image: quay.io/prometheus/blackbox-exporter:latest
+    restart: unless-stopped
+
+  proxy:
+    image: nginx
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/dhparam.pem:/etc/nginx/dhparam.pem:ro
+      - ./config/nginx/self-signed-key.pem:/run/proxy/key.pem:ro
+			- ./config/nginx/self-signed-crt.pem:/run/proxy/certificate.pem:ro
+    ports:
+      - '80:80'
+      - '443:443'
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    restart: unless-stopped
+
+volumes:
+  grafana-storage: {}
+  prometheus-storage: {}
+  alertmanager-storage: {}
+  bots-tls: {}

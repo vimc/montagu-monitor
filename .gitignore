@@ -4,4 +4,6 @@ config/prometheus/generated
 config/__pycache__/*
 config/buildkite.env
 config/grafana/grafana.ini
+config/nginx/self-signed-key.pem
+config/nginx/self-signed-crt.pem
 hdb-credentials

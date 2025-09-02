@@ -3,18 +3,34 @@ set -e
 
 echo "Usage: ./run [--dev]"
 echo "Options:"
-echo  "--dev     Run in development mode, using the test Slack channel for notifications"
+echo  "--dev         Run in development mode, use test Slack channel for notifications, and no TLS"
 echo ""
 
 if [[ "$1" == "--dev" ]] ; then
     echo "Running in development mode"
     echo ""
+    echo "Creating self-signed SSL key/cert"
+    openssl req -x509 \
+       -newkey rsa:2048 \
+       -nodes \
+       -keyout ./config/nginx/self-signed-key.pem \
+       -out ./config/nginx/self-signed-crt.pem \
+       -days 365 \
+       -subj "/C=GB/ST=GB/L=London/O=Imperial College/OU=Reside/CN=localhost"
+
+    echo ""
+    docker compose -f docker-compose-dev.yml -p monitor up --detach --build
+
+else
+    echo "Running in production mode"
+    echo ""
+
+    rm -f ./config/nginx/self-signed-key.pem ./config/nginx/self-signed-crt.pem
+
+    # Put secrets into configs
+    ./config/configure.py $1
+    docker compose -p monitor up --detach --build
 fi
-
-# Put secrets into configs
-./config/configure.py $1
-
-docker compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
 echo "Browse to http://localhost:9090 to see basic output."
