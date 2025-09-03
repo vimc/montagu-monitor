@@ -66,6 +66,18 @@ services:
     image: quay.io/prometheus/blackbox-exporter:latest
     restart: unless-stopped
 
+  openssl:
+    image: alpine/openssl
+    command: >
+      req -x509 -newkey rsa:2048 -noenc -days 365
+          -subj "/C=GB/ST=GB/L=London/O=Imperial College/OU=Reside/CN=localhost"
+          -keyout /tls/key.pem
+          -out /tls/certificate.pem
+    profiles:
+      - dev
+    volumes:
+      - bots-tls:/tls
+
   proxy:
     image: nginx
     restart: unless-stopped
@@ -96,7 +108,9 @@ services:
       --certificate-path /tls/certificate.pem
       --key-path /tls/key.pem
       --account-path /tls/account.json
-      --reload-container ${COMPOSE_PROJECT_NAME}-proxy-1			
+      --reload-container ${COMPOSE_PROJECT_NAME}-proxy-1
+    profiles:
+      - production
 
   redis-exporter:
     image: oliver006/redis_exporter

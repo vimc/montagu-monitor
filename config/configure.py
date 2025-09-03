@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Usage:
-  setup.py [--dev]
+  configure.py [--dev]
 """
 from os import chdir, makedirs
 from os.path import dirname, realpath
@@ -79,12 +79,13 @@ if __name__ == "__main__":
         {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
     )
 
-    print("Fetching HDB credentials")
-    hdb_username = vault.read_secret("secret/certbot-hdb/credentials", field="username")
-    hdb_password = vault.read_secret("secret/certbot-hdb/credentials", field="password")
-    with open("hdb-credentials" , "w") as f:
-      f.write(f"HDB_ACME_USERNAME={hdb_username}\n")
-      f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")
+    if not args["--dev"]:
+        print("Fetching HDB credentials")
+        hdb_username = vault.read_secret("secret/certbot-hdb/credentials", field="username")
+        hdb_password = vault.read_secret("secret/certbot-hdb/credentials", field="password")
+        with open("hdb-credentials" , "w") as f:
+            f.write(f"HDB_ACME_USERNAME={hdb_username}\n")
+            f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")
 
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format(

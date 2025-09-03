@@ -3,17 +3,21 @@ set -e
 
 echo "Usage: ./run [--dev]"
 echo "Options:"
-echo  "--dev     Run in development mode, using the test Slack channel for notifications"
+echo "--dev     Run in development mode, using the test Slack channel for notifications"
+echo "          and self-signed certificate."
 echo ""
 
 if [[ "$1" == "--dev" ]] ; then
-    echo "Running in development mode"
-    echo ""
+    PROFILE="dev"
+else
+    PROFILE="production"
 fi
 
-# Put secrets into configs
-./config/configure.py $1
+echo "Running in $PROFILE mode"
+echo ""
+echo "COMPOSE_PROFILES=$PROFILE" > .env
 
+./config/configure.py $1
 docker compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
