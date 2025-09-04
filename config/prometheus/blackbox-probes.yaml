@@ -25,6 +25,13 @@
     project: montagu
 
 - targets:
+    - https://montagu.vaccineimpact.org/packit/api
+    - https://science.montagu.dide.ic.ac.uk/packit/api
+    - https://uat.montagu.dide.ic.ac.uk/packit/api
+  labels:
+    project: montagu-packit-api
+
+- targets:
   - https://mint.dide.ic.ac.uk
   - https://mint-dev.dide.ic.ac.uk
   labels:

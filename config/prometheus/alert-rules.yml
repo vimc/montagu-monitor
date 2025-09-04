@@ -9,13 +9,21 @@ groups:
         annotations:
           error: "Montagu on {{ $labels.instance }} is down"
 
-  - name: orderly-web
+  - name: packit-api
     rules:
-      - alert: OrderlyWebDown
-        expr: up{job="orderly-web"} == 0
+      - alert: PackitAPIDown
+        expr: up{job="packit-api"} == 0
         for: 5m
         annotations:
-          error: "OrderlyWeb on {{ $labels.instance }} is down"
+          error: "PackitAPI on {{ $labels.instance }} is down"
+
+  - name: outpack-server
+    rules:
+      - alert: OutpackServerDown
+        expr: up{job="outpack-server"} == 0
+        for: 5m
+        annotations:
+          error: "OutpackServer on {{ $labels.instance }} is down"
 
   - name: hint
     rules:

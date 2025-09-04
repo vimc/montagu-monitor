@@ -29,42 +29,47 @@ scrape_configs:
     static_configs:
       - targets: ['montagu.vaccineimpact.org:9113', 'uat.montagu.dide.ic.ac.uk:9113', 'science.montagu.dide.ic.ac.uk:9113']
     relabel_configs:
-      - source_labels: [__address__]
+      # Override the default instance name to remove the port
+      - source_labels: [ __address__ ]
+        regex: (.+):(.+)
         target_label: instance
-        regex: (uat)(.+)(9113)
-        replacement: 'UAT'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (science)(.+)(9113)
-        replacement: 'Science'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (.+)(vaccineimpact)(.+)
-        replacement: 'Production'
+        replacement: $1
 
-  - job_name: 'orderly-web'
-    metrics_path: /reports/metrics
-    scheme: https
+  - job_name: 'packit-api'
+    metrics_path: /metrics/packit-api
+    scheme: http
     static_configs:
-      - targets: ['montagu.vaccineimpact.org', 'science.montagu.dide.ic.ac.uk']
+      - targets: ['montagu.vaccineimpact.org:9000', 'science.montagu.dide.ic.ac.uk:9000']
         labels:
           frequency: high
-      - targets: ['uat.montagu.dide.ic.ac.uk']
+          project: montagu
+      - targets: ['uat.montagu.dide.ic.ac.uk:9000']
+        labels:
+          frequency: low
+          project: montagu
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
+
+  - job_name: 'outpack-server'
+    metrics_path: /metrics/outpack_server
+    scheme: http
+    static_configs:
+      - targets: ['montagu.vaccineimpact.org:9000', 'science.montagu.dide.ic.ac.uk:9000']
+        labels:
+          frequency: high
+      - targets: ['uat.montagu.dide.ic.ac.uk:9000']
         labels:
           frequency: low
     relabel_configs:
-      - source_labels: [__address__]
+      # Override the default instance name to remove the port
+      - source_labels: [ __address__ ]
+        regex: (.+):(.+)
         target_label: instance
-        regex: (uat)(.+)
-        replacement: 'UAT'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (science)(.+)
-        replacement: 'Science'
-      - source_labels: [__address__]
-        target_label: instance
-        regex: (.+)(vaccineimpact)(.+)
-        replacement: 'Production'
+        replacement: $1
 
   - job_name: 'hint'
     scheme: https
@@ -203,8 +208,6 @@ scrape_configs:
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
-        regex: ^(.*://)?(.*?)(:\d+)?$
-        replacement: $2
       - target_label: __address__
         replacement: blackbox-exporter:9115
 
