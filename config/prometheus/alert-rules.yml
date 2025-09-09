@@ -146,8 +146,7 @@ groups:
 
       - alert: AcmeBuddyCertificateNotLoaded
         expr: |
-          acme_buddy_certificate_info unless on(domain, fingerprint_sha256)
-            label_replace(probe_ssl_last_chain_info, "domain", "$1", "instance", "(.+)")
+          acme_buddy_certificate_info unless on(fingerprint_sha256) probe_ssl_last_chain_info
         for: 5m
         annotations:
           error: "certificate obtained by acme-buddy was not loaded: '{{ $labels.domain }}'"
