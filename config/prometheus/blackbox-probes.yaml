@@ -53,7 +53,6 @@
 
 - targets:
   - https://shiny.dide.ic.ac.uk
-  - https://shiny-dev.dide.ic.ac.uk
   labels:
     project: shiny
 
