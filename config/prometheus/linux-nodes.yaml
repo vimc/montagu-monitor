@@ -1,0 +1,61 @@
+# This is the list of all our Linux-based machines, used to scrape
+# node_exporter on port 9100.
+#
+# There are a few exceptions:
+# - Buildkite nodes are generated from data/buildkite-nodes.json by configure.py.
+# - HPC Cluster nodes aren't being scraped yet.
+# - NixOS Packit nodes use a different discovery mechanism. We might change
+#   this in order to harmonise the setup.
+- targets:
+  - wpia-naomi.dide.ic.ac.uk
+  - wpia-naomi-preview.dide.ic.ac.uk
+  labels:
+    project: hint
+
+- targets:
+  - wpia-beebop-dev.dide.ic.ac.uk
+  - wpia-beebop.dide.ic.ac.uk
+  labels:
+    project: beebop
+
+- targets:
+  - wpia-daedalus-dev.dide.ic.ac.uk
+  - wpia-daedalus.dide.ic.ac.uk
+  labels:
+    project: daedalus
+
+- targets:
+  - annex.montagu.dide.ic.ac.uk
+  - production2.montagu.dide.ic.ac.uk
+  - wpia-science.montagu.dide.ic.ac.uk
+  - wpia-uat.montagu.dide.ic.ac.uk
+  - wpia-annex2.montagu.dide.ic.ac.uk
+  labels:
+    project: montagu
+
+- targets:
+  - wpia-mint-dev.dide.ic.ac.uk
+  - wpia-mint.dide.ic.ac.uk
+  labels:
+    project: mint
+
+- targets:
+  - wpia-epimodels.dide.ic.ac.uk
+  - wpia-wodin-dev.dide.ic.ac.uk
+  labels:
+    project: wodin
+
+- targets:
+  - shiny.dide.ic.ac.uk
+  labels:
+    project: shiny
+
+- targets:
+  - wpia-bots.dide.ic.ac.uk
+  - wpia-vault.dide.ic.ac.uk
+  - wpia-hiv-orderly.dide.ic.ac.uk
+  - wpia-malaria-orderly.dide.ic.ac.uk
+  - wpia-modules.dide.ic.ac.uk
+  - wpia-hn2b.dide.ic.ac.uk
+  - wpia-gpu-01.dide.ic.ac.uk
+  - wpia-gpu-02.dide.ic.ac.uk
