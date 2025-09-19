@@ -91,32 +91,14 @@ scrape_configs:
     - targets: ['buildkite_metrics:8080']
 
   - job_name: 'machine-metrics'
-    static_configs:
-    - targets: ['naomi.dide.ic.ac.uk:9100']
-      labels:
-        project: hint
-        frequency: high
-        instance: 'hint production'
-    - targets: ['wpia-naomi-preview.dide.ic.ac.uk:9100']
-      labels:
-        project: hint
-        instance: 'hint preview'
-    - targets: ['montagu.vaccineimpact.org:9100']
-      labels:
-        instance: 'montagu production'
-    - targets: ['wpia-annex2.montagu.dide.ic.ac.uk:9100']
-      labels:
-        instance: 'montagu annex'
-    - targets:
-      - bots.dide.ic.ac.uk:9100
-      - wpia-gpu-01.dide.ic.ac.uk:9100
-      - wpia-gpu-02.dide.ic.ac.uk:9100
+    file_sd_configs:
+      - files: [ /etc/prometheus/linux-nodes.yaml ]
     relabel_configs:
-      # Override the default instance name to remove the port
       - source_labels: [__address__]
-        regex: (.+):(.+)
         target_label: instance
-        replacement: $1
+      - source_labels: [__address__]
+        replacement: $0:9100
+        target_label: __address__
 
   - job_name: 'machine-metrics-buildkite'
     file_sd_configs:
