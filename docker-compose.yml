@@ -65,6 +65,9 @@ services:
   blackbox-exporter:
     image: quay.io/prometheus/blackbox-exporter:latest
     restart: unless-stopped
+    command:
+      - '--config.file=/etc/blackbox_exporter/config.yml'
+      - '--log.prober=info'
 
   openssl:
     image: alpine/openssl
