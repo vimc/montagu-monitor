@@ -7,12 +7,6 @@
 # - NixOS Packit nodes use a different discovery mechanism. We might change
 #   this in order to harmonise the setup.
 - targets:
-  - wpia-naomi.dide.ic.ac.uk
-  - wpia-naomi-preview.dide.ic.ac.uk
-  labels:
-    project: hint
-
-- targets:
   - wpia-beebop-dev.dide.ic.ac.uk
   - wpia-beebop.dide.ic.ac.uk
   labels:
