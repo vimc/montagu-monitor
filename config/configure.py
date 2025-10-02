@@ -55,10 +55,8 @@ if __name__ == "__main__":
     args = docopt(__doc__)
     if args["--dev"]:
         slack_default_channel = "monitor-test"
-        slack_hint_channel = "monitor-test"
     else:
         slack_default_channel = "montagu-monitor"
-        slack_hint_channel = "hint-monitor"
 
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
@@ -70,8 +68,7 @@ if __name__ == "__main__":
         "alertmanager.template.yml",
         "alertmanager/alertmanager.yml",
         {"slack_oauth_token": vault.read_secret(slack_oauth_token),
-         "slack_default_channel": slack_default_channel,
-         "slack_hint_channel": slack_hint_channel}
+         "slack_default_channel": slack_default_channel}
     )
     instantiate_config(
         "grafana/grafana.template.ini",

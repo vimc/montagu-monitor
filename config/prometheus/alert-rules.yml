@@ -25,58 +25,6 @@ groups:
         annotations:
           error: "OutpackServer on {{ $labels.instance }} is down"
 
-  - name: hint
-    rules:
-      - alert: HINTDown
-        expr: up{job="hint"} == 0
-        for: 5m
-        annotations:
-          error: "Naomi is down"
-      - alert: WorkersDown
-        expr: live_workers{job="hint"} < 7
-        for: 5m
-        annotations:
-          error: "Naomi has fewer than 7 workers"
-
-  - name: hint-dev
-    rules:
-      - alert: DevHINTDown
-        expr: up{job="hint-dev"} == 0
-        for: 5m
-        annotations:
-          error: "Naomi-dev is down"
-      - alert: DevWorkersDown
-        expr: live_workers{job="hint-dev"} < 2
-        for: 5m
-        annotations:
-          error: "Naomi-dev has fewer than 2 workers"
-
-  - name: hint-staging
-    rules:
-      - alert: StagingHINTDown
-        expr: up{job="hint-staging"} == 0
-        for: 5m
-        annotations:
-          error: "Naomi-staging is down"
-      - alert: StagingWorkersDown
-        expr: live_workers{job="hint-staging"} < 2
-        for: 5m
-        annotations:
-          error: "Naomi-staging has fewer than 2 workers"
-
-  - name: hint-preview
-    rules:
-      - alert: PreviewHINTDown
-        expr: up{job="hint-preview"} == 0
-        for: 5m
-        annotations:
-          error: "Naomi-preview is down"
-      - alert: PreviewWorkersDown
-        expr: live_workers{job="hint-preview"} < 2
-        for: 5m
-        annotations:
-          error: "Naomi-preview has fewer than 2 workers"
-
   - name: buildkite-metrics
     rules:
       - alert: BuildkiteMetricsDown
@@ -89,11 +37,6 @@ groups:
         for: 5m
         annotations:
           error: "Buildkite has fewer than 8 default agents"
-      - alert: HintDeployAgentDown
-        expr: buildkite_queues_total_agent_count{queue="hint-deploy"} < 1
-        for: 5m
-        annotations:
-          error: "Buildkite hint-deployment agent is down"
       - alert: NcovAgentDown
         expr: buildkite_queues_total_agent_count{queue="ncov-cdi"} < 1
         for: 5m

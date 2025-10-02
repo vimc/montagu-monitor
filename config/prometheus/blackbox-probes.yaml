@@ -37,13 +37,6 @@
   labels:
     project: mint
 
-# These are set to become Avenir's responsibility in the near future.
-- targets:
-  - https://naomi.unaids.org
-  - https://naomi-preview.dide.ic.ac.uk
-  labels:
-    project: naomi
-
 - targets:
   - https://packit.dide.ic.ac.uk
   - https://packit-dev.dide.ic.ac.uk

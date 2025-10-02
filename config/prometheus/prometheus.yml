@@ -71,21 +71,6 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
-  - job_name: 'hint'
-    scheme: https
-    static_configs:
-      - targets: ['naomi.unaids.org']
-        labels:
-          project: hint
-          frequency: high
-
-  - job_name: 'hint-preview'
-    scheme: https
-    static_configs:
-      - targets: ['naomi-preview.dide.ic.ac.uk']
-        labels:
-          project: hint
-
   - job_name: 'buildkite-metrics'
     static_configs:
     - targets: ['buildkite_metrics:8080']
