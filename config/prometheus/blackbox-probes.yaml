@@ -32,8 +32,8 @@
     project: montagu-packit-api
 
 - targets:
-  - https://mint.dide.ic.ac.uk
-  - https://mint-dev.dide.ic.ac.uk
+  - https://mint.dide.ic.ac.uk/healthz
+  - https://mint-dev.dide.ic.ac.uk/healthz
   labels:
     project: mint
 
