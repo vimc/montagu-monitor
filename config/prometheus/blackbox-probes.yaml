@@ -33,7 +33,7 @@
 
 - targets:
   - https://mint.dide.ic.ac.uk
-  - https://mint-dev.dide.ic.ac.uk
+  - https://mint-dev.dide.ic.ac.uk/healthz
   labels:
     project: mint
 
