@@ -226,6 +226,8 @@ scrape_configs:
         target_label: __metrics_path__
       - target_label: __address__
         replacement: wpia-hn.hpc.dide.ic.ac.uk:8001
+      - target_label: job
+        replacement: "machine-metrics"
 
   - job_name: 'acme-buddy'
     static_configs:
