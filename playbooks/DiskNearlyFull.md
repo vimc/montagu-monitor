@@ -18,7 +18,7 @@ The `/home` directory is mounted on its own 4TB drive. For historical reasons,
 as well (we will get rid of this eventually). `/home` and `/data` are the same
 disk, but two distinct alerts will fire each time the disk fills up.
 
-A break down of disk usage by user is reported on the [GPU servers dashboard](gpu-dashboard).
+A break down of disk usage by user is reported on the [GPU servers dashboard][gpu-dashboard].
 The dashboard can be used to find out which user might be responsible for
 recent increase in disk usage. If a particular user stands out, you can contact
 to find out more about their needs and ask them to remove any old data or
