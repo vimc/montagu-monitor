@@ -61,6 +61,7 @@ if __name__ == "__main__":
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
     process_inventory("hpc-windows-nodes.json")
+    process_inventory("hpc-linux-nodes.json")    
     process_inventory("buildkite-nodes.json")
 
     Path('alertmanager').mkdir(exist_ok=True)
