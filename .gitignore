@@ -6,3 +6,4 @@ config/__pycache__/*
 config/buildkite.env
 config/grafana/grafana.ini
 hdb-credentials
+.history

@@ -31,6 +31,7 @@
   labels:
     project: montagu-packit-api
 
+# MINT: Uses /healthz to avoid creating phantom users (/ creates a user session)
 - targets:
   - https://mint.dide.ic.ac.uk/healthz
   - https://mint-dev.dide.ic.ac.uk/healthz
