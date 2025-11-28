@@ -3,6 +3,7 @@
 #
 # There are a few exceptions:
 # - Buildkite nodes are generated from data/buildkite-nodes.json by configure.py.
+# - GPU nodes are listed in `gpu-nodes.yaml`.
 # - HPC Cluster nodes aren't being scraped yet.
 # - NixOS Packit nodes use a different discovery mechanism. We might change
 #   this in order to harmonise the setup.
@@ -51,5 +52,3 @@
   - wpia-malaria-orderly.dide.ic.ac.uk
   - wpia-modules.hpc.dide.ic.ac.uk
   - wpia-hn2b.hpc.dide.ic.ac.uk
-  - wpia-gpu-01.dide.ic.ac.uk
-  - wpia-gpu-02.dide.ic.ac.uk
