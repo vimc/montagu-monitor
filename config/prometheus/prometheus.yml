@@ -217,6 +217,18 @@ scrape_configs:
       - target_label: __address__
         replacement: wpia-hn.hpc.dide.ic.ac.uk:8000
 
+  - job_name: 'linux-hpc-exporter'
+    file_sd_configs:
+      - files: [ /etc/prometheus/generated/hpc-linux-nodes.json ]
+    relabel_configs:
+      - source_labels: [__address__]
+        replacement: /metrics/$0:9100
+        target_label: __metrics_path__
+      - target_label: __address__
+        replacement: wpia-hn.hpc.dide.ic.ac.uk:8000
+      - target_label: job
+        replacement: "machine-metrics"
+
   - job_name: 'acme-buddy'
     static_configs:
     - targets:
