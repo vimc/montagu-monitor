@@ -2,9 +2,9 @@
 # node_exporter on port 9100.
 #
 # There are a few exceptions:
-# - Buildkite nodes are generated from data/buildkite-nodes.json by configure.py.
+# - Buildkite nodes are generated from `data/buildkite-nodes.json` by configure.py.
+# - HPC cluster nodes are generated from `data/hpc-linux-nodes.json` by configure.py.
 # - GPU nodes are listed in `gpu-nodes.yaml`.
-# - HPC Cluster nodes aren't being scraped yet.
 # - NixOS Packit nodes use a different discovery mechanism. We might change
 #   this in order to harmonise the setup.
 - targets:
