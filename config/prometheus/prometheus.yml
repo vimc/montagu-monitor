@@ -225,7 +225,7 @@ scrape_configs:
         replacement: /metrics/$0:9100
         target_label: __metrics_path__
       - target_label: __address__
-        replacement: wpia-hn.hpc.dide.ic.ac.uk:8001
+        replacement: wpia-hn.hpc.dide.ic.ac.uk:8000
       - target_label: job
         replacement: "machine-metrics"
 
