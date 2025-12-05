@@ -94,21 +94,3 @@ groups:
         annotations:
           error: "certificate obtained by acme-buddy was not loaded: '{{ $labels.domain }}'"
           playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/AcmeBuddyCertificateNotLoaded.md
-
-  - name: packit
-    rules:
-      # Detect configuration drift between the NixOS config on GitHub and what
-      # is deployed on the machines. If a machine differs from the source of
-      # truth for more than a week, an alert is fired.
-      #
-      # We only consider the system hash, not the Git revision, allowing trivial
-      # differences that don't affect the output.
-      - alert: PackitConfigDrift
-        expr: |
-          nixos_configuration_info unless on(hostname, narHash) nixos_source_info
-        for: 1w
-        annotations:
-          error: "NixOS configuration is out-of-sync: '{{ $labels.instance }}'"
-          playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/PackitConfigDrift.md
-        labels:
-          frequency: "weekly"

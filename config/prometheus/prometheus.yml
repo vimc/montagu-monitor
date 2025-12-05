@@ -47,6 +47,9 @@ scrape_configs:
         labels:
           frequency: low
           project: montagu
+      - targets:
+        - reside-dev.packit-dev.dide.ic.ac.uk:9000
+        - kipling.packit-private.dide.ic.ac.uk:9000
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
@@ -64,6 +67,9 @@ scrape_configs:
       - targets: ['uat.montagu.dide.ic.ac.uk:9000']
         labels:
           frequency: low
+      - targets:
+        - reside-dev.packit-dev.dide.ic.ac.uk:9000
+        - kipling.packit-private.dide.ic.ac.uk:9000
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [ __address__ ]
@@ -124,8 +130,6 @@ scrape_configs:
   - job_name: 'packit'
     http_sd_configs:
       - url: "http://packit.dide.ic.ac.uk:9000/targets"
-      - url: "http://packit-dev.dide.ic.ac.uk:9000/targets"
-      - url: "http://packit-private.dide.ic.ac.uk:9000/targets"
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
@@ -176,31 +180,6 @@ scrape_configs:
       - target_label: __address__
         replacement: blackbox-exporter:9115
 
-  # This jobs scrapes metrics off of GitHub pages. These metrics would
-  # typically be produced by a GitHub actions workflow and published to pages.
-  - job_name: 'github-pages-metrics'
-    # GitHub pages does not set the right Content-Type, so we need a fallback
-    # value.
-    fallback_scrape_protocol: 'PrometheusText0.0.4'
-    static_configs:
-      - targets: ['reside-ic/packit-infra']
-
-    scheme: https
-    # The target set above is saved as the `repository` label.
-    # It is split in two and used to form `https://<owner>.github.io/<repo>/metrics`
-    # as the metrics URL.
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: repository
-      - source_labels: [__address__]
-        target_label: __metrics_path__
-        regex: ^(.*)/(.*)$
-        replacement: $2/metrics
-      - source_labels: [__address__]
-        target_label: __address__
-        regex: ^(.*)/(.*)$
-        replacement: $1.github.io
-
   - job_name: 'windows-exporter'
     file_sd_configs:
       - files: [ /etc/prometheus/generated/hpc-windows-nodes.json ]
@@ -241,6 +220,8 @@ scrape_configs:
       - shiny.dide.ic.ac.uk:2112
       - vault.dide.ic.ac.uk:2112
       - wodin-dev.dide.ic.ac.uk:2112
+      - packit-dev.dide.ic.ac.uk:2112
+      - packit-private.dide.ic.ac.uk:2112
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]

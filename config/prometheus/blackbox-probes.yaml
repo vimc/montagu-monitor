@@ -31,6 +31,14 @@
   labels:
     project: montagu-packit-api
 
+- targets:
+    - https://packit-dev.dide.ic.ac.uk
+    - https://reside-dev.packit-dev.dide.ic.ac.uk
+    - https://reside-dev.packit-dev.dide.ic.ac.uk/packit/api
+    - https://packit-private.dide.ic.ac.uk
+    - https://kipling.packit-private.dide.ic.ac.uk
+    - https://kipling.packit-private.dide.ic.ac.uk/packit/api
+
 # MINT: Uses /healthz to avoid creating phantom users (/ creates a user session)
 - targets:
   - https://mint.dide.ic.ac.uk/healthz
