@@ -5,7 +5,6 @@
 # - Buildkite nodes are generated from `data/buildkite-nodes.json` by configure.py.
 # - HPC cluster nodes are generated from `data/hpc-linux-nodes.json` by configure.py.
 # - GPU nodes are listed in `gpu-nodes.yaml`.
-# - NixOS Packit nodes use a different discovery mechanism. We might change
 #   this in order to harmonise the setup.
 - targets:
   - wpia-beebop-dev.dide.ic.ac.uk
@@ -52,3 +51,9 @@
   - wpia-malaria-orderly.dide.ic.ac.uk
   - wpia-modules.hpc.dide.ic.ac.uk
   - wpia-hn2b.hpc.dide.ic.ac.uk
+
+- targets:
+  - wpia-packit-dev.dide.ic.ac.uk
+  - wpia-packit-private.dide.ic.ac.uk
+  labels:
+    project: packit
