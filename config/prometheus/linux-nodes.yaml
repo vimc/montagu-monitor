@@ -55,5 +55,6 @@
 - targets:
   - wpia-packit-dev.dide.ic.ac.uk
   - wpia-packit-private.dide.ic.ac.uk
+  - wpia-packit.dide.ic.ac.uk
   labels:
     project: packit
