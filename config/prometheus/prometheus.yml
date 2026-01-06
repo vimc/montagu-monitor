@@ -219,7 +219,6 @@ scrape_configs:
       - packit-dev.dide.ic.ac.uk:2112
       - packit-private.dide.ic.ac.uk:2112
       - packit.dide.ic.ac.uk:2112
-
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
