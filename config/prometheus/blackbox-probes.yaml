@@ -38,6 +38,17 @@
     - https://packit-private.dide.ic.ac.uk
     - https://kipling.packit-private.dide.ic.ac.uk
     - https://kipling.packit-private.dide.ic.ac.uk/packit/api
+    - https://packit.dide.ic.ac.uk
+    - https://priority-pathogens.packit.dide.ic.ac.uk
+    - https://priority-pathogens.packit.dide.ic.ac.uk/packit/api
+    - https://reside.packit.dide.ic.ac.uk
+    - https://reside.packit.dide.ic.ac.uk/packit/api
+    - https://malariaverse-sitefiles.packit.dide.ic.ac.uk
+    - https://malariaverse-sitefiles.packit.dide.ic.ac.uk/packit/api
+    - https://training.packit.dide.ic.ac.uk
+    - https://training.packit.dide.ic.ac.uk/packit/api
+    - https://eppi-vulnerability-index.packit.dide.ic.ac.uk
+    - https://eppi-vulnerability-index.packit.dide.ic.ac.uk/packit/api
 
 # MINT: Uses /healthz to avoid creating phantom users (/ creates a user session)
 - targets:

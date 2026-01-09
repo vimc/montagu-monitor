@@ -50,6 +50,11 @@ scrape_configs:
       - targets:
         - reside-dev.packit-dev.dide.ic.ac.uk:9000
         - kipling.packit-private.dide.ic.ac.uk:9000
+        - priority-pathogens.packit.dide.ic.ac.uk:9000
+        - reside.packit.dide.ic.ac.uk:9000
+        - malariaverse-sitefiles.packit.dide.ic.ac.uk:9000
+        - training.packit.dide.ic.ac.uk:9000
+        - eppi-vulnerability-index.packit.dide.ic.ac.uk:9000
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
@@ -70,6 +75,11 @@ scrape_configs:
       - targets:
         - reside-dev.packit-dev.dide.ic.ac.uk:9000
         - kipling.packit-private.dide.ic.ac.uk:9000
+        - priority-pathogens.packit.dide.ic.ac.uk:9000
+        - reside.packit.dide.ic.ac.uk:9000
+        - malariaverse-sitefiles.packit.dide.ic.ac.uk:9000
+        - training.packit.dide.ic.ac.uk:9000
+        - eppi-vulnerability-index.packit.dide.ic.ac.uk:9000
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [ __address__ ]
@@ -122,20 +132,6 @@ scrape_configs:
       - source_labels: [__address__]
         replacement: $0:10018
         target_label: __address__
-
-  # The packit servers have a whole slew of services we want to scrape. To ease
-  # configuration, each server exposes a JSON document that lists them all.
-  # Prometheus dynamically discovers the services to scrape by fetching that
-  # endpoint.
-  - job_name: 'packit'
-    http_sd_configs:
-      - url: "http://packit.dide.ic.ac.uk:9000/targets"
-    relabel_configs:
-      # Override the default instance name to remove the port
-      - source_labels: [__address__]
-        regex: (.+):(.+)
-        target_label: instance
-        replacement: $1
 
   # We run a couple of "multi-target exporters", that expose a different service
   # as prometheus metrics. This scrape job collects the exporters' own metrics.
@@ -222,6 +218,7 @@ scrape_configs:
       - wodin-dev.dide.ic.ac.uk:2112
       - packit-dev.dide.ic.ac.uk:2112
       - packit-private.dide.ic.ac.uk:2112
+      - packit.dide.ic.ac.uk:2112
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
