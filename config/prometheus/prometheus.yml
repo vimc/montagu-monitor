@@ -27,7 +27,12 @@ scrape_configs:
 
   - job_name: 'proxy-metrics'
     static_configs:
-      - targets: ['montagu.vaccineimpact.org:9113', 'uat.montagu.dide.ic.ac.uk:9113', 'science.montagu.dide.ic.ac.uk:9113']
+      - targets:
+        - montagu.vaccineimpact.org:9113
+        - uat.montagu.dide.ic.ac.uk:9113
+        - science.montagu.dide.ic.ac.uk:9113
+        - mint.dide.ic.ac.uk:9113
+        - mint-dev.dide.ic.ac.uk:9113
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [ __address__ ]
@@ -58,6 +63,23 @@ scrape_configs:
     relabel_configs:
       # Override the default instance name to remove the port
       - source_labels: [__address__]
+        regex: (.+):(.+)
+        target_label: instance
+        replacement: $1
+
+  - job_name: "mint-api"
+    metrics_path: /metrics/api/
+    scheme: https
+    static_configs:
+      - targets: ["mint.dide.ic.ac.uk:9000"]
+        labels:
+          frequency: high
+      - targets: ["mint-dev.dide.ic.ac.uk:9000"]
+        labels:
+          frequency: low
+    relabel_configs:
+      # Override the default instance name to remove the port
+      - source_labels: [ __address__ ]
         regex: (.+):(.+)
         target_label: instance
         replacement: $1
