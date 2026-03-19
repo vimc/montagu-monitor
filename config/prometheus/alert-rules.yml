@@ -94,3 +94,21 @@ groups:
         annotations:
           error: "certificate obtained by acme-buddy was not loaded: '{{ $labels.domain }}'"
           playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/AcmeBuddyCertificateNotLoaded.md
+
+  - name: trmnl_alerts
+    rules:
+      - alert: TRMNLBatteryLow
+        expr: trmnl_battery_volts < 3.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low battery on {{ $labels.device }}"
+
+      - alert: TRMNLDeviceOffline
+        expr: time() - trmnl_last_refresh_timestamp > 7200
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Device {{ $labels.device }} offline"
