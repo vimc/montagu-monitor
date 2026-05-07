@@ -98,7 +98,7 @@ groups:
   - name: trmnl_alerts
     rules:
       - alert: TRMNLBatteryLow
-        expr: trmnl_battery_volts < 3.8
+        expr: trmnl_battery_volts < 3.4
         for: 5m
         labels:
           severity: warning
