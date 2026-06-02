@@ -250,7 +250,7 @@ scrape_configs:
 
   - job_name: 'trmnl'
     scheme: https
-    metrics_path: trmnl/metrics/
+    metrics_path: /trmnl/metrics/
     static_configs:
       - targets: ['mrcdata.dide.ic.ac.uk:443']
 
