@@ -104,11 +104,3 @@ groups:
           severity: warning
         annotations:
           summary: "Low battery on {{ $labels.device }}"
-
-      - alert: TRMNLDeviceOffline
-        expr: time() - trmnl_last_refresh_timestamp > 7200
-        for: 2m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Device {{ $labels.device }} offline"
