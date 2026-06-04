@@ -248,5 +248,11 @@ scrape_configs:
         target_label: instance
         replacement: $1
 
+  - job_name: 'trmnl'
+    scheme: https
+    metrics_path: /trmnl/metrics/
+    static_configs:
+      - targets: ['mrcdata.dide.ic.ac.uk:443']
+
 rule_files:
   - alert-rules.yml
