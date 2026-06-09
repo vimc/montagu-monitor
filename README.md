@@ -26,6 +26,13 @@ To reload Prometheus and the alert manager after a config change, run
 ```
 
 ## Local development
+
+```sh
+git clone git@github.com:vimc/montagu-monitor.git
+git submodule update
+pip3 install -r requirements.txt --user
+```
+
 To run locally and have the alert manager notify a test Slack channel rather than creating noise in
 the real monitor channel, use
 ```
@@ -46,6 +53,9 @@ to
 
 `up{job="proxy-metrics"} == 1`
 
+### Grafana dashboard
+
+Go to http://localhost:3000/grafana/ to see the Grafana dashboard. Without any further configuration you should be able to see metrics under Drilldown > Metrics.
 
 ## Deployment on bots.dide.ic.ac.uk
 

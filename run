@@ -18,7 +18,12 @@ echo ""
 echo "COMPOSE_PROFILES=$PROFILE" > .env
 
 ./config/configure.py $1
+
+# Override Grafana configuration to set the domain to localhost, so that the root_url is correct.
+echo "GF_SERVER_DOMAIN=localhost" >> .env
+
 docker compose -p monitor up --detach --build
 
 echo "Now running Montagu Monitor"
-echo "Browse to http://localhost:9090 to see basic output."
+echo "Browse to http://localhost:9090 to see basic Prometheus output."
+echo "Browse to http://localhost:3000/grafana to see Grafana dashboards."
