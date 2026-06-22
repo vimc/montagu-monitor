@@ -53,10 +53,4 @@ storage_config:
   # Configures storing the chunks on the local file system.
   filesystem: # <local_storage_config> The local_storage_config block configures the usage of local file system as object storage backend.
     directory: /tmp/loki/chunks # Is this an example location that should be done somewhere else?
-
-
-# Theory: I added this after seeing UI error message 'Log volume has not been configured.'
-# But volume_enabled is true by default: https://community.grafana.com/t/loki-logs-not-appearing-with-error-message-log-volume-not-configured/150319/9
-# The limits_config block configures global and per-tenant limits in Loki
-# limits_config:
-#   volume_enabled: true # Enable log-volume endpoints. https://grafana.com/docs/loki/latest/reference/loki-http-api/#query-log-volume
+    

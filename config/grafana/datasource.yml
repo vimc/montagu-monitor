@@ -28,7 +28,6 @@ datasources:
   - name: loki
     orgId: 1 # the default value is 1 https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources
     type: loki
-    # access: proxy # does this require updates to nginx.conf?
     # replacing localhost with 172.17.0.1 worked;
     # then with 'loki' ensures container-to-container communication as opposed to going via host.
     url: http://loki:3100
