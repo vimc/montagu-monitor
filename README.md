@@ -33,6 +33,8 @@ git submodule update
 pip3 install -r requirements.txt --user
 ```
 
+on ubuntu 24 you have to use like a venv
+
 To run locally and have the alert manager notify a test Slack channel rather than creating noise in
 the real monitor channel, use
 ```
@@ -55,7 +57,11 @@ to
 
 ### Grafana dashboard
 
-Go to http://localhost:3000/grafana/ to see the Grafana dashboard. Without any further configuration you should be able to see metrics under Drilldown > Metrics.
+Go to http://localhost:3000/grafana/ to see the Grafana dashboard.
+
+Log in using the user `admin` and the password from Vault under `secret/vimc/prometheus/grafana_password`.
+
+Without any further configuration you should be able to see metrics under Drilldown > Metrics.
 
 ## Deployment on bots.dide.ic.ac.uk
 

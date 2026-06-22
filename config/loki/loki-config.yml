@@ -8,7 +8,9 @@
 
 # Enables authentication through the X-Scope-OrgID header, which must be present
 # if true. If false, the OrgID will always be set to 'fake'.
-auth_enabled: false # I think this is distinct from the need for nginx proxy around loki that is flagged everywhere with comments like 'note you must put it behind a proxy'
+# [I think this is distinct from the need for nginx proxy around loki that is flagged everywhere with comments like 'note you must put it behind a proxy'
+# I think it's to do with multi-tenant set-ups.]
+auth_enabled: false
 
 
 server:
@@ -36,7 +38,7 @@ schema_config:
     # The date of the first day that index buckets should be created. Use a date in
     # the past if this is your only period_config, otherwise use a date when you
     # want the schema to switch over. In YYYY-MM-DD format, for example: 2018-04-15.
-    - from: 2020-05-15
+    - from: 2026-06-21 # Confirmed this is printed on start up
       # store and object_store below affect which <storage_config> key is used. Which
       # index to use. Either tsdb or boltdb-shipper.
       # David inferences: 'store' refers to the index storage, and object_store to chunk storage.

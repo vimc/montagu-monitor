@@ -54,16 +54,28 @@ services:
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
       - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
 
+# dont forget to configure `restart` property as in other services
+
+# Also, "In most cases you should specify a tagged release version for running, the above examples all use the implied :latest tag:" https://hub.docker.com/r/grafana/loki#loki-docker-image
+
+# Cf: https://github.com/grafana/loki/blob/main/examples/getting-started/docker-compose.yaml
+
   loki: # via https://medium.com/@netopschic/implementing-the-log-monitoring-stack-using-promtail-loki-and-grafana-using-docker-compose-bcb07d1a51aa
     image: grafana/loki:latest
+    # Exposing 3100 to the host is necessary for Loki to receive logs from Alloy. (At least for local dev?)
+    # It has the side-effect that we can inspect Loki with e.g. http://localhost:3100/ready from the host.
     ports:
       - 3100:3100
+
     # NB the below does nothing, since 'docker logs monitor-loki-1' shows
     # level=info ts=2026-06-18T15:46:25.116556309Z caller=main.go:147 msg="Loading configuration file" filename=/etc/loki/local-config.yaml
     # Wanted to try switching the second arg here to 'local-config.yaml' but blocked by Zscaler blocking Vault.
     # OK, that didn't work either, so I don't know how I ever had loki working in docker before.
     volumes:
-      - ./config/loki/loki-config.yml:/etc/loki/loki-config.yaml
+      - ./config/loki/loki-config-22-Jun.yml:/etc/loki/local-config.yaml:ro
+    command:
+      - "-print-config-stderr" # Helpful for debugging.
+      - "-config.file=/etc/loki/local-config.yaml"
 
   rrq-dashboard:
     image: mrcide/rrq.dashboard:main
