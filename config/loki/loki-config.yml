@@ -1,0 +1,60 @@
+# From https://grafana.com/docs/loki/latest/configure/examples/configuration-examples/#1-local-configuration-exampleyaml
+# This is a complete configuration to deploy Loki backed by the filesystem.
+# The index will be shipped to the storage via tsdb-shipper.
+
+
+# See also https://github.com/grafana/loki/blob/main/cmd/loki/loki-local-config.yaml
+
+
+# Enables authentication through the X-Scope-OrgID header, which must be present
+# if true. If false, the OrgID will always be set to 'fake'.
+auth_enabled: false # I think this is distinct from the need for nginx proxy around loki that is flagged everywhere with comments like 'note you must put it behind a proxy'
+
+
+server:
+  http_listen_port: 3100
+
+common:
+  ring: # refers to https://grafana.com/docs/loki/latest/get-started/hash-rings/
+    instance_addr: 127.0.0.1 # IP address to advertise in the ring.
+    kvstore:
+      # Backend storage to use for the ring. Supported values are: consul,
+      # etcd, inmemory, memberlist, multi.
+      store: inmemory
+  # Found two descriptions of the 'replication_factor' property:
+  # 1) The number of ingesters to write to and read from.
+  # 2) a single copy of each piece of data. (factor was set to 1)
+  # See also https://grafana.com/docs/loki/latest/get-started/components/#replication-factor
+  replication_factor: 1
+  path_prefix: /tmp/loki
+
+# Configures the chunk index schema and where it is stored. <- sounds wrong
+schema_config:
+  # list of period_configs. The period_config block configures what index schemas should be used for from specific time periods.
+  # https://grafana.com/docs/loki/latest/configure/storage/#upgrading-schemas
+  configs:
+    # The date of the first day that index buckets should be created. Use a date in
+    # the past if this is your only period_config, otherwise use a date when you
+    # want the schema to switch over. In YYYY-MM-DD format, for example: 2018-04-15.
+    - from: 2020-05-15
+      # store and object_store below affect which <storage_config> key is used. Which
+      # index to use. Either tsdb or boltdb-shipper.
+      # David inferences: 'store' refers to the index storage, and object_store to chunk storage.
+      store: tsdb # Starting with Loki v2.8, TSDB is the recommended Loki index.
+      object_store: filesystem
+      schema: v13 # The schema version to use, current recommended schema is v13.
+      index: # Configures how the index is updated and stored.
+        prefix: index_ # Table prefix for all period tables.
+        period: 24h # Table period.
+
+storage_config:
+  # Configures storing the chunks on the local file system.
+  filesystem: # <local_storage_config> The local_storage_config block configures the usage of local file system as object storage backend.
+    directory: /tmp/loki/chunks # Is this an example location that should be done somewhere else?
+
+
+# Theory: I added this after seeing UI error message 'Log volume has not been configured.'
+# But volume_enabled is true by default: https://community.grafana.com/t/loki-logs-not-appearing-with-error-message-log-volume-not-configured/150319/9
+# The limits_config block configures global and per-tenant limits in Loki
+# limits_config:
+#   volume_enabled: true # Enable log-volume endpoints. https://grafana.com/docs/loki/latest/reference/loki-http-api/#query-log-volume
