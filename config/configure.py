@@ -85,6 +85,13 @@ if __name__ == "__main__":
             f.write(f"HDB_ACME_USERNAME={hdb_username}\n")
             f.write(f"HDB_ACME_PASSWORD={hdb_password}\n")
 
+    # .htpasswd files should be created using the -B flag to use more secure bcrypt hashing.
+    print("Fetching Loki basic auth credentials")
+    loki_basic_auth_path = f"secret/vimc/loki/basicauth/{'dev' if args['--dev'] else 'prod'}"
+    password_hash = vault.read_secret(loki_basic_auth_path, field=".htpasswd")
+    with open("nginx/.htpasswd", 'w') as f:
+        f.write(password_hash)
+
     with open("buildkite.env", 'w') as f:
         f.write("BUILDKITE_AGENT_TOKEN={}".format(
             vault.read_secret("secret/buildkite/agent", "token")))
