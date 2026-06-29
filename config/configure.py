@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
     if args["--dev"]:
-        slack_default_channel = "monitor-test"
+        slack_default_channel = "monitor-dev"
     else:
         slack_default_channel = "montagu-monitor"
 
