@@ -1,56 +1,88 @@
-# From https://grafana.com/docs/loki/latest/configure/examples/configuration-examples/#1-local-configuration-exampleyaml
-# This is a complete configuration to deploy Loki backed by the filesystem.
-# The index will be shipped to the storage via tsdb-shipper.
+# Copied from https://github.com/grafana/loki/blob/main/cmd/loki/loki-docker-config.yaml
 
-
-# See also https://github.com/grafana/loki/blob/main/cmd/loki/loki-local-config.yaml
-
-
-# Enables authentication through the X-Scope-OrgID header, which must be present
-# if true. If false, the OrgID will always be set to 'fake'.
-# [I think this is distinct from the need for nginx proxy around loki that is flagged everywhere with comments like 'note you must put it behind a proxy'
-# I think it's to do with multi-tenant set-ups.]
+# `auth_enabled` enables authentication through the X-Scope-OrgID header, which must be present if true.
+# If false, the OrgID will always be set to 'fake'.
+# This 'auth' is distinct from the need for authentication around Loki and relates to multi-tenant set-ups.
+# We protect the /loki/ route with basic auth via the nginx proxy.
 auth_enabled: false
-
 
 server:
   http_listen_port: 3100
 
 common:
+  instance_addr: 127.0.0.1
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1 # filesystem storage cannot be replicated: https://grafana.com/docs/loki/latest/configure/storage/#chunk-storage
   ring: # refers to https://grafana.com/docs/loki/latest/get-started/hash-rings/
-    instance_addr: 127.0.0.1 # IP address to advertise in the ring.
     kvstore:
-      # Backend storage to use for the ring. Supported values are: consul,
-      # etcd, inmemory, memberlist, multi.
       store: inmemory
-  # Found two descriptions of the 'replication_factor' property:
-  # 1) The number of ingesters to write to and read from.
-  # 2) a single copy of each piece of data. (factor was set to 1)
-  # See also https://grafana.com/docs/loki/latest/get-started/components/#replication-factor
-  replication_factor: 1
-  path_prefix: /tmp/loki
 
-# Configures the chunk index schema and where it is stored. <- sounds wrong
 schema_config:
-  # list of period_configs. The period_config block configures what index schemas should be used for from specific time periods.
-  # https://grafana.com/docs/loki/latest/configure/storage/#upgrading-schemas
   configs:
-    # The date of the first day that index buckets should be created. Use a date in
-    # the past if this is your only period_config, otherwise use a date when you
-    # want the schema to switch over. In YYYY-MM-DD format, for example: 2018-04-15.
-    - from: 2026-06-21 # Confirmed this is printed on start up
-      # store and object_store below affect which <storage_config> key is used. Which
-      # index to use. Either tsdb or boltdb-shipper.
-      # David inferences: 'store' refers to the index storage, and object_store to chunk storage.
-      store: tsdb # Starting with Loki v2.8, TSDB is the recommended Loki index.
+    - from: 2026-06-22
+      store: tsdb # Type of index storage
       object_store: filesystem
-      schema: v13 # The schema version to use, current recommended schema is v13.
-      index: # Configures how the index is updated and stored.
-        prefix: index_ # Table prefix for all period tables.
-        period: 24h # Table period.
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
 
-storage_config:
-  # Configures storing the chunks on the local file system.
-  filesystem: # <local_storage_config> The local_storage_config block configures the usage of local file system as object storage backend.
-    directory: /tmp/loki/chunks # Is this an example location that should be done somewhere else?
-    
+compactor:
+  retention_enabled: true
+  delete_request_store: filesystem
+
+ruler:
+  # This correction from localhost to alertmanager is a guess for now.
+  # Test it with the test Slack channel?
+  alertmanager_url: http://alertmanager:9093
+
+# The recommended limits_config values from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-production-limits
+# NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#limits_config
+limits_config:
+  # Rate limits
+  ingestion_rate_strategy: global
+  ingestion_rate_mb: 10
+  ingestion_burst_size_mb: 20
+  per_stream_rate_limit: 3MB
+  per_stream_rate_limit_burst: 15MB
+  
+  # Stream limits
+  max_global_streams_per_user: 10000
+  max_streams_per_user: 0
+  
+  # Validation
+  max_line_size: 256KB
+  max_line_size_truncate: false
+  max_label_name_length: 1024
+  max_label_value_length: 2048
+  max_label_names_per_series: 15
+  
+  # Time constraints
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h  # 7 days
+  creation_grace_period: 10m
+  unordered_writes: true
+
+  # Custom values for reside
+  retention_period: 24h # 1440h # 60 days to match prometheus retention period. Minimum 24h. https://grafana.com/docs/loki/latest/operations/storage/retention/
+
+# The recommended ingester config from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-ingester-configuration
+# NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#ingester
+ingester:
+  # Chunk settings
+  chunk_idle_period: 30m
+  chunk_target_size: 1572864  # 1.5 MB
+  chunk_encoding: snappy
+  max_chunk_age: 2h
+  
+  # WAL settings, see https://grafana.com/blog/the-essential-config-settings-you-should-use-so-you-wont-drop-logs-in-loki/#wal
+  wal:
+    enabled: true
+    dir: /loki/wal # Hopefully inside volume 'loki-storage' which is mounted to /loki
+    checkpoint_duration: 5m
+    flush_on_shutdown: true
+

@@ -54,28 +54,15 @@ services:
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
       - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
 
-# dont forget to configure `restart` property as in other services
-
-# dont forget to check data is persisting between container restarts (in a volume?) See https://hub.docker.com/r/grafana/loki#running
-
-# Also, "In most cases you should specify a tagged release version for running, the above examples all use the implied :latest tag:" https://hub.docker.com/r/grafana/loki#loki-docker-image
-
-# Cf: https://github.com/grafana/loki/blob/main/examples/getting-started/docker-compose.yaml
-
-# do the auth thingy from https://grafana.com/docs/loki/latest/operations/authentication/
-
-  loki: # via https://medium.com/@netopschic/implementing-the-log-monitoring-stack-using-promtail-loki-and-grafana-using-docker-compose-bcb07d1a51aa
-    image: grafana/loki:latest
-    # Exposing 3100 to the host is necessary for Loki to receive logs from Alloy. (At least for local dev?)
-    # It has the side-effect that we can inspect Loki with e.g. http://localhost:3100/ready from the host.
-    ports:
-      - 3100:3100
-
+  loki:
+    image: grafana/loki:3.7.3 # 'In most cases you should specify a tagged release version for running' according to https://hub.docker.com/r/grafana/loki
+    restart: always
     volumes:
-      - ./config/loki/loki-config-22-Jun.yml:/etc/loki/config.yaml:ro
+      - ./config/loki/loki-config.yml:/etc/loki/config.yml:ro
+      - loki-storage:/loki
     command:
       - "-print-config-stderr" # Helpful for debugging.
-      - "-config.file=/etc/loki/config.yaml"
+      - "-config.file=/etc/loki/config.yml"
 
   rrq-dashboard:
     image: mrcide/rrq.dashboard:main
@@ -148,3 +135,4 @@ volumes:
   prometheus-storage: {}
   alertmanager-storage: {}
   bots-tls: {}
+  loki-storage: {}
