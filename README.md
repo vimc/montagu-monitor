@@ -143,3 +143,9 @@ using Alloy to push metrics to Prometheus ([tutorial](https://grafana.com/docs/a
 ### Machine metrics
 
 See [machine-metrics](https://github.com/vimc/machine-metrics) for turning on Prometheus Node Exporter for publishing machine metrics from a system. This will make the metrics accessible on `localhost:9100`. You then need to add a new job to `prometheus.yml` to pull metrics, they can then be used to build alerts or for graphs.
+
+## Loki and Alloy integration
+
+Here is a diagram to provide a sense of the intended architectural set-up of Loki and Alloy in practice, taking an example of having Alloy installed to aggregate logs on the daedalus-dev.dide.ic.ac.uk machine:
+
+![alt text](./alloy-loki-drawio.png)
