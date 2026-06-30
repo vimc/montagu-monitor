@@ -1,4 +1,7 @@
-# Copied from https://github.com/grafana/loki/blob/main/cmd/loki/loki-docker-config.yaml
+# Based on https://github.com/grafana/loki/blob/main/cmd/loki/loki-docker-config.yaml
+
+# If you encounter issues with too many files in a directory with filesystem storage,
+# see https://grafana.com/docs/loki/latest/operations/storage/filesystem/#scaling
 
 # `auth_enabled` enables authentication through the X-Scope-OrgID header, which must be present if true.
 # If false, the OrgID will always be set to 'fake'.
