@@ -2,8 +2,8 @@
 
 # `auth_enabled` enables authentication through the X-Scope-OrgID header, which must be present if true.
 # If false, the OrgID will always be set to 'fake'.
-# This 'auth' is distinct from the need for authentication around Loki and relates to multi-tenant set-ups.
-# We protect the /loki/ route with basic auth via the nginx proxy.
+# This 'auth' is distinct from the need for authentication around Loki, and instead relates to multi-tenant set-ups.
+# As regards traffic from outside the Docker network, we protect the /loki/ route with basic auth via the nginx proxy.
 auth_enabled: false
 
 server:

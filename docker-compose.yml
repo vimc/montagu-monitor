@@ -54,14 +54,16 @@ services:
       - ./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
       - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
 
+  # The loki docker image is documented at https://hub.docker.com/r/grafana/loki
   loki:
-    image: grafana/loki:3.7.3 # 'In most cases you should specify a tagged release version for running' according to https://hub.docker.com/r/grafana/loki
+    image: grafana/loki:3.7.3 # The docs advise 'In most cases you should specify a tagged release version for running'
     restart: always
     volumes:
       - ./config/loki/loki-config.yml:/etc/loki/config.yml:ro
       - loki-storage:/loki
     command:
-      - "-print-config-stderr" # Helpful for debugging.
+      # Debugging: Uncomment the line below to dump all config to logs including defaults.
+      # - "-print-config-stderr"
       - "-config.file=/etc/loki/config.yml"
 
   rrq-dashboard:
