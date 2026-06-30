@@ -17,13 +17,15 @@ common:
       chunks_directory: /loki/chunks
       rules_directory: /loki/rules
   replication_factor: 1 # filesystem storage cannot be replicated: https://grafana.com/docs/loki/latest/configure/storage/#chunk-storage
-  ring: # refers to https://grafana.com/docs/loki/latest/get-started/hash-rings/
+  ring: # 'ring' refers to https://grafana.com/docs/loki/latest/get-started/hash-rings/
     kvstore:
       store: inmemory
 
+# https://grafana.com/docs/loki/latest/configure/#schema_config
+# https://grafana.com/docs/loki/latest/configure/#period_config
 schema_config:
   configs:
-    - from: 2026-06-22
+    - from: 1970-01-01
       store: tsdb # Type of index storage
       object_store: filesystem
       schema: v13
@@ -34,11 +36,6 @@ schema_config:
 compactor:
   retention_enabled: true
   delete_request_store: filesystem
-
-ruler:
-  # This correction from localhost to alertmanager is a guess for now.
-  # Test it with the test Slack channel?
-  alertmanager_url: http://alertmanager:9093
 
 # The recommended limits_config values from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-production-limits
 # NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#limits_config

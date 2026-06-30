@@ -32,7 +32,7 @@ services:
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--web.external-url=https://bots.dide.ic.ac.uk/alertmanager'
-      # Two weeks of data rentention: this is necessary to support long repeat
+      # Two weeks of data retention: this is necessary to support long repeat
       # intervals for alerts.
       - '--data.retention=336h'
 
