@@ -1,0 +1,88 @@
+# Based on https://github.com/grafana/loki/blob/main/cmd/loki/loki-docker-config.yaml
+
+# If you encounter issues with too many files in a directory with filesystem storage,
+# see https://grafana.com/docs/loki/latest/operations/storage/filesystem/#scaling
+
+# `auth_enabled` enables authentication through the X-Scope-OrgID header, which must be present if true.
+# If false, the OrgID will always be set to 'fake'.
+# This 'auth' is distinct from the need for authentication around Loki, and instead relates to multi-tenant set-ups.
+# As regards traffic from outside the Docker network, we protect the /loki/ route with basic auth via the nginx proxy.
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1 # filesystem storage cannot be replicated: https://grafana.com/docs/loki/latest/configure/storage/#chunk-storage
+  ring: # 'ring' refers to https://grafana.com/docs/loki/latest/get-started/hash-rings/
+    kvstore:
+      store: inmemory
+
+# https://grafana.com/docs/loki/latest/configure/#schema_config
+# https://grafana.com/docs/loki/latest/configure/#period_config
+schema_config:
+  configs:
+    - from: 1970-01-01
+      store: tsdb # Type of index storage
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+compactor:
+  retention_enabled: true
+  delete_request_store: filesystem
+
+# The recommended limits_config values from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-production-limits
+# NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#limits_config
+limits_config:
+  # Rate limits
+  ingestion_rate_strategy: global
+  ingestion_rate_mb: 10
+  ingestion_burst_size_mb: 20
+  per_stream_rate_limit: 3MB
+  per_stream_rate_limit_burst: 15MB
+  
+  # Stream limits
+  max_global_streams_per_user: 10000
+  max_streams_per_user: 0
+  
+  # Validation
+  max_line_size: 256KB
+  max_line_size_truncate: false
+  max_label_name_length: 1024
+  max_label_value_length: 2048
+  max_label_names_per_series: 15
+  
+  # Time constraints
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h  # 7 days
+  creation_grace_period: 10m
+  unordered_writes: true
+
+  # Custom values for reside
+  retention_period: 24h # 1440h # 60 days to match prometheus retention period. Minimum 24h. https://grafana.com/docs/loki/latest/operations/storage/retention/
+
+# The recommended ingester config from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-ingester-configuration
+# NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#ingester
+ingester:
+  # Chunk settings
+  chunk_idle_period: 30m
+  chunk_target_size: 1572864  # 1.5 MB
+  chunk_encoding: snappy
+  max_chunk_age: 2h
+  
+  # WAL settings, see https://grafana.com/blog/the-essential-config-settings-you-should-use-so-you-wont-drop-logs-in-loki/#wal
+  wal:
+    enabled: true
+    dir: /loki/wal # Hopefully inside volume 'loki-storage' which is mounted to /loki
+    checkpoint_duration: 5m
+    flush_on_shutdown: true
+
