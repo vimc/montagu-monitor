@@ -104,6 +104,12 @@ services:
     ports:
       - '80:80'
       - '443:443'
+    depends_on:
+      - prometheus
+      - alertmanager
+      - grafana
+      - rrq-dashboard
+      - loki
 
   acme-buddy:
     image: ghcr.io/reside-ic/acme-buddy:main
