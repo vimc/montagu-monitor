@@ -45,7 +45,7 @@ services:
       - '-interval=30s'
 
   grafana:
-    image: grafana/grafana-oss
+    image: grafana/grafana
     restart: unless-stopped
     ports:
       - '3000:3000'
