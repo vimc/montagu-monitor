@@ -24,6 +24,9 @@ echo "GF_SERVER_DOMAIN=localhost" >> .env
 
 docker compose -p monitor up --detach --build
 
+echo ""
 echo "Now running Montagu Monitor"
-echo "Browse to http://localhost:9090 to see basic Prometheus output."
-echo "Browse to http://localhost:3000/grafana to see Grafana dashboards."
+echo "* Browse to http://localhost:9090 to see basic Prometheus output." # or https://localhost/prometheus/
+echo "* Browse to http://localhost:3000/grafana to see Grafana dashboards." # or https://localhost/grafana/
+echo "* ./stop to stop containers."
+echo "* ./reload --dev to reload containers after config changes."
