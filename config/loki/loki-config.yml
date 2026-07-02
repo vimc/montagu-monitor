@@ -3,10 +3,10 @@
 # If you encounter issues with too many files in a directory with filesystem storage,
 # see https://grafana.com/docs/loki/latest/operations/storage/filesystem/#scaling
 
-# `auth_enabled` enables authentication through the X-Scope-OrgID header, which must be present if true.
-# If false, the OrgID will always be set to 'fake'.
-# This 'auth' is distinct from the need for authentication around Loki, and instead relates to multi-tenant set-ups.
-# As regards traffic from outside the Docker network, we protect the /loki/ route with basic auth via the nginx proxy.
+# The 'auth' of 'auth_enabled' is distinct from the need for authentication around Loki,
+# and instead refers to multi-tenant set-ups: https://grafana.com/docs/loki/latest/operations/multi-tenancy/
+# As regards authenticating traffic from outside the Docker network, we protect the /loki/ route
+# with basic auth via the nginx proxy.
 auth_enabled: false
 
 server:
@@ -68,7 +68,7 @@ limits_config:
   unordered_writes: true
 
   # Custom values for reside
-  retention_period: 24h # 1440h # 60 days to match prometheus retention period. Minimum 24h. https://grafana.com/docs/loki/latest/operations/storage/retention/
+  retention_period: 1440h # 60 days to match prometheus retention period. Minimum 24h. https://grafana.com/docs/loki/latest/operations/storage/retention/
 
 # The recommended ingester config from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-ingester-configuration
 # NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#ingester

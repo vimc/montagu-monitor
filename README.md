@@ -28,7 +28,7 @@ On production, to reload all services after a config change, run
 ```sh
 git clone git@github.com:vimc/montagu-monitor.git
 cd montagu-monitor
-git submodule update
+git submodule update --init
 ```
 
 ### Install python packages
