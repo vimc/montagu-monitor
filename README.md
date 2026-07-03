@@ -106,13 +106,13 @@ Connect as the `vagrant` user on `bots.dide.ic.ac.uk`, then
 
 ```
 # git clone --recursive https://github.com/vimc/montagu-monitor monitor
-cd ~/monitor
+cd ~/montagu-monitor
 git pull
 pip3 install --user -r requirements.txt
 ```
 
 And then either call `./run` (if there are code changes) or `./reload` (to
-refresh the config).
+refresh the config), or both (if both code changes and config changes).
 
 ## Metric exporters
 
