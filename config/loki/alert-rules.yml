@@ -1,0 +1,23 @@
+# This file configures:
+# - alerts on Loki, using Prometheus rules syntax: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+# - 'recording rules' for Loki, see https://grafana.com/docs/loki/latest/alert/#recording-rules
+
+groups:
+  - name: production_rules
+    interval: 1m # Query is executed every 1m
+    limit: 10
+    rules:
+      - alert: HighPercentageError
+        expr: |
+          sum by (instance_hostname, container_name) (
+            rate({container_name!=""} |= "error" [5m])
+          )
+            /
+          sum by (instance_hostname, container_name) (
+            rate({container_name!=""} [5m])
+          )
+            > 0.05
+        for: 2m
+        annotations:
+          error: High percentage of error logs for 10 minutes for container "{{ $labels.container_name }}" on
+            host "{{ $labels.instance_hostname }}"

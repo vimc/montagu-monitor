@@ -40,6 +40,14 @@ compactor:
   retention_enabled: true
   delete_request_store: filesystem
 
+ruler:
+  alertmanager_url: http://alertmanager:9093/alertmanager
+  storage:
+    type: local
+    local:
+      directory: /loki/rules # Directory to scan for rules
+  enable_api: true
+
 # The recommended limits_config values from https://grafana.com/docs/loki/latest/configure/bp-configure/#recommended-production-limits
 # NB These recommended values differ from the defaults at https://grafana.com/docs/loki/latest/configure/#limits_config
 limits_config:
