@@ -8,9 +8,9 @@ groups:
     limit: 10
     rules:
       - alert: HighPercentageError
-        expr: |
+        expr: | # {container_name!=""} matches any stream with a container_name, only because we can't have an empty selector
           sum by (instance_hostname, container_name) (
-            rate({container_name!=""} |= "error" [5m])
+            rate({container_name!=""} |= "error" or "Error" or "ERROR" [5m])
           )
             /
           sum by (instance_hostname, container_name) (
