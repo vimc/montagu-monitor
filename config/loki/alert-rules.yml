@@ -17,7 +17,7 @@ groups:
             rate({container_name!=""} [5m])
           )
             > 0.05
-        for: 2m
+        for: 5m
         annotations:
-          error: High percentage of error logs for 10 minutes for container "{{ $labels.container_name }}" on
+          error: High percentage of error logs for 5 minutes for container "{{ $labels.container_name }}" on
             host "{{ $labels.instance_hostname }}"
