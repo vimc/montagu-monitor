@@ -60,6 +60,7 @@ services:
     restart: always
     volumes:
       - ./config/loki/loki-config.yml:/etc/loki/config.yml:ro
+      - ./config/loki/alert-rules.yml:/loki/rules/fake/alert-rules.yml:ro # 'fake' is the default tenant name when auth_enabled is false
       - loki-storage:/loki
     command:
       # Debugging: Uncomment the line below to dump all config to logs including defaults.

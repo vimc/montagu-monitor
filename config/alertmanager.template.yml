@@ -21,6 +21,7 @@ route:
 templates:
   - 'templates/*.tmpl'
 
+# To receive alerts in a new slack channel, invite the app 'monitor' using the /invite command.
 receivers:
   - name: 'slack'
     slack_configs:
