@@ -6,7 +6,3 @@
     container_name: montagu-proxy
     instance_hostname: wpia-vimc2a
   log_matcher: "No such file or directory"
-- labels:
-    container_name: test-local
-    env: development
-  log_matcher: "Message that I am logging on localhost for testing purposes"
