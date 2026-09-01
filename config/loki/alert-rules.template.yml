@@ -12,6 +12,7 @@ groups:
         annotations:
           error: High percentage of error logs for 5 minutes for container "{{ $labels.container_name }}" on
             host "{{ $labels.instance_hostname }}"
+          playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/HighPercentageError.md
         # {container_name!=""} matches any stream with a container_name, only because we can't have an empty selector
         expr: |
           sum by (instance_hostname, container_name) (
