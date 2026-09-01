@@ -11,6 +11,8 @@ groups:
         expr: | # {container_name!=""} matches any stream with a container_name, only because we can't have an empty selector
           sum by (instance_hostname, container_name) (
             rate({container_name!=""} |= "error" or "Error" or "ERROR" [5m])
+            unless
+            rate({container_name="barman-montagu", instance_hostname="wpia-annex"} |= "No module named 'metrics_utils'" [5m])
           )
             /
           sum by (instance_hostname, container_name) (
