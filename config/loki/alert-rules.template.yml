@@ -8,18 +8,22 @@ groups:
     limit: 10
     rules:
       - alert: HighPercentageError
-        expr: | # {container_name!=""} matches any stream with a container_name, only because we can't have an empty selector
+        for: 5m
+        annotations:
+          error: High percentage of error logs for 5 minutes for container "{{ $labels.container_name }}" on
+            host "{{ $labels.instance_hostname }}"
+        # {container_name!=""} matches any stream with a container_name, only because we can't have an empty selector
+        expr: |
           sum by (instance_hostname, container_name) (
             rate({container_name!=""} |= "error" or "Error" or "ERROR" [5m])
+% for entry in wontfix_entries:
+<% label_selector = ", ".join(f'{label["name"]}={label["value"]}' for label in entry["labels"]) %>
             unless
-            rate({container_name="barman-montagu", instance_hostname="wpia-annex"} |= "No module named 'metrics_utils'" [5m])
+            rate({${label_selector}} |= ${entry["log_matcher"]} [5m])
+% endfor
           )
             /
           sum by (instance_hostname, container_name) (
             rate({container_name!=""} [5m])
           )
             > 0.05
-        for: 5m
-        annotations:
-          error: High percentage of error logs for 5 minutes for container "{{ $labels.container_name }}" on
-            host "{{ $labels.instance_hostname }}"
