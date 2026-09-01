@@ -10,3 +10,4 @@ config/grafana/grafana.ini
 hdb-credentials
 .history
 .venv
+.vscode
