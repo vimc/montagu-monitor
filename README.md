@@ -16,6 +16,7 @@ These instances are configured by:
 * `config/alertmanager/alertmanager.yml` - Alertmanager config. This controls where alerts get posted to (see [docs](https://prometheus.io/docs/alerting/configuration/))
 * `config/prometheus/alert-rules.yml` - What Prometheus conditions should trigger alerts (see [docs](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/))
 * `config/loki/loki-config.yml` - Loki config (see [docs](https://grafana.com/docs/loki/latest/configure/))
+* `config/loki/alert-rules.yml` - What Loki conditions should trigger alerts
 * `config/grafana/datasource.yml` - Config telling Grafana where to find the Prometheus and Loki endpoints
 
 On production, to reload all services after a config change, run
