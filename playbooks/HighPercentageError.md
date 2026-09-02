@@ -4,6 +4,8 @@ This error is triggered for a container when over 5% of its logs in a 5-minute p
 
 When a new error starts alerting, it should be triaged. The alert may be temporarily silenced, though this risks our failing to be alerted about different errors from the same instance (see below for guidance). Some of the time, we will deliberately choose to do nothing about an error, if e.g. it is a false positive or not worth fixing; in this case, we have a way to permanently ignore by matching the log message (see below for guidance).
 
+You can also decide to adjust the sensitivity of the alert by changing the duration or threshold.
+
 ## Temporarily silencing an error
 
 We can temporarily silence HighPercentageError alerts at [https://bots.dide.ic.ac.uk/grafana/#/silences/new](https://bots.dide.ic.ac.uk/grafana/#/silences/new). If you do this, be careful to scope the silence to the specific container and instance where the errors originate, using the filters in the UI. Note that this is a ham-fisted option since alerts cannot distinguish between different errors (log content is not available to alertmanager), and so if you silence this alert on a container/instance, we will fail to be alerted for any new class of error coming from the silenced instance during the silence.
