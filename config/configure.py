@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
 Usage:
-  configure.py [--dev]
+    configure.py [--dev]
 """
-from os import chdir, makedirs
+from os import chdir
 from os.path import dirname, realpath
 from pathlib import Path
 from docopt import docopt
 from mako.template import Template
 import json
 import os.path
+import yaml
 
 from vault.vault import VaultClient
 
@@ -47,6 +48,11 @@ def buildkite_node_exporter_config(name, ip):
     }
 
 
+# Quote values for generated LogQL string literals so escaping is handled safely.
+def logql_quote(value):
+    return json.dumps(str(value))
+
+
 if __name__ == "__main__":
     # Set working directory to this script's dir
     chdir(dirname(realpath(__file__)))
@@ -75,6 +81,22 @@ if __name__ == "__main__":
         "grafana/grafana.template.ini",
         "grafana/grafana.ini",
         {"admin_password": vault.read_secret("secret/vimc/prometheus/grafana_password")}
+    )
+
+    with Path("loki/wontfix.yml").open() as f:
+        wontfix = [{
+            "labels": [
+                {"name": name, "value": logql_quote(value)}
+                for name, value in entry["labels"].items()
+            ],
+            "log_matcher": logql_quote(entry["log_matcher"]),
+        }
+        for entry in yaml.safe_load(f) or []
+    ]
+    instantiate_config(
+        "loki/alert-rules.template.yml",
+        "loki/alert-rules.yml",
+        {"wontfix_entries": wontfix}
     )
 
     if not args["--dev"]:

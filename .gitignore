@@ -1,6 +1,7 @@
 .env
 .idea/*
 config/alertmanager/alertmanager.yml
+config/loki/alert-rules.yml
 config/prometheus/generated
 config/nginx/.htpasswd
 config/__pycache__/*
@@ -9,3 +10,4 @@ config/grafana/grafana.ini
 hdb-credentials
 .history
 .venv
+.vscode
