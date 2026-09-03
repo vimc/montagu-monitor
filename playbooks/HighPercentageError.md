@@ -14,7 +14,7 @@ We can temporarily silence HighPercentageError alerts at [https://bots.dide.ic.a
 
 To permanently silence an error:
 
-1. Ascertain the most specific labels to match the error (at least the instance hostname, as well as the container name if applicable), and a substring of the error text for the alert logic to match against. Avoid choosing an overly generic error substring which may be caused by a different class of error.
+1. Ascertain the most specific labels to match the error (you will probably want to narrow the scope to at least the instance hostname, and the container name if applicable), and a substring of the error text for the alert logic to match against. Avoid choosing an overly generic error substring which may be caused by a different class of error.
 1. Update `./config/loki/wontfix.yml` with a new entry for the labels and log matcher.
 1. Run `./run --dev` to ensure that `./config/loki/alert-rules.yml` is generated as expected.
 1. Pull the config change to the deployment, and reload it as per [README.md](../README.md).
