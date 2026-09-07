@@ -3,14 +3,19 @@
     instance_hostname: wpia-annex
   log_matcher: "No module named 'metrics_utils'"
 - labels:
+    env: production
+  log_matcher: "No such file or directory"
+  description: "404s are often triggered on many services due to vulnerability scanning, whether from ICT or malicious bots"
+- labels:
+    env: production
+  log_matcher: "Not found"
+  description: "Attributed to vulnerability scanning"
+- labels:
+    env: production
+  log_matcher: "not found"
+  description: "Attributed to vulnerability scanning"
+- labels:
     container_name: montagu-proxy
     instance_hostname: wpia-vimc2a
-  log_matcher: "No such file or directory"
-- labels:
-    container_name: wodin-proxy
-    instance_hostname: wpia-epimodels
-  log_matcher: "No such file or directory"
-- labels:
-    container_name: wodin-proxy
-    instance_hostname: wpia-mint
-  log_matcher: "SvelteKitError: Not found"
+  log_matcher: "connect() failed (111: Connection refused) while connecting to upstream"
+  description: "Attributed to vulnerability scanning"
