@@ -12,8 +12,17 @@
   [{{ .Status | toUpper -}}] {{ .CommonLabels.alertname }}
 {{- end }}
 
+{{ define "__alert_logs_link" -}}
+{{- $serviceName := .Labels.container_name | urlquery -}}
+{{- $from := (.StartsAt.Add -900000000000).UTC.Format "2006-01-02T15:04:05.000Z" | urlquery -}}
+{{- $to := .StartsAt.UTC.Format "2006-01-02T15:04:05.000Z" | urlquery -}}
+<{{ printf "%s/grafana/a/grafana-lokiexplore-app/explore/service/%s/logs?var-filters=container_name%%7C%%3D%%7C%s&var-filters=instance_hostname%%7C%%3D%%7C%s&from=%s&to=%s" .Annotations.grafana_base_url $serviceName $serviceName (.Labels.instance_hostname | urlquery) $from $to }}|Logs>
+{{- end }}
+
 {{ define "slack.text" -}}
-  {{- range .Alerts }}
-* {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}
-  {{- end }}
+{{- range .Alerts -}}
+{{- $showLogsLink := and (eq .Labels.alertname "HighPercentageError") .Labels.container_name .Labels.instance_hostname -}}
+* {{ if eq .Status "firing" }}{{ .Annotations.error }}{{ else }}~{{ .Annotations.error }}~{{ end }}{{ if $showLogsLink }} {{ template "__alert_logs_link" . }}{{ end }}
+{{ "\n" -}}
+{{- end -}}
 {{- end }}
