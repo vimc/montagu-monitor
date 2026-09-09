@@ -10,6 +10,7 @@ groups:
       - alert: HighPercentageError
         for: 5m
         annotations:
+          grafana_base_url: ${grafana_base_url}
           error: High percentage of error logs for 5 minutes for container "{{ $labels.container_name }}" on
             host "{{ $labels.instance_hostname }}"
           playbook: https://github.com/vimc/montagu-monitor/blob/master/playbooks/HighPercentageError.md

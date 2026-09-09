@@ -61,8 +61,10 @@ if __name__ == "__main__":
     args = docopt(__doc__)
     if args["--dev"]:
         slack_default_channel = "monitor-dev"
+        grafana_base_url = "http://localhost:3000"
     else:
         slack_default_channel = "montagu-monitor"
+        grafana_base_url = "https://bots.dide.ic.ac.uk"
 
     slack_oauth_token = "secret/vimc/slack/oauth-token"
 
@@ -96,7 +98,8 @@ if __name__ == "__main__":
     instantiate_config(
         "loki/alert-rules.template.yml",
         "loki/alert-rules.yml",
-        {"wontfix_entries": wontfix}
+        {"wontfix_entries": wontfix,
+         "grafana_base_url": grafana_base_url}
     )
 
     if not args["--dev"]:
