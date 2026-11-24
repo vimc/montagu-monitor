@@ -95,7 +95,5 @@ groups:
       - alert: TRMNLBatteryLow
         expr: trmnl_battery_volts < 3.4
         for: 5m
-        labels:
-          severity: warning
         annotations:
-          summary: "Low battery on {{ $labels.device }}"
+          error: "Low battery on {{ $labels.device }}"
