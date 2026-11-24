@@ -37,11 +37,6 @@ groups:
         for: 5m
         annotations:
           error: "Buildkite has fewer than 8 default agents"
-      - alert: NcovAgentDown
-        expr: buildkite_queues_total_agent_count{queue="ncov-cdi"} < 1
-        for: 5m
-        annotations:
-          error: "Buildkite ncov CDI agent is down"
 
   - name: disk-usage
     rules:
@@ -100,7 +95,5 @@ groups:
       - alert: TRMNLBatteryLow
         expr: trmnl_battery_volts < 3.4
         for: 5m
-        labels:
-          severity: warning
         annotations:
-          summary: "Low battery on {{ $labels.device }}"
+          error: "Low battery on {{ $labels.device }}"
